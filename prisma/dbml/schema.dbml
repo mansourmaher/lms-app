@@ -1,0 +1,237 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table User {
+  id String [pk]
+  name String
+  email String [unique]
+  emailVerified DateTime
+  password String
+  role UserRole [not null, default: 'STUDENT']
+  image String
+  createdAt DateTime [default: `now()`]
+  accounts Account [not null]
+  teacherAccess Boolean [not null, default: false]
+  teacherRequest TeacherRequest [not null]
+  filier String
+  origin String
+  DateOfBirth DateTime
+  courseReview CourseReview [not null]
+  course Course [not null]
+}
+
+Table TeacherRequest {
+  id String [pk]
+  userId String [not null]
+  status String [not null, default: 'pending']
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  url String [not null]
+  user User [not null]
+}
+
+Table VerificationToken {
+  id String [pk]
+  email String [not null]
+  token String [not null]
+  expires DateTime [not null]
+
+  indexes {
+    (email, token) [unique]
+  }
+}
+
+Table PasswordResetToken {
+  id String [pk]
+  email String [not null]
+  token String [not null]
+  expires DateTime [not null]
+
+  indexes {
+    (email, token) [unique]
+  }
+}
+
+Table Course {
+  id String [pk]
+  userId String [not null]
+  user User
+  title String [not null]
+  description String
+  imageUrl String
+  price Float
+  isPublished Boolean [not null, default: false]
+  categoryId String
+  category Category
+  chapters Chapter [not null]
+  purchases Purchase [not null]
+  attachment Attachment [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  quiz Quiz [not null]
+  review CourseReview [not null]
+}
+
+Table CourseReview {
+  id String [pk]
+  userId String
+  user User
+  starts Int
+  comment String
+  createdAt DateTime [default: `now()`, not null]
+  likes Int [default: 0]
+  dislikes Int [default: 0]
+  courseId String [not null]
+  course Course [not null]
+}
+
+Table Attachment {
+  id String [pk]
+  name String [not null]
+  url String [not null]
+  courseId String [not null]
+  course Course [not null]
+  chapterId String [not null]
+  chapter Chapter [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Category {
+  id String [pk]
+  name String [not null]
+  courses Course [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Chapter {
+  id String [pk]
+  title String [not null]
+  descreption String
+  videoUrl String
+  resources Attachment [not null]
+  toDo String
+  position Int [not null]
+  isPublished Boolean [not null, default: false]
+  isFree Boolean [not null, default: false]
+  muxData MuxData
+  courseId String [not null]
+  course Course [not null]
+  userProgress UserProgress [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  quiz Quiz [not null]
+}
+
+Table MuxData {
+  id String [pk]
+  playbackId String [not null]
+  assetId String [not null]
+  chapterId String [unique, not null]
+  chapter Chapter [not null]
+}
+
+Table UserProgress {
+  id String [pk]
+  userId String [not null]
+  chapterId String [not null]
+  chapter Chapter [not null]
+  isCompleted Boolean [not null, default: false]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (userId, chapterId) [unique]
+  }
+}
+
+Table Purchase {
+  id String [pk]
+  userId String [not null]
+  courseId String [not null]
+  course Course [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  indexes {
+    (userId, courseId) [unique]
+  }
+}
+
+Table Quiz {
+  id String [pk]
+  question String [not null]
+  answer String [not null]
+  courseId String [not null]
+  course Course [not null]
+  createdAt DateTime [default: `now()`, not null]
+  chapterId String [not null]
+  chapter Chapter [not null]
+  options Options [not null]
+}
+
+Table Options {
+  id String [pk]
+  options String[] [not null]
+  correctOption String [not null]
+  quizId String [not null]
+  quiz Quiz [not null]
+}
+
+Enum UserRole {
+  STUDENT
+  ADMIN
+  TEACHER
+}
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: TeacherRequest.userId > User.id
+
+Ref: Course.userId > User.id
+
+Ref: Course.categoryId > Category.id
+
+Ref: CourseReview.userId > User.id
+
+Ref: CourseReview.courseId > Course.id
+
+Ref: Attachment.courseId > Course.id
+
+Ref: Attachment.chapterId > Chapter.id
+
+Ref: Chapter.courseId > Course.id
+
+Ref: MuxData.chapterId - Chapter.id
+
+Ref: UserProgress.chapterId > Chapter.id
+
+Ref: Purchase.courseId > Course.id
+
+Ref: Quiz.courseId > Course.id
+
+Ref: Quiz.chapterId > Chapter.id
+
+Ref: Options.quizId > Quiz.id
