@@ -66,6 +66,7 @@ export const QuizForm = ({
   const [seccondAvailable, setSeccondAvailable] = useState(10);
   const [options, setOptions] = useState([]);
   const [isFalse, setIsFalse] = useState(false);
+  
 
   const cureentQuestion = useMemo(() => {
     //@ts-ignore
@@ -308,7 +309,7 @@ export const QuizForm = ({
                   : false || dipslayResult === false
               }
               chapterId={chapterId}
-              userId={userId}
+             
             />
           </AlertDialogFooter>
         </AlertDialogContent>

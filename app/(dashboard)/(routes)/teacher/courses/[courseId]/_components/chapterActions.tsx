@@ -69,7 +69,7 @@ interface ChapterProps{
 
                           <ConfirmModel  chpaterId={chapterId} onDelete={onDelete}/>
                           <QuizModel   chpaterId={chapterId} courseId={courseId}/>
-                          <QuizForm chapterId={chapterId} courseId={courseId}/>
+                          <QuizForm chapterId={chapterId} courseId={courseId} />
 
             
           

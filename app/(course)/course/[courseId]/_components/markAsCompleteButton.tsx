@@ -7,21 +7,21 @@ import React from "react";
 import toast from "react-hot-toast";
 
 interface markAsCompleteButtonProps {
-  userId: string;
+  
   disabled?: boolean;
 
   chapterId: string;
 }
 
 export default function MarkAsCompleteButton({
-  userId,
+ 
   disabled,
 
   chapterId,
 }: markAsCompleteButtonProps) {
 
-    const onclick=(chapterId:string,userId:string)=>{
-        markAsComplete(chapterId,userId)
+    const onclick=(chapterId:string)=>{
+        markAsComplete(chapterId)
         toast.success("Chapter marked as complete")
         
         window.location.reload()
@@ -32,7 +32,7 @@ export default function MarkAsCompleteButton({
     <div>
       <Button
         disabled={disabled}
-        onClick={() => onclick(chapterId,userId)}
+        onClick={() => onclick(chapterId)}
       >
         Mark as complete
       </Button>
