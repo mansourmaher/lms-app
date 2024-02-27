@@ -14,7 +14,7 @@ export const ErrorCard=()=>{
             <Card className="w-full md:w-1/2 lg:w-1/3">
                 <CardHeader>
                     
-                    <Header title="Error"/>
+                    <Header label="Error"/>
                 </CardHeader>
                 <div className="p-4">
                     <p className="text-center text-gray-600">
