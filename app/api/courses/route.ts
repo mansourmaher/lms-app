@@ -16,10 +16,12 @@ export async function POST(req: Request) {
       };
     }
     const course = await db.course.create({ data: { userId,title } });
-    return new NextResponse(JSON.stringify(course), { status: 200 });
+    return new Response(JSON.stringify(course), { status: 200 });
   } catch (e) {
     console.log(e);
-    return NextResponse.json({ error: "Something went wrong" });
+    return  new Response("error while reordering chapters" + e, {
+      status: 500,
+    });
   }
 }
 
@@ -45,9 +47,9 @@ export async function PUT(req: Request, params: { courseId: string }) {
         position: parseInt(data.list.order),
       },
     });
-    return new NextResponse("chapters reordered", { status: 200 });
+    return new Response("chapters reordered", { status: 200 });
   } catch (error) {
-    return new NextResponse("error while reordering chapters" + error, {
+    return new Response("error while reordering chapters" + error, {
       status: 500,
     });
   }
@@ -58,9 +60,9 @@ export async function GET(req: Request, params: { courseId: string }) {
     const courses=  await db.course.findMany({
       
         })
-    return new NextResponse(JSON.stringify(courses), { status: 200 });
+    return new Response(JSON.stringify(courses), { status: 200 });
   } catch (error) {
-    return new NextResponse("error while fetching course" + error, {
+    return new Response("error while fetching course" + error, {
       status: 500,
     });
   }
