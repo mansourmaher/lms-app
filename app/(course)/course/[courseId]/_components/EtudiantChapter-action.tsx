@@ -32,7 +32,7 @@ export default function EtudiantChapterAction({
   return (
     <div>
       {/* <MarkAsCompleteButton  chapterId={chapterId} userId={userId}  /> */}
-      <QuizForm chapterId={chapterId} courseId={courseId} userId={userId} />
+      <QuizForm chapterId={chapterId} courseId={courseId} />
       <button onClick={downloadPdf}>Download PDF</button>
     </div>
   );
