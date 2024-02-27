@@ -3,18 +3,13 @@ import { db } from "@/lib/db";
 import next from "next";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request): Promise<Response | { status: number; body: { error: string } }> {
+export async function POST(req: Request):  Promise<void | Response> {
   try {
     
     const user = await auth();
     const { title } = await req.json();
     const userId=user?.user?.id as string
-    if (!user) {
-      return {
-        status: 400,
-        body: { error: "You must be logged in to create a course" },
-      };
-    }
+    
     const course = await db.course.create({ data: { userId,title } });
     return new Response(JSON.stringify(course), { status: 200 });
   } catch (e) {
@@ -25,7 +20,7 @@ export async function POST(req: Request): Promise<Response | { status: number; b
   }
 }
 
-export async function PUT(req: Request, params: { courseId: string }): Promise<Response | { status: number; body: { error: string } }> {
+export async function PUT(req: Request, params: { courseId: string }):  Promise<void | Response>{
   try {
    
     const data = await req.json();
@@ -55,7 +50,7 @@ export async function PUT(req: Request, params: { courseId: string }): Promise<R
   }
 }
 
-export async function GET(req: Request, params: { courseId: string }): Promise<Response | { status: number; body: { error: string } }> {
+export async function GET(req: Request, params: { courseId: string }): Promise<void | Response> {
   try {
     const courses=  await db.course.findMany({
       
