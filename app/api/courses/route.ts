@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import next from "next";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<Response | { status: number; body: { error: string } }> {
   try {
     
     const user = await auth();
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   }
 }
 
-export async function PUT(req: Request, params: { courseId: string }) {
+export async function PUT(req: Request, params: { courseId: string }): Promise<Response | { status: number; body: { error: string } }> {
   try {
    
     const data = await req.json();
@@ -55,7 +55,7 @@ export async function PUT(req: Request, params: { courseId: string }) {
   }
 }
 
-export async function GET(req: Request, params: { courseId: string }) {
+export async function GET(req: Request, params: { courseId: string }): Promise<Response | { status: number; body: { error: string } }> {
   try {
     const courses=  await db.course.findMany({
       
