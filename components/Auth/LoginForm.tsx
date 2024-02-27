@@ -53,7 +53,8 @@ export const LoginForm = () => {
 
             login(values).then((result)=>{
                 setError(result?.error)
-                setSucces(result?.succes)
+                
+                setSucces(result?.success)
                 
                 localStorage.setItem("email",values.email)
             })
