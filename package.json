@@ -69,6 +69,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/tween-functions": "^1.2.2",
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
     "prisma": "^5.9.1",
