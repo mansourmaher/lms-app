@@ -10,12 +10,7 @@ export async function POST(req: Request) {
     const userId=user?.user.id
     const { courseId, chapterId,questions,optionss,name,isYesOrNo,correctOption } = await req.json();
     
-    if (!userId) {
-      return {
-        status: 400,
-        body: { error: "You must be logged in to create a course" },
-      };
-    }
+   
     const optionReal = [optionss[0], optionss[1]];
     console.log(isYesOrNo)
     
@@ -56,10 +51,10 @@ export async function POST(req: Request) {
         }
      });
      revalidatePath(`/api/courses/${courseId}/chapters/${chapterId}`);
-    return new NextResponse(JSON.stringify(quiz), { status: 200 });
+     return { status: 200, body: JSON.stringify(quiz) };
   } catch (e) {
     console.log(e);
-    return NextResponse.json({ error: "Something went wrong" });
+    return { status: 500, body: { error: "Something went wrong" } };
   }
 }
 
@@ -81,10 +76,10 @@ export async function GET(req: Request,{params}:{params:{courseId:string,chapter
 
     
    
-    return new NextResponse(JSON.stringify(allquiz), { status: 200 });
+    return  { status: 200, body: JSON.stringify(allquiz) };
   } catch (e) {
     console.log(e);
 
-    return NextResponse.json({ error: "Something went wrong" });
+    return { status: 500, body: { error: "Something went wrong" } };
   }
 }
