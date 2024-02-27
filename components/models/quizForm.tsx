@@ -39,13 +39,13 @@ const formSchema = z.object({
 interface ConfirmModelProps {
   chapterId: string;
   courseId: string;
-  userId: string;
+  
 }
 
 export const QuizForm = ({
   chapterId,
   courseId,
-  userId,
+ 
 }: ConfirmModelProps) => {
   const {
     register,
