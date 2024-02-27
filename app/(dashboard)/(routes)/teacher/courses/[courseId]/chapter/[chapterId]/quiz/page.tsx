@@ -7,3 +7,4 @@ const QuizPart = (props: Props) => {
     <div>page</div>
   )
 }
+export default QuizPart
