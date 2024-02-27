@@ -17,6 +17,7 @@ interface CountrySelectProps {
   onChange: (value: CountrySelectValue) => void;
 }
 export const CountrySelect = ({ value, onChange }: CountrySelectProps) => {
+  console.log("value", value)
 
 
   const Map=useMemo(()=>dynamic(()=>import("./Map"),{loading:()=><p>loading...</p>,ssr:false}),[value])

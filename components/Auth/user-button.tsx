@@ -21,6 +21,7 @@ import { formatDate } from "date-fns";
 
 export const UserButton = () => {
   const currentUser = getCurrentUser();
+  
   const [isTeacherRequestPending, setIsTeacherRequestPending] = useState(false);
   useEffect(() => {
     if (currentUser?.role === "TEACHER") {

@@ -24,3 +24,7 @@ export async function getCourseById(courseId: string, userId: string) {
       );
         return course
 }
+
+
+
+

@@ -27,6 +27,7 @@ import { FillInformation } from "@/actions/profile/fill-information";
 import { Button } from "../ui/button";
 import { User } from "next-auth";
 import Stepper from "./stepper";
+import { MdClose } from "react-icons/md";
 
 interface ProfileInformationForm {
   location: string;
@@ -34,41 +35,49 @@ interface ProfileInformationForm {
   profilePicture: string;
 }
 
-interface userDataProps{
-  user:User,
-  
-
+interface userDataProps {
+  user: User;
 }
 
 export const ProfileInformation = () => {
   const user = useSession();
-  const initialDate = user?.data?.user?.DateOfBirth ? new Date(user?.data?.user?.DateOfBirth) : new Date();
-  const initailFilier=user?.data?.user?.filier ? user?.data?.user?.filier : ""
-  const initailImageUrl=user?.data?.user?.image ? user?.data?.user?.image : ""
-  const [initailFilierValue, setInitailFilierValue] = useState<string>(initailFilier)
+  const initialDate = user?.data?.user?.DateOfBirth
+    ? new Date(user?.data?.user?.DateOfBirth)
+    : new Date();
+  const initailFilier = user?.data?.user?.filier
+    ? user?.data?.user?.filier
+    : "";
+  const initailImageUrl = user?.data?.user?.image
+    ? user?.data?.user?.image
+    : "";
+    const initialeAbout = user?.data?.user?.about
+    ? user?.data?.user?.about
+    : "";
+    const initialeOrigin = user?.data?.user?.origin
+    ? user?.data?.user?.origin
+    : "";
+
+
+  const [initailFilierValue, setInitailFilierValue] =
+    useState<string>(initailFilier);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [date, setDate] = useState<Date>(initialDate);
   const [optionSelected, setOptionSelected] = useState<string>("");
-  const [about, setAbout] = useState<string>("");
+  const [about, setAbout] = useState<string>(initialeAbout);
   const [imageUrl, setImageUrl] = useState<string>(initailImageUrl);
   const [isloading, setIsloading] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-  
-
-
+  const [origin, setOrigin] = useState<string>(initialeOrigin);
 
   const steps = [
     {
-      id: 1,
       title: "Your location",
     },
     {
-      id: 2,
       title: "Personal Information",
     },
     {
-      id: 3,
       title: "Profile Picture",
     },
   ];
@@ -86,7 +95,6 @@ export const ProfileInformation = () => {
         if (date && optionSelected && about) {
           return prevStep + 1;
         } else {
-         
           toast.error("Please fill all the fields");
           return prevStep;
         }
@@ -101,7 +109,7 @@ export const ProfileInformation = () => {
         }
       }
 
-      // If none of the conditions are met, return the current step
+   
       return prevStep;
     });
   };
@@ -110,39 +118,55 @@ export const ProfileInformation = () => {
     setCurrentStep((prevStep) => (prevStep > 1 ? prevStep - 1 : prevStep));
   };
 
-  
-
-  const handelSubmit=async()=>{
-    
-
-    const data={
-      date:date as Date,
-      optionSelected:optionSelected as string,
-      imageUrl:imageUrl as string,
-      country:location?.region as string,
-      about:""
-
-      
-    }
+  const handelSubmit = async () => {
+    const data = {
+      date: date as Date,
+      optionSelected: optionSelected as string,
+      imageUrl: imageUrl as string,
+      country: location?.region as string,
+      about: about as string,
+    };
     await FillInformation(data)
-  }
+      .then((res) => {
+        if (res) {
+          toast.success("Profile Information Added Successfully");
+        }
+      })
+      .then(() => {
+        setIsFinished(true);
+      });
+  };
 
   return (
     <>
       <Toaster />
       <AlertDialog>
-        <AlertDialogTrigger className="flex items-center gap-x-2">
-          <Button className="w-full ">
-            Fill some information
-          </Button>
+        <AlertDialogTrigger className="flex items-center gap-x-2" asChild>
+          <Button className="w-full ">Fill some information</Button>
         </AlertDialogTrigger>
         <AlertDialogContent className="max-w-[50%]">
-          <AlertDialogTitle>
-            <Stepper steps={steps} currentStep={currentStep} isFinished={isFinished} />
+          <AlertDialogTitle className="flex justify-between items-center w-full">
+            <div>
+              <span>
+                For a better experience, you should fill some information.
+              </span>
+            </div>
+            <div>
+              <AlertDialogTrigger asChild>
+                <button>
+                  <MdClose size={24} />
+                </button>
+              </AlertDialogTrigger>
+            </div>
           </AlertDialogTitle>
-          <AlertDialogDescription>
-            For a better experience, you should fill some information.
-          </AlertDialogDescription>
+          <AlertDialogDescription></AlertDialogDescription>
+          <div className="w-full">
+            <Stepper
+              steps={steps}
+              currentStep={currentStep}
+              isFinished={isFinished}
+            />
+          </div>
 
           {currentStep === 1 && (
             <div>
@@ -171,7 +195,7 @@ export const ProfileInformation = () => {
                   <div className="mt-3 mb-3">Your Birdhday</div>
                   <Calendar
                     mode="single"
-                    selected={date as Date} 
+                    selected={date as Date}
                     onSelect={setDate as any}
                     className="rounded-md border w-full"
                   />
@@ -184,11 +208,10 @@ export const ProfileInformation = () => {
                     options={filierOptions}
                     placeholder="Select your filier"
                     className="w-full rounded-md border py-2 px-4 mb-3"
-                    
-                   
                     value={
-                      filierOptions.find((option) => option.value === initailFilierValue ) ||
-                      null
+                      filierOptions.find(
+                        (option) => option.value === initailFilierValue
+                      ) || null
                     }
                     onChange={(value) => {
                       setInitailFilierValue(value?.value as string);
@@ -250,9 +273,8 @@ export const ProfileInformation = () => {
                       if (url) {
                         setImageUrl(url);
                         setIsloading(false);
-                        setIsFinished(true)
+                        setIsFinished(true);
 
-                        
                         console.log(
                           "country" +
                             location?.region +
@@ -277,9 +299,9 @@ export const ProfileInformation = () => {
                     <Image
                       src={imageUrl}
                       alt="profilePicture"
-                      className="boreder-sm "
-                      width={200}
-                      height={200}
+                      className="boreder-sm rounded-full "
+                      width={150}
+                      height={150}
                     />
                   </div>
                 )}
@@ -287,19 +309,20 @@ export const ProfileInformation = () => {
 
               <div className="flex items-center justify-center">
                 <div className="flex-1">
-                <button
-                  onClick={handelPrevious}
-                  className="w-full mt-4 bg-primary text-white rounded-md py-2"
-                >
-                  Previous
-                </button>
+                  <button
+                    onClick={handelPrevious}
+                    className="w-full mt-4 bg-primary text-white rounded-md py-2"
+                  >
+                    Previous
+                  </button>
                 </div>
                 <div className="flex-1">
-                <button
-                onClick={handelSubmit}
-                className="w-full mt-4 bg-primary text-white rounded-md py-2">
-                  submit
-                </button>
+                  <button
+                    onClick={handelSubmit}
+                    className="w-full mt-4 bg-primary text-white rounded-md py-2"
+                  >
+                    submit
+                  </button>
                 </div>
               </div>
             </div>

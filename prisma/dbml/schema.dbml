@@ -36,6 +36,7 @@ Table User {
   teacherRequest TeacherRequest [not null]
   filier String
   origin String
+  about String
   DateOfBirth DateTime
   courseReview CourseReview [not null]
   course Course [not null]

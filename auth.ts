@@ -65,6 +65,8 @@ export const {
                 session.user.origin = token.origin;
                 session.user.image = token.image;
                 session.user.createdAt = token.createdAt;
+                session.user.about = token.about;
+                session.user.origin = token.origin;
 
                   
              
@@ -83,6 +85,10 @@ export const {
         token.filier=existingUser.filier
         token.origin=existingUser.origin
         token.image=existingUser.image
+        token.createdAt=existingUser.createdAt
+        token.about=existingUser.about
+        token.origin=existingUser.origin
+        
         
         
         return token

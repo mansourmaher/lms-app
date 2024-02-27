@@ -1,13 +1,14 @@
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 
 export async function POST(req: Request) {
   try {
     const user =await  auth();
     const userId=user?.user.id
-    const { courseId, chapterId,questions,optionss,name,isYesOrNo } = await req.json();
+    const { courseId, chapterId,questions,optionss,name,isYesOrNo,correctOption } = await req.json();
     
     if (!userId) {
       return {
@@ -23,7 +24,11 @@ export async function POST(req: Request) {
       optionReal.push(optionss[2], optionss[3]);
     }
 
-    const filteredOptions = optionReal.filter(option => option !== null && option !== undefined);
+    const filteredOptions = optionss.filter((option: null | undefined) => option !== null && option !== undefined && option !== "");
+    
+    filteredOptions.unshift(correctOption);
+   
+
 
 
      
@@ -32,7 +37,7 @@ export async function POST(req: Request) {
         data:{
           options:filteredOptions,
           quizId:"1",
-          correctOption:optionReal[0]
+          correctOption:correctOption
             
         }
     })
@@ -50,6 +55,7 @@ export async function POST(req: Request) {
         
         }
      });
+     revalidatePath(`/api/courses/${courseId}/chapters/${chapterId}`);
     return new NextResponse(JSON.stringify(quiz), { status: 200 });
   } catch (e) {
     console.log(e);

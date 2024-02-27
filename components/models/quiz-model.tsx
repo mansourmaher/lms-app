@@ -11,13 +11,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import axios from "axios";
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "../ui/button";
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/components/ui/switch";
 
 import {
   Form,
@@ -35,57 +35,40 @@ interface ConfirmModelProps {
   courseId: string;
 }
 
-
 export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [showOptions34, setShowOptions34] = useState(true); // State to track checkbox status
 
-  const QuizSchema = showOptions34
-  ? z.object({
-      question: z.string().min(1, { message: "Please enter a question" }),
-      option1: z.string().min(1, { message: "Please enter option 1" }),
-      option2: z.string().min(1, { message: "Please enter option 2" }),
-      option3: z.string().min(1, { message: "Please enter option 3" }),
-      option4: z.string().min(1, { message: "Please enter option 4" }),
-    })
-  : z.object({
-      question: z.string().min(1, { message: "Please enter a question" }),
-      option1: z.string().min(1, { message: "Please enter option 1" }),
-      option2: z.string().min(1, { message: "Please enter option 2" }),
-    });
-
-
-
-
-  // const removeHtmlTags = (htmlString: any) => {
-  //   const doc = new DOMParser().parseFromString(htmlString, "text/html");
-  //   return doc.body.textContent || "";
-  // };
-
-  const form = useForm<z.infer<typeof QuizSchema>>({
-    resolver: zodResolver(QuizSchema),
-    shouldFocusError: true,
-    defaultValues: {
-      question: "",
-      option1: "",
-      option2: "",
-      option3: "",
-      option4: "",
-    },
-
-
+  const MultipleQuizSchema = z.object({
+    question: z.string().min(1, { message: "Please enter a question" }),
+    option1: z.string().min(1, { message: "Please enter option 1" }),
+    option2: z.string().min(1, { message: "Please enter option 2" }),
+    
   });
+  const YesOrNoQuizSchema = z.object({
+    question: z.string().min(1, { message: "Please enter a question" }),
+    option1: z.string().min(1, { message: "Please enter option 1" }),
+    option2: z.string().min(1, { message: "Please enter option 2" }),
+  });
+
+  const form = useForm({
+    resolver: zodResolver(
+      showOptions34 ? MultipleQuizSchema : YesOrNoQuizSchema
+    ),
+  });
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowOptions34(!e.target.checked);
   };
 
   const saveQuiz = async (data: any) => {
-    //const questions = removeHtmlTags(data.question);
-    let options: string[] = [];
+    console.log("data", data);
     
-       options = [data.option1, data.option2, data.option3, data.option4];
-    
+
+   const  options = staticOptions
+   options.unshift(data.option2)
+   console.log("options after the push ", options);
 
     setIsOpen(true);
     const quiz = {
@@ -94,9 +77,9 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
       name: data.quizName,
       questions: data.question,
       optionss: options,
-      
+      correctOption: data.option1,
+
       isYesOrNo: showOptions34,
-      
     };
     const response = axios.post(
       `/api/courses/${courseId}/chapters/${chpaterId}/quizzes`,
@@ -111,7 +94,29 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
       .then(() => {
         setIsOpen(true);
         form.reset();
+        form.setValue("option1", "");
+        form.setValue("option2", "");
+        
       });
+  };
+
+  const [staticOptions, setStaticOptions] = useState([""]);
+  useEffect(() => {
+    console.log("staticOptions updated:", staticOptions);
+  }, [staticOptions]);
+
+  const onAddMoreClick = async (data: any) => {
+
+    await setStaticOptions((prev) => {
+      const updatedOptions = [...prev, data.option2];
+      console.log("staticOptions", updatedOptions);
+      return updatedOptions;
+    });
+    console.log("staticOptions", staticOptions);
+
+    form.resetField("option2");
+    form.setValue("option2", "");
+    
   };
 
   return (
@@ -133,22 +138,20 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
               className="space-y-4 mt-4"
             >
               <div className="flex flex-row justify-between items-center">
-              <FormLabel>{showOptions34 ? "Multiple Choice" : "Yes/No"}</FormLabel>
-              <div className="flex flex-row gap-3 items-center justify-center">
-              
-              <FormLabel>{showOptions34 ? "Yes/No" : "Multiple Choice"}</FormLabel>
-            
-              <Switch  onCheckedChange={() => {setShowOptions34(!showOptions34)}} />
-              
-              
-              <input
-                type="checkbox"
-                className=""
-                name="checkbox"
-                onChange={handleCheckboxChange}
-              />
-              
-              </div>
+                <FormLabel>
+                  {showOptions34 ? "Multiple Choice" : "Yes/No"}
+                </FormLabel>
+                <div className="flex flex-row gap-3 items-center justify-center">
+                  <FormLabel>
+                    {showOptions34 ? "Yes/No" : "Multiple Choice"}
+                  </FormLabel>
+
+                  <Switch
+                    onCheckedChange={() => {
+                      setShowOptions34(!showOptions34);
+                    }}
+                  />
+                </div>
               </div>
               <FormField
                 control={form.control}
@@ -158,9 +161,7 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                     <FormControl>
                       <Editor {...field} />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.question?.message}
-                    </FormMessage>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -180,9 +181,7 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                         className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                       />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.option1?.message}
-                    </FormMessage>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -202,74 +201,23 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                         className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                       />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.option2?.message}
-                    </FormMessage>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
-              {showOptions34 && (
-                <>
-              <FormLabel className="text-red-600 flex  mt-3">
-                Put here your third option
-              </FormLabel>
-              <FormField
-                control={form.control}
-               
-                name="option3"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <input
-                        {...field}
-                        type="text"
-                        placeholder="Third option"
-                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {/* @ts-ignore */}
 
-                      {form.formState.errors.option3?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-              <FormLabel className="text-red-600 flex  mt-3">
-                Put here your fourth option
-              </FormLabel>
-              <FormField
-                control={form.control}
-                
-
-                name="option4"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <input
-                        {...field}
-                        type="text"
-                        placeholder="Forth  option"
-                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {/* @ts-ignore */}
-
-                      {form.formState.errors.option4?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
-              </>
-              )}
-              <div className="flex justify-end">
-                <Button type="submit" disabled={!form.formState.isValid}>
-                  Save
-                </Button>
+              <div className="flex justify-between items-center">
+                <Button type="submit">Save</Button>
               </div>
             </form>
           </Form>
+          <Button
+            onClick={() => {
+              onAddMoreClick(form.getValues());
+            }}
+          >
+            Add more
+          </Button>
         </AlertDialogContent>
         <AlertDialogOverlay />
       </AlertDialog>

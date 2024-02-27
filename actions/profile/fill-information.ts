@@ -39,10 +39,12 @@ export const FillInformation=async(value:z.infer<typeof ProfileSchema>)=>
             filier:optionSelected,
             origin:country,
             image:imageUrl,
+            about:about
 
 
         }
     })
+    return updateUser
     if(!updateUser)
     {
         console.log("error in updating user")

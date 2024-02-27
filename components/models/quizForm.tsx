@@ -3,7 +3,6 @@ import {
   AlertDialogDescription,
   AlertDialogTitle,
   AlertDialogCancel,
-  AlertDialogAction,
   AlertDialogContent,
   AlertDialogTrigger,
   AlertDialogOverlay,
@@ -14,15 +13,10 @@ import { AlertCircleIcon, Crown, Plus, Timer } from "lucide-react";
 import React, { useState, useEffect, useMemo } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Button } from "../ui/button";
-import { set, z } from "zod";
-import { Options } from "@prisma/client";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Previews } from "../previews";
-import Stepper from "./stepper";
 import MarkAsCompleteButton from "@/app/(course)/course/[courseId]/_components/markAsCompleteButton";
-import { auth } from "@/auth";
-import { getProgress } from "@/actions/course/get-progress";
 
 const formSchema = z.object({
   question: z.string().min(1, {
@@ -74,14 +68,19 @@ export const QuizForm = ({
   const [isFalse, setIsFalse] = useState(false);
 
   const cureentQuestion = useMemo(() => {
+    //@ts-ignore
+
     setOptions(quiz[questionIndex]?.options[0].options);
     return quiz[questionIndex];
   }, [questionIndex, quiz]);
 
   const shuffleOptions = () => {
     const optionss = [
+      //@ts-ignore
       cureentQuestion.options[0]?.option1,
+      //@ts-ignore
       cureentQuestion.options[0]?.option2,
+      //@ts-ignore
       cureentQuestion.options[0]?.option3,
     ];
     // Shuffle the options randomly
@@ -146,10 +145,9 @@ export const QuizForm = ({
     getAllQuiz();
   };
 
- 
-
   const handleAnswer = (selectedOption: any) => {
     setSeccondAvailable(10);
+    //@ts-ignore
 
     if (selectedOption.option === cureentQuestion.options[0]?.correctOption) {
       setCorrectAnswer(correctAnswer + 1);
@@ -236,6 +234,8 @@ export const QuizForm = ({
                 <div>
                   <h1
                     dangerouslySetInnerHTML={{
+                      // @ts-ignore
+
                       __html: cureentQuestion.question,
                     }}
                   />
