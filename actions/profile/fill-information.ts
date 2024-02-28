@@ -55,6 +55,20 @@ export const FillInformation=async(value:z.infer<typeof ProfileSchema>)=>
         
         
     }
+    else
+    {
+        await db.origin.create({
+            data:{
+
+                label:country?.label!,
+                value:country?.value!,
+                flag:country?.flag!,
+                region:country?.region!,
+                lalng:country?.lalng!,
+                userId:userId
+            }
+        })
+    }
 
     
   
