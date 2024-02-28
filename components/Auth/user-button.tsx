@@ -31,13 +31,15 @@ export const UserButton = () => {
       });
     }
   }, [currentUser]);
+  const originValue = currentUser?.origin ? `${currentUser.origin.region},${currentUser.origin.label}` : "";
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <button className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
-          <Avatar className="h-10 w-10">
+          <Avatar className="h-10 w-10 ">
             <AvatarImage
+            className="rounded-full"
               src={currentUser?.image || ""}
               alt={currentUser?.name!}
             />
@@ -85,7 +87,7 @@ export const UserButton = () => {
           <Label>Field of Study (Filier)</Label>
           <Input value={currentUser?.filier || ""} readOnly className="mt-2" />
           <Label>Country</Label>
-          <Input value={currentUser?.origin || ""} readOnly className="mt-2" />
+          <Input value={originValue || ""} readOnly className="mt-2" />
           <Label>About</Label>
           <Input value={currentUser?.about || ""} readOnly className="mt-2" />
         </div>

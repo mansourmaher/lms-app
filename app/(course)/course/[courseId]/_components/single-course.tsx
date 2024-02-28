@@ -13,19 +13,14 @@ import CommentList from "./course-comment";
 
 interface SingleCourseProps {
   course: Awaited<ReturnType<typeof getCourseById>>;
+  comments: Awaited<ReturnType<typeof getCourseComments>> | null;
 }
 
-export default function SingleCourse({ course }: SingleCourseProps) {
+export default function SingleCourse({ course,comments }: SingleCourseProps) {
   const [isShowComments, setIsShowComments] = React.useState(false);
-  const [comments, setComments] = React.useState<any[]>([]);
+  
 
-  useEffect(() => {
-    const fetchCourse = async () => {
-      const comment = await getCourseComments(course);
-      setComments(comment);
-    };
-    fetchCourse();
-  }, [course?.id]);
+  
 
   const toggleComments = () => {
     setIsShowComments(!isShowComments);
@@ -49,11 +44,9 @@ export default function SingleCourse({ course }: SingleCourseProps) {
         <CourseRating courseId={course?.id!} readonly={false} />
       </div>
 
-      {isShowComments && (
-        <div className="m-8">
-          <CommentList comments={comments} />
+      <div className="m-8">
+        {comments!.length !==0 && <CommentList comments={comments} courseId={course?.id} />}
         </div>
-      )}
     </div>
   );
 }

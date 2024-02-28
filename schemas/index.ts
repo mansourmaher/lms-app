@@ -36,10 +36,17 @@ export const NewPasswordSchema=z.object({
 
 export const ProfileSchema=z.object({
     date:z.date().refine((date)=>date!==undefined,{message:"Please select a date"}),
-    optionSelected:z.string().min(1,{message:"Please select a field"}),
+    optionSelected:z.string().min(0,{message:"Please select you filiers "}).optional(),
     about:z.string().min(0,{message:"Please enter a valid about"}),
     imageUrl:z.string().min(1,{message:"Please enter a valid image url"}),
-    country:z.string().min(1,{message:"please select you country"})
+    country: z.object({
+        value: z.string().min(0, { message: "Please select a country" }),
+        label: z.string().min(0, { message: "Please select a country" }),
+        flag: z.string().min(0, { message: "Please select a country" }),
+        region: z.string().min(0, { message: "Please select a country" }),
+        lalng: z.array(z.number()).min(0, { message: "Please select a country" })
+    
+    }).optional()
 })
 
 export const QuizSchema=z.object({

@@ -2,23 +2,23 @@
 
 import { db } from "@/lib/db"
 import { revalidatePath } from "next/cache"
-import { NextResponse } from "next/server"
 
 
 
-export async function ReactOnComment(isLikes: boolean,comment:string) {
+export async function ReactOnComment(isLikes: boolean,comment:string,courseId:string) {
 
-    console.log("reacting on comment")
+    
   
     const realComment = await db.courseReview.findUnique({
         where: {
             id: comment
         }
     })
-    const likes = realComment?.likes
-    console.log("liking")
+    
+    
     if(isLikes){
-         return await db.courseReview.update({
+        const likes = realComment?.likes
+          await db.courseReview.update({
             where: {
                 id: comment
             },
@@ -26,11 +26,14 @@ export async function ReactOnComment(isLikes: boolean,comment:string) {
                 likes: likes! + 1
             }
         })
+        revalidatePath(`/course/${courseId}`)
+        
+        return 
     
     }
-    console.log("disliking")
+    
     const dislikes = realComment?.dislikes
-    return  await db.courseReview.update({
+      await db.courseReview.update({
         where: {
             id: comment
         },
@@ -38,6 +41,9 @@ export async function ReactOnComment(isLikes: boolean,comment:string) {
             dislikes: dislikes! + 1
         }
     })
+    revalidatePath(`/course/${courseId}`)
+    
+    return
     
 
 }

@@ -28,6 +28,7 @@ import { Button } from "../ui/button";
 import { User } from "next-auth";
 import Stepper from "./stepper";
 import { MdClose } from "react-icons/md";
+import { Origin } from "@prisma/client";
 
 interface ProfileInformationForm {
   location: string;
@@ -37,6 +38,14 @@ interface ProfileInformationForm {
 
 interface userDataProps {
   user: User;
+}
+interface data{
+  date: Date;
+  optionSelected: string;
+  imageUrl: string;
+  country: CountrySelectValue | undefined;
+  about:string
+
 }
 
 export const ProfileInformation = () => {
@@ -53,9 +62,18 @@ export const ProfileInformation = () => {
     const initialeAbout = user?.data?.user?.about
     ? user?.data?.user?.about
     : "";
-    const initialeOrigin = user?.data?.user?.origin
-    ? user?.data?.user?.origin
-    : "";
+    const initialFilier=user?.data?.user?.filier || "";
+
+  const initialeOrigin = user?.data?.user?.origin || {
+    id:"",
+    userId: "",
+    value: "",
+    label: "",
+    flag: "",
+    region: "",
+    lalng: [0, 0],
+  };
+
 
 
   const [initailFilierValue, setInitailFilierValue] =
@@ -63,12 +81,12 @@ export const ProfileInformation = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [date, setDate] = useState<Date>(initialDate);
-  const [optionSelected, setOptionSelected] = useState<string>("");
+  const [optionSelected, setOptionSelected] = useState<string>(initailFilier);
   const [about, setAbout] = useState<string>(initialeAbout);
   const [imageUrl, setImageUrl] = useState<string>(initailImageUrl);
   const [isloading, setIsloading] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-  const [origin, setOrigin] = useState<string>(initialeOrigin);
+  const [origin, setOrigin] = useState<Origin>(initialeOrigin);
 
   const steps = [
     {
@@ -101,7 +119,7 @@ export const ProfileInformation = () => {
       }
 
       if (prevStep === 1) {
-        if (location) {
+        if (origin) {
           return prevStep + 1;
         } else {
           toast.error("Please select your location");
@@ -123,13 +141,16 @@ export const ProfileInformation = () => {
       date: date as Date,
       optionSelected: optionSelected as string,
       imageUrl: imageUrl as string,
-      country: location?.region as string,
+      country: origin as CountrySelectValue,
       about: about as string,
     };
     await FillInformation(data)
       .then((res) => {
-        if (res) {
+        if (res.success) {
           toast.success("Profile Information Added Successfully");
+        }
+        else{
+          toast.error("Error Adding Profile Information");
         }
       })
       .then(() => {
@@ -160,7 +181,7 @@ export const ProfileInformation = () => {
             </div>
           </AlertDialogTitle>
           <AlertDialogDescription></AlertDialogDescription>
-          <div className="w-full">
+          <div className="">
             <Stepper
               steps={steps}
               currentStep={currentStep}
@@ -172,13 +193,14 @@ export const ProfileInformation = () => {
             <div>
               <h1>{steps[0].title}</h1>
               <CountrySelect
-                value={location}
-                onChange={(value) => setLocation(value)}
+                value={origin}
+                /* @ts-ignore */
+                onChange={(value) => setOrigin(value)}
               />
               <div className="flex items-center justify-center">
                 <button
                   onClick={handleNext}
-                  className="w-full mt-4 bg-primary text-white rounded-md py-2"
+                  className="mt-4 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 w-full rounded-md py-2"
                 >
                   Next
                 </button>
@@ -236,11 +258,11 @@ export const ProfileInformation = () => {
                 </div>
               </div>
 
-              <div className="flex flex-row justify-between gap-3">
+              <div className="flex flex-row justify-between gap-3 items-center">
                 <div className="flex-1">
                   <button
                     onClick={handelPrevious}
-                    className="w-full mt-4 bg-primary text-white rounded-md py-2"
+                    className="mt-4 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 w-full rounded-md py-2"
                   >
                     Previews
                   </button>
@@ -248,7 +270,7 @@ export const ProfileInformation = () => {
                 <div className="flex-1">
                   <button
                     onClick={handleNext}
-                    className="w-full mt-4 bg-primary text-white rounded-md py-2"
+                    className="mt-4 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 w-full rounded-md py-2"
                   >
                     Next
                   </button>
@@ -307,11 +329,11 @@ export const ProfileInformation = () => {
                 )}
               </div>
 
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center gap-x-3">
                 <div className="flex-1">
                   <button
                     onClick={handelPrevious}
-                    className="w-full mt-4 bg-primary text-white rounded-md py-2"
+                    className="mt-4 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 w-full rounded-md py-2"
                   >
                     Previous
                   </button>
@@ -319,7 +341,7 @@ export const ProfileInformation = () => {
                 <div className="flex-1">
                   <button
                     onClick={handelSubmit}
-                    className="w-full mt-4 bg-primary text-white rounded-md py-2"
+                    className="mt-4 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 w-full rounded-md py-2"
                   >
                     submit
                   </button>

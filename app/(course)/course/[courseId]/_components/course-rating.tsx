@@ -3,6 +3,7 @@ import { CommentCourse } from "@/actions/Etudiant/comment-course";
 import { Editor } from "@/components/editor";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { set } from "date-fns";
 import React from "react";
 import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
@@ -32,63 +33,69 @@ export default function CourseRating({ courseId }: RatingProps) {
   const handleRatingChange = (event: any) => {
     setRating(parseFloat(event.target.value));
   };
-  const onclick = () => {
+  const onclick =async () => {
     setIsDisabled(true);
-    CommentCourse(rating, comment, courseId!).then((res) => {
-      toast.success("Comment added");
-      window.location.reload();
-    });
+    
+    await CommentCourse(rating, comment, courseId!)
+    setIsDisabled(false);
+    toast.success("Comment added");
+    setRating(0);
+    setComment("");
+   
   };
 
   return (
     <>
-    <hr />
-   
-    <div className="flex flex-col gap-y-6 w-full">
-      <div className="flex flex-row gap-x-6 items-center">
-        <p className=" flex ml-16 text-sm font-semibold">
-          You can Rate this coure and keep a comment below to help others
-        </p>
-        <div className="flex flex-row gap-x-1">
-          {[...Array(5)].map((_, index) => {
-            const currentRating = index + 1;
-            return (
-              <div key={currentRating} className="flex flex-row space-x-2">
-                <label>
-                  <input
-                    type="radio"
-                    name="rate"
-                    value={currentRating}
-                    checked={rating === currentRating}
-                    onChange={handleRatingChange}
-                    className="hidden"
-                  />
-                  <FaStar
-                    className={cn(
-                      "text-2xl",
-                      rating >= currentRating
-                        ? "text-yellow-400"
-                        : "text-gray-400"
-                    )}
-                  />
-                </label>
-              </div>
-            );
-          })}
-        </div>
-        <p> {labels[rating]}</p>
-      </div>
-      <div className="w-full pl-16 pr-32">
-        <Editor value="" onChange={() => {}} width="w-full"></Editor>
-      </div>
-      <div className="flex flex-row justify-end pr-32">
-        <Button 
-        disabled={rating === 0 && comment === "" || isDisabled}
-        className="bg-blue-400 hover:bg-blue-500"onClick={onclick}>submit</Button>
-      </div>
+      <hr />
 
-    </div>
-    <hr />
+      <div className="flex flex-col gap-y-6 w-full">
+        <div className="flex flex-row gap-x-6 items-center">
+          <p className=" flex ml-16 text-sm font-semibold">
+            You can Rate this coure and keep a comment below to help others
+          </p>
+          <div className="flex flex-row gap-x-1">
+            {[...Array(5)].map((_, index) => {
+              const currentRating = index + 1;
+              return (
+                <div key={currentRating} className="flex flex-row space-x-2">
+                  <label>
+                    <input
+                      type="radio"
+                      name="rate"
+                      value={currentRating}
+                      checked={rating === currentRating}
+                      onChange={handleRatingChange}
+                      className="hidden"
+                    />
+                    <FaStar
+                      className={cn(
+                        "text-2xl",
+                        rating >= currentRating
+                          ? "text-yellow-400"
+                          : "text-gray-400"
+                      )}
+                    />
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+          <p> {labels[rating]}</p>
+        </div>
+        <div className="w-full pl-16 pr-32">
+          <Editor value="" onChange={() => {}} width="w-full"></Editor>
+        </div>
+        <div className="flex flex-row justify-end pr-32">
+          <Button
+            disabled={(rating === 0 && comment === "") || isDisabled}
+            className="bg-blue-400 hover:bg-blue-500"
+            onClick={onclick}
+          >
+            submit
+          </Button>
+        </div>
+      </div>
+      <hr />
     </>
   );
 }

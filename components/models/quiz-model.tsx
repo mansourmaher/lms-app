@@ -28,6 +28,8 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Editor } from "../editor";
+import { revalidatePath } from "next/cache";
+import { MdAddComment } from "react-icons/md";
 //import { QuizSchema } from "@/schemas";
 
 interface ConfirmModelProps {
@@ -44,7 +46,6 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
     question: z.string().min(1, { message: "Please enter a question" }),
     option1: z.string().min(1, { message: "Please enter option 1" }),
     option2: z.string().min(1, { message: "Please enter option 2" }),
-    
   });
   const YesOrNoQuizSchema = z.object({
     question: z.string().min(1, { message: "Please enter a question" }),
@@ -58,17 +59,9 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
     ),
   });
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShowOptions34(!e.target.checked);
-  };
-
   const saveQuiz = async (data: any) => {
-    console.log("data", data);
-    
-
-   const  options = staticOptions
-   options.unshift(data.option2)
-   console.log("options after the push ", options);
+    const options = staticOptions;
+    options.unshift(data.option2);
 
     setIsOpen(true);
     const quiz = {
@@ -96,27 +89,24 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
         form.reset();
         form.setValue("option1", "");
         form.setValue("option2", "");
-        
+        setStaticOptions([""]);
       });
   };
 
   const [staticOptions, setStaticOptions] = useState([""]);
-  useEffect(() => {
-    console.log("staticOptions updated:", staticOptions);
-  }, [staticOptions]);
+  // useEffect(() => {
+  //   console.log("staticOptions updated:", staticOptions);
+  // }, [staticOptions]);
 
   const onAddMoreClick = async (data: any) => {
-
     await setStaticOptions((prev) => {
       const updatedOptions = [...prev, data.option2];
-      console.log("staticOptions", updatedOptions);
+
       return updatedOptions;
     });
-    console.log("staticOptions", staticOptions);
 
     form.resetField("option2");
     form.setValue("option2", "");
-    
   };
 
   return (
@@ -165,7 +155,7 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                   </FormItem>
                 )}
               />
-              <FormLabel className="text-green-600  flex mt-6">
+              <FormLabel className="  flex mt-6">
                 Put here your first option and it should be the correct one
               </FormLabel>
               <FormField
@@ -185,39 +175,60 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                   </FormItem>
                 )}
               />
-              <FormLabel className="text-red-600 flex mt-3">
+
+              <FormLabel className="flex mt-3">
                 Put here your second option
               </FormLabel>
-              <FormField
-                control={form.control}
-                name="option2"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <input
-                        {...field}
-                        type="text"
-                        placeholder="Second option"
-                        className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="flex flex-row justify-between  items-center">
+                <div className="flex-1 ">
+                  <FormField
+                    control={form.control}
+                    name="option2"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <input
+                            {...field}
+                            type="text"
+                            placeholder="Second option"
+                            className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  {showOptions34 ? (
+                    <Button
+                      type="button"
+                      size={"sm"}
+                      className="ml-4 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                      onClick={() => {
+                        onAddMoreClick(form.getValues());
+                      }}
+                    >
+                      <MdAddComment size={25} />
+                    </Button>
+                  ) : null}
+                </div>
+              </div>
 
-              <div className="flex justify-between items-center">
-                <Button type="submit">Save</Button>
+              <div className="">
+                <Button variant="primary" type="submit">
+                  Save
+                </Button>
+                <Button
+                  className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Cancel
+                </Button>
               </div>
             </form>
           </Form>
-          <Button
-            onClick={() => {
-              onAddMoreClick(form.getValues());
-            }}
-          >
-            Add more
-          </Button>
         </AlertDialogContent>
         <AlertDialogOverlay />
       </AlertDialog>

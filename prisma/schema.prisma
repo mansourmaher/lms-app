@@ -51,11 +51,23 @@ model User {
   teacherAccess Boolean @default(false)
   teacherRequest TeacherRequest[]
   filier       String? 
-  origin        String?
+  origin        Origin?
+  
   about        String?
   DateOfBirth    DateTime?
   courseReview CourseReview[]
   course Course[]
+}
+model Origin {
+  id String @id @default(uuid())
+  userId String @unique
+  user User @relation(fields: [userId], references: [id])
+  value String
+  label String
+  flag String
+  region String
+  lalng Int[]
+  
 }
 model TeacherRequest{
   id String @id @default(uuid())

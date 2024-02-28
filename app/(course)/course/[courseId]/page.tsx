@@ -15,10 +15,11 @@ const CoursePage = async ({
   const userId = user?.user.id as string;
 
   const course = await getCourseById(courseId, userId);
+  const comments = await getCourseComments(course);
 
   return (
     <>
-      <SingleCourse course={course} />
+      <SingleCourse course={course} comments={comments} />
     </>
   );
 };

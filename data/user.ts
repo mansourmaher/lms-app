@@ -18,7 +18,17 @@ export const getUserByEmail=async(email:string)=>
 export const getUserById=async(id:string)=>
 {
     try{
-        const user=await db.user.findFirst({where:{id}})
+        const user=await db.user.findFirst({
+            where:{id},
+            include:{
+                origin:true
+            }
+            
+        },
+       
+        
+        
+        )
         return user
     }catch(e)
     {

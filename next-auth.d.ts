@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { Origin, UserRole } from "@prisma/client";
 import NextAuth, { type DefaultSession } from "next-auth";
 
 export type ExtendedUser = DefaultSession["user"] & {
@@ -9,7 +9,7 @@ export type ExtendedUser = DefaultSession["user"] & {
   teacherAccess: boolean;
   DateOfBirth: Date | null;
   filier: string;
-  origin: string;
+  origin: Origin;
   about: string;
   createdAt: Date;
 };

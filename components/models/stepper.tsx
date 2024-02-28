@@ -9,7 +9,7 @@ interface StepperProps {
 
 const Stepper = ({ steps, currentStep, isFinished }: StepperProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full flex justify-center ml-16">
       <div data-hs-stepper className="w-full">
         <ul className="relative flex flex-row gap-x-2">
           {steps.map((_, index) => (
@@ -31,7 +31,7 @@ const Stepper = ({ steps, currentStep, isFinished }: StepperProps) => {
               >
                 <span
                   className={`size-7 flex justify-center items-center flex-shrink-0 font-medium text-gray-800 rounded-full group-focus:bg-gray-200 dark:bg-gray-700 dark:text-white dark:group-focus:bg-gray-600 hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600
-                    ${index + 1 < currentStep ? "bg-teal-500 text-white" : ""} 
+                    ${index + 1 < currentStep ? "bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white" : ""} 
                     ${
                       index + 1 === currentStep
                         ? "hs-stepper-active:bg-blue-600 hs-stepper-active:text-white"

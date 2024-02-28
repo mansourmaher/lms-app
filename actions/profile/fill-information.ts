@@ -9,6 +9,8 @@ export const FillInformation=async(value:z.infer<typeof ProfileSchema>)=>
 
 
 {
+    
+
     console.log("fill information")
     const user=await auth()
     const userId=user?.user.id
@@ -23,12 +25,39 @@ export const FillInformation=async(value:z.infer<typeof ProfileSchema>)=>
     if(!validateFiels.success)
     {
         console.log("invalid data")
+        console.log("country"+value.country)
         return {error:"invalid data"}
     }
     const {date,optionSelected,imageUrl,about,country}=validateFiels.data
-    // const formatedDate = format(date, 'yyyy-MM-dd');
-    //     console.log(formatedDate)
+
+    const existingOrigin=await db.origin.findFirst({
+        where:{
+            userId:userId
+        }
+    })
+    if(existingOrigin)
+    {
+        await db.origin.updateMany({
+            where:{
+                userId:userId
+            },
+            data:{
+                label:country?.label,
+                value:country?.value,
+                flag:country?.flag,
+                region:country?.region,
+                lalng:country?.lalng
+            }
+        })
+       
+        
+      
+        
+        
+    }
+
     
+  
     
     const updateUser=await db.user.updateMany({
         where:{
@@ -37,18 +66,19 @@ export const FillInformation=async(value:z.infer<typeof ProfileSchema>)=>
         data:{
             DateOfBirth:date,
             filier:optionSelected,
-            origin:country,
+            
             image:imageUrl,
             about:about
 
 
         }
     })
-    return updateUser
     if(!updateUser)
     {
-        console.log("error in updating user")
-        return {error:"error in updating user"}
+        console.log("error updating user")
+        return {error:"error updating user"}
     }
-    console.log("user updated")
+    
+    return {success:true}
+    
 }

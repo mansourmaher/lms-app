@@ -35,11 +35,22 @@ Table User {
   teacherAccess Boolean [not null, default: false]
   teacherRequest TeacherRequest [not null]
   filier String
-  origin String
+  origin Origin
   about String
   DateOfBirth DateTime
   courseReview CourseReview [not null]
   course Course [not null]
+}
+
+Table Origin {
+  id String [pk]
+  userId String [unique, not null]
+  user User [not null]
+  value String [not null]
+  label String [not null]
+  flag String [not null]
+  region String [not null]
+  lalng Int[] [not null]
 }
 
 Table TeacherRequest {
@@ -208,6 +219,8 @@ Enum UserRole {
 }
 
 Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: Origin.userId - User.id
 
 Ref: TeacherRequest.userId > User.id
 

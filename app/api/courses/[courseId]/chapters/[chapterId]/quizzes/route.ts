@@ -58,22 +58,22 @@ export async function POST(req: Request) {
   }
 }
 
-// export async function GET(req: Request, { params }: { params: { courseId: string, chapterId: string } }): Promise<Response> {
-//   try {
-//     const { courseId, chapterId } = params;
+ export async function GET(req: Request, { params }: { params: { courseId: string, chapterId: string } }): Promise<Response> {
+try {
+  const { courseId, chapterId } = params;
 
-//     const allquiz = await db.quiz.findMany({
-//       where: {
-//         chapterId: params.chapterId
-//       },
-//       include: {
-//         options: true
-//       }
-//     });
+  const allquiz = await db.quiz.findMany({
+    where: {
+      chapterId: params.chapterId
+    },
+    include: {
+      options: true
+    }
+  });
 
-//     return new Response(JSON.stringify(allquiz), { status: 200, headers: { 'Content-Type': 'application/json' }})
-//   } catch (e) {
-//     console.log(e);
-//     return new Response(JSON.stringify({ error: "Something went wrong" }), { status: 500, headers: { 'Content-Type': 'application/json' }})
-//   }
-// }
+  return new Response(JSON.stringify(allquiz), { status: 200, headers: { 'Content-Type': 'application/json' }})
+} catch (e) {
+  console.log(e);
+  return new Response(JSON.stringify({ error: "Something went wrong" }), { status: 500, headers: { 'Content-Type': 'application/json' }})
+}
+ }
