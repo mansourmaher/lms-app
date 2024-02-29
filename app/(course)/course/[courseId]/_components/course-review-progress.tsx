@@ -14,6 +14,7 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { CourseReview } from "@prisma/client";
+import { BarChartBigIcon } from "lucide-react";
 import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 
@@ -101,9 +102,12 @@ export default function ReviewProgress({ courseId }: Props) {
 
   return (
     <HoverCard>
-      <HoverCardTrigger>Hover nayk</HoverCardTrigger>
+      <HoverCardTrigger className="cursor-pointer">
+        <p>
+          Ratings: {total} <br />
+        </p>
+      </HoverCardTrigger>
       <HoverCardContent>
-      
         <div className="flex items-center mb-4">
           {[...Array(5)].map((_, index) => {
             const currentRating = index + 1;
@@ -228,7 +232,6 @@ export default function ReviewProgress({ courseId }: Props) {
             {percentageofonestars}%{""}
           </span>
         </div>
-        
       </HoverCardContent>
     </HoverCard>
   );

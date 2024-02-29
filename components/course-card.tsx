@@ -38,6 +38,7 @@ export const CourseCard = ({
           fill
         />
       </div>
+      <hr className="border-t border-muted-foreground mb-4" />
 
       <h1 className="text-lg font-semibold">{title}</h1>
       <p className="text-sm text-muted-foreground mt-1.5  line-clamp-3 h-14 mb-6">
@@ -45,7 +46,7 @@ export const CourseCard = ({
       </p>
       <div className="flex flex-row justify-between items-center mt-3">
         <div className=" -mx-1">
-          <Badge variant="yellow">{category}</Badge>
+          <Badge variant="yellow" className="mr-2">{category}</Badge>
         </div>
 
         <div className=" -mx-1">
@@ -58,21 +59,19 @@ export const CourseCard = ({
           <DollarSign size={14} className="mr-2" />
           {price} D
         </Badge>
+        <Badge variant="green" className="mr-2">
+          <ReviewProgress courseId={id} />
+        </Badge>
       </div>
+      <div></div>
       <div>
-        <ReviewProgress courseId={id} />
+        <div className="mt-6 ">
+          <Button variant={"primary"}>
+            <Link href={`/course/${id}`} className="flex items-center gap-x-3 ">
+              <Eye size={18} /> View Course
+            </Link>
+          </Button>
         </div>
-        <div>
-
-      <div className="mt-6 ">
-        <Button
-       
-        variant={"primary"}
-        >
-          <Link href={`/course/${id}`} className="flex items-center gap-x-3 "><Eye size={18}/>{" "}View Course</Link>
-          
-        </Button>
-      </div>
       </div>
     </div>
   );
