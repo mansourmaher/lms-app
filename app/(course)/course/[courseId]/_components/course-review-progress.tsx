@@ -6,6 +6,11 @@ import {
   getThreestarscount,
   getTwostarscount,
 } from "@/actions/course/get-stars-number";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { CourseReview } from "@prisma/client";
@@ -95,164 +100,136 @@ export default function ReviewProgress({ courseId }: Props) {
   ]);
 
   return (
-    <div>
-      <div className="hs-tooltip inline-block [--trigger:click]">
-        <div className="hs-tooltip-toggle block text-center">
-          <button
-            type="button"
-            onClick={toggleTooltip}
-            className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent  hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-          >
-            Preline review
-            <svg
-              className="flex-shrink-0 size-4"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m18 15-6-6-6 6" />
-            </svg>
-          </button>
-
-          <div
-            className={`hs-tooltip-content ${
-              tooltipVisible ? "opacity-100 visible p-6" : "opacity-0 invisible"
-            } transition-opacity absolute z-10 max-w-xs w-full bg-white border border-gray-100 text-start rounded-xl shadow-md dark:bg-gray-800 dark:border-gray-700`}
-            role="tooltip"
-          >
-            <div className="flex items-center mb-4">
-              {[...Array(5)].map((_, index) => {
-                const currentRating = index + 1;
-                return (
-                  <div key={currentRating} className="flex flex-row space-x-2">
-                    <label>
-                      <input
-                        type="radio"
-                        name="rate"
-                        value={currentRating}
-                        checked={average === currentRating}
-                        readOnly
-                        className="hidden"
-                      />
-                      <FaStar
-                        className={cn(
-                          "text-2xl",
-                          average >= currentRating
-                            ? "text-yellow-400"
-                            : "text-gray-400"
-                        )}
-                      />
-                    </label>
-                  </div>
-                );
-              })}
-              <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-                {average.toFixed(1)}
-              </p>
-              <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-                out of
-              </p>
-              <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-                5
-              </p>
-            </div>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              {total} global ratings
-            </p>
-            <div className="flex items-center mt-4">
-              <a
-                href="#"
-                className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                5 star
-              </a>
-              <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                <div
-                  className="h-5 bg-yellow-300 rounded"
-                  style={{ width: `${percentageoffivestars}%` }}
-                ></div>
+    <HoverCard>
+      <HoverCardTrigger>Hover nayk</HoverCardTrigger>
+      <HoverCardContent>
+      
+        <div className="flex items-center mb-4">
+          {[...Array(5)].map((_, index) => {
+            const currentRating = index + 1;
+            return (
+              <div key={currentRating} className="flex flex-row space-x-2">
+                <label>
+                  <input
+                    type="radio"
+                    name="rate"
+                    value={currentRating}
+                    checked={average === currentRating}
+                    readOnly
+                    className="hidden"
+                  />
+                  <FaStar
+                    className={cn(
+                      "text-2xl",
+                      average >= currentRating
+                        ? "text-yellow-400"
+                        : "text-gray-400"
+                    )}
+                  />
+                </label>
               </div>
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                {percentageoffivestars}%{" "}
-              </span>
-            </div>
-            <div className="flex items-center mt-4">
-              <a
-                href="#"
-                className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                4 star
-              </a>
-              <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                <div
-                  className="h-5 bg-yellow-300 rounded"
-                  style={{ width: `${percentageoffourstars}%` }}
-                ></div>
-              </div>
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                {percentageoffourstars}%{""}
-              </span>
-            </div>
-            <div className="flex items-center mt-4">
-              <a
-                href="#"
-                className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                3 star
-              </a>
-              <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                <div
-                  className="h-5 bg-yellow-300 rounded"
-                  style={{ width: `${percentageofthreestars}%` }}
-                ></div>
-              </div>
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                {percentageofthreestars}%{""}
-              </span>
-            </div>
-            <div className="flex items-center mt-4">
-              <a
-                href="#"
-                className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                2 star
-              </a>
-              <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                <div
-                  className="h-5 bg-yellow-300 rounded"
-                  style={{ width: `${percentageoftwostars}%` }}
-                ></div>
-              </div>
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                {percentageoftwostars}%{""}
-              </span>
-            </div>
-            <div className="flex items-center mt-4">
-              <a
-                href="#"
-                className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                1 star
-              </a>
-              <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                <div
-                  className="h-5 bg-yellow-300 rounded"
-                  style={{ width: `${percentageofonestars}%` }}
-                ></div>
-              </div>
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                {percentageofonestars}%{""}
-              </span>
-            </div>
-          </div>
+            );
+          })}
+          <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+            {average.toFixed(1)}
+          </p>
+          <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+            out of
+          </p>
+          <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+            5
+          </p>
         </div>
-      </div>
-    </div>
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+          {total} global ratings
+        </p>
+        <div className="flex items-center mt-4">
+          <a
+            href="#"
+            className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          >
+            5 star
+          </a>
+          <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div
+              className="h-5 bg-yellow-300 rounded"
+              style={{ width: `${percentageoffivestars}%` }}
+            ></div>
+          </div>
+          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            {percentageoffivestars}%{" "}
+          </span>
+        </div>
+        <div className="flex items-center mt-4">
+          <a
+            href="#"
+            className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          >
+            4 star
+          </a>
+          <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div
+              className="h-5 bg-yellow-300 rounded"
+              style={{ width: `${percentageoffourstars}%` }}
+            ></div>
+          </div>
+          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            {percentageoffourstars}%{""}
+          </span>
+        </div>
+        <div className="flex items-center mt-4">
+          <a
+            href="#"
+            className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          >
+            3 star
+          </a>
+          <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div
+              className="h-5 bg-yellow-300 rounded"
+              style={{ width: `${percentageofthreestars}%` }}
+            ></div>
+          </div>
+          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            {percentageofthreestars}%{""}
+          </span>
+        </div>
+        <div className="flex items-center mt-4">
+          <a
+            href="#"
+            className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          >
+            2 star
+          </a>
+          <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div
+              className="h-5 bg-yellow-300 rounded"
+              style={{ width: `${percentageoftwostars}%` }}
+            ></div>
+          </div>
+          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            {percentageoftwostars}%{""}
+          </span>
+        </div>
+        <div className="flex items-center mt-4">
+          <a
+            href="#"
+            className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          >
+            1 star
+          </a>
+          <div className="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
+            <div
+              className="h-5 bg-yellow-300 rounded"
+              style={{ width: `${percentageofonestars}%` }}
+            ></div>
+          </div>
+          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            {percentageofonestars}%{""}
+          </span>
+        </div>
+        
+      </HoverCardContent>
+    </HoverCard>
   );
 }

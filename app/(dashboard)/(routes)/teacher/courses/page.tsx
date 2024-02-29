@@ -39,8 +39,21 @@ const TeacherCoursePage = () => {
   }, []); //[] bech mayd5olch fi boucle infin whowa yconsoli fihom
 
   return (
-    <div className="px-6 py-6 ">
+    <div className="px-6 py-6">
+      <div className="flex justify-end p-8">
+      <Button >
+        <Link href="/teacher/create">
+          <p>
+            Create a new course
+          </p>
+        </Link>
+
+      </Button>
+    </div>
+    <div>
       <DataTable columns={columns} data={myCourses} />
+    </div>
+    
     </div>
   );
 };

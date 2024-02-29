@@ -17,7 +17,7 @@ export const Sidebar = () => {
       <div className="p-6">
         <Logo />
       </div>
-      <div className="w-full flex flex-cols">
+      <div className="w-full flex flex-cols pt-8">
         <SideBarRoutes />
       </div>
       {/* i want to make the logo in the top and routes in the bottom  of the sidebar how?*/}

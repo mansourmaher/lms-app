@@ -14,7 +14,7 @@ interface CoursesListProps {
 export const CoursesList = ({items}:CoursesListProps) => {
     return (
         <div className="">
-        <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
         {
             
             items.map((course)=>(
@@ -27,6 +27,7 @@ export const CoursesList = ({items}:CoursesListProps) => {
                 price={course.price!}
                 progress={course.progress!}
                 category={course.category?.name!}
+                description={course.description!}
                 />
 
 

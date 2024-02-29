@@ -33,7 +33,9 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       </div>
       <div className="p-6 space-y-6 ">
         <Categories items={categories} />
+        
         <CoursesList items={courses} />
+        
       </div>
     </>
   );

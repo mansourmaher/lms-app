@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { IconBadge } from "./icon-badge";
-import { BookOpen } from "lucide-react";
+import { BookOpen, DollarSign, Eye } from "lucide-react";
 import ReviewProgress from "@/app/(course)/course/[courseId]/_components/course-review-progress";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { FaEyeSlash } from "react-icons/fa";
 
 interface CourseCardProps {
   id: string;
@@ -12,6 +15,7 @@ interface CourseCardProps {
   price: number;
   progress: number;
   category: string;
+  description: string;
 }
 
 export const CourseCard = ({
@@ -22,52 +26,53 @@ export const CourseCard = ({
   price,
   progress,
   category,
+  description,
 }: CourseCardProps) => {
   return (
-    <div>
-      <Link href={`/course/${id}`}>
-        <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p- h-full">
-          <div className="relative w-full aspect-video rounded-md">
-            <Image
-              fill
-              className="object-cover"
-              alt={title}
-              src={imageUrl}
-            ></Image>
-          </div>
-          <div className="flex flex-col pt-2">
-            <div className="text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2">
-              {title}
-            </div>
-            <p className="text-sm md:text-xs text-gray-500 line-clamp-1">
-              {category}
-            </p>
-            <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
-              <div className="flex items-center gap-x-1 text-slate-500">
-                <IconBadge icon={BookOpen} size="sm" />
-                <span>{chapterLenght} chapters</span>
-              </div>
-            </div>
-            {progress !== null ? (
-              <div>
-                <div className="flex items-center gap-x-1 text-slate-500">
-                  <IconBadge icon={BookOpen} size="sm" />
-                  <span>{progress}% completed</span>
-                </div>
-              </div>
-            ) : (
-              <div className="text-sm md:text-xs text-slate-500">
-                <span className="text-md md:text-sm font-medium text-slate-700">
-                  {price}$
-                </span>
-              </div>
-            )}
-          </div>
+    <div className="p-4 bg-white flex flex-col border rounded-lg">
+      <div className="relative w-full aspect-video rounded-xl mb-4">
+        <Image
+          className=" w-full object-cover rounded-xl"
+          src={imageUrl}
+          alt="Course Image"
+          fill
+        />
+      </div>
+
+      <h1 className="text-lg font-semibold">{title}</h1>
+      <p className="text-sm text-muted-foreground mt-1.5  line-clamp-3 h-14 mb-6">
+        {description}
+      </p>
+      <div className="flex flex-row justify-between items-center mt-3">
+        <div className=" -mx-1">
+          <Badge variant="yellow">{category}</Badge>
         </div>
-      </Link>
+
+        <div className=" -mx-1">
+          <Badge variant="outline">
+            <BookOpen size={14} className="mr-2" />
+            {chapterLenght} chapters
+          </Badge>
+        </div>
+        <Badge variant="primary">
+          <DollarSign size={14} className="mr-2" />
+          {price} D
+        </Badge>
+      </div>
       <div>
-        <hr />
         <ReviewProgress courseId={id} />
+        </div>
+        <div>
+
+      <div className="mt-6 ">
+        <Button
+       
+        variant={"primary"}
+        >
+          <Link href={`/course/${id}`} className="flex items-center gap-x-3 "><Eye size={18}/>{" "}View Course</Link>
+          
+        </Button>
+      </div>
       </div>
     </div>
   );
