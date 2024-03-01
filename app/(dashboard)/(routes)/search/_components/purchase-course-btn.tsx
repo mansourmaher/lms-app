@@ -7,25 +7,35 @@ interface PurchaseBtnProps {
 
 import { purchaseCourse } from "@/actions/Etudiant/purchase-course";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import React from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function PurchaseButton({ courseId, userId }: PurchaseBtnProps) {
-  const onclick = async (courseId: string) => {
-    await purchaseCourse({ courseId, userId }).then((res) => {
-        if (res.success) {
-            toast.success("Course purchased successfully");
+  const [isloading, setIsloading] = React.useState(false);
+  const onclick= async (courseId:string) => {
+    setIsloading(true);
+
+    axios
+      .post("/api/purchase", {courseId,userId})
+      .then((res) => {
         
-      } else {
-        toast.error("Course already purchased");
-      }
-    });
+        toast.success(res.data.message);
+        
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      })
+      .finally(() => {
+        setIsloading(false);
+      });
   };
   return (
     <Button
       onClick={() => onclick(courseId)}
-      variant="primary"
+      variant="secondary"
       className="w-full"
+      disabled={isloading}
     >
       Purchase
     </Button>

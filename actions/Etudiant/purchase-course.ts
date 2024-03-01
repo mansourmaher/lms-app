@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 
 
 export async function purchaseCourse({ courseId, userId }: { courseId: string, userId: string }) {
+    console.log("asbaa")
 
     const existingPurchase = await db.courseUser.findFirst({
         where: {

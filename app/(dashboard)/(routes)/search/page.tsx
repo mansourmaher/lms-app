@@ -5,11 +5,15 @@ import { getCourses } from "@/actions/course/get-courses";
 import { auth } from "@/auth";
 import { CoursesList } from "@/components/courses-list";
 
+export const dynamic = "force-dynamic";
+
+interface getCoursesParams {
+  title?: string;
+  category?: string;
+}
+
 interface SearchPageProps {
-  searchParams: {
-    title: string;
-    category: string;
-  };
+  searchParams: getCoursesParams;
 }
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const user = await auth();
@@ -23,8 +27,8 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 
   const courses = await getCourses({
     userId: userId,
-    title: searchParams.title,
-    category: searchParams.category,
+    title: searchParams.title!,
+    category: searchParams.category!,
   });
   return (
     <>
@@ -33,9 +37,8 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       </div>
       <div className="p-6 space-y-6 ">
         <Categories items={categories} />
-        
+
         <CoursesList items={courses} />
-        
       </div>
     </>
   );
