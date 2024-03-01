@@ -57,6 +57,7 @@ model User {
   DateOfBirth    DateTime?
   courseReview CourseReview[]
   course Course[]
+  courseUser CourseUser[]
 }
 model Origin {
   id String @id @default(uuid())
@@ -118,9 +119,20 @@ model Course{
   updatedAt DateTime @updatedAt
   quiz Quiz[]
   review CourseReview[]
+  courseUser CourseUser[]
 
   @@index([categoryId])
   
+}
+model CourseUser{
+  id String @id @default(uuid())
+  userId String
+  user  User? @relation(fields: [userId],references: [id])
+  courseId String
+  course Course @relation(fields: [courseId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([userId, courseId])
 }
 model CourseReview{
   id String @id @default(uuid())

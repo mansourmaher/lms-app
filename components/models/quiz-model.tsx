@@ -10,7 +10,7 @@ import {
   AlertDialogFooter,
 } from "@/components/ui/alert-dialog";
 import axios from "axios";
-import { Plus } from "lucide-react";
+import { Crown, Plus, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,8 @@ import {
 import { Editor } from "../editor";
 import { revalidatePath } from "next/cache";
 import { MdAddComment } from "react-icons/md";
+import { Badge } from "../ui/badge";
+import { set } from "date-fns";
 //import { QuizSchema } from "@/schemas";
 
 interface ConfirmModelProps {
@@ -89,14 +91,11 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
         form.reset();
         form.setValue("option1", "");
         form.setValue("option2", "");
-        setStaticOptions([""]);
+        setStaticOptions([null]);
       });
   };
 
-  const [staticOptions, setStaticOptions] = useState([""]);
-  // useEffect(() => {
-  //   console.log("staticOptions updated:", staticOptions);
-  // }, [staticOptions]);
+  const [staticOptions, setStaticOptions] = useState([null]);
 
   const onAddMoreClick = async (data: any) => {
     await setStaticOptions((prev) => {
@@ -199,11 +198,15 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                     )}
                   />
                 </div>
+
                 <div>
                   {showOptions34 ? (
                     <Button
                       type="button"
                       size={"sm"}
+                      disabled={
+                        form.formState.isSubmitting || !form.formState.isValid
+                      }
                       className="ml-4 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                       onClick={() => {
                         onAddMoreClick(form.getValues());
@@ -214,6 +217,32 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                   ) : null}
                 </div>
               </div>
+              {staticOptions && (
+                <div className="flex flex-row gap-x-3 mt-2">
+                  {staticOptions.map((option, index) => {
+                    if (option === null) return null;
+                    return (
+                      <div key={index} className="flex ">
+                        <Badge variant="slate" className="mt-2">
+                          {option}
+                          <X 
+                          onClick={() => {
+                            setStaticOptions((prev) => {
+                              const updatedOptions = prev.filter(
+                                (opt) => opt !== option
+                              );
+
+                              return updatedOptions;
+                            });
+                          }}
+                          className="ml-2 cursor-pointer"></X>
+                        </Badge>
+                       
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
 
               <div className="">
                 <Button variant="primary" type="submit">
@@ -222,7 +251,12 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                 <Button
                   className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {setIsOpen(false)
+                  form.reset()
+                  form.setValue("option1", "")
+                  form.setValue("option2", "")
+                  setStaticOptions([null])}
+                  }
                 >
                   Cancel
                 </Button>

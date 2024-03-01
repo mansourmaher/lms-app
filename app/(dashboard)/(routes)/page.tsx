@@ -1,4 +1,5 @@
 import { getTop2Courses } from "@/actions/course/get-top-5-courses";
+import { getAllCourseIncludeProgresse, getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-include-progresse";
 import { auth } from "@/auth";
 
 import { redirect } from "next/navigation";
@@ -10,11 +11,16 @@ export default async function Home() {
     redirect("/sign-in");
   }
   const top2Couses=await getTop2Courses()
-  console.log(top2Couses)
+ 
+  const allUserCourse=await getAllCourseIncludeProgresse()
+  
+  const courseUserIncludeProgress=await getCourseIncludeProgresse()
+  
 
   return (
     <div>
       {JSON.stringify(user)}
+      {JSON.stringify(allUserCourse)}
       {/* <ListCourse /> */}
     </div>
   );

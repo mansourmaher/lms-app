@@ -22,6 +22,7 @@ export default function CourseOption({ course }: CourseOptionProps) {
     <div>
       <hr />
       <div className="flex flex-row justify-between items-center m-6 mr-16">
+
         <div className="mb-6">
           <div className="mb-3 text-sm font-semibold">Skill Level</div>
           <div className="flex flex-row items-center gap-6">
@@ -47,12 +48,16 @@ export default function CourseOption({ course }: CourseOptionProps) {
             <div>Beginner</div>
           </div>
         </div>
-      </div>
-      <div className="m-8">
+        <div className="mb-6">
+          <div className="mb-3 text-sm font-semibold">Skill Level</div>
+          <div className="flex flex-row items-center gap-6">
+            <FcStatistics size={40} className="text-blue-400" />
 
-        <ReviewProgress courseId={course?.id!} />
-      
+            <ReviewProgress courseId={course?.id!} />
+          </div>
       </div>
+      
+    </div>
     </div>
   );
 }

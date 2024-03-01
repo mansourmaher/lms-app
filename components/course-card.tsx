@@ -6,6 +6,9 @@ import ReviewProgress from "@/app/(course)/course/[courseId]/_components/course-
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { FaEyeSlash } from "react-icons/fa";
+import { auth } from "@/auth";
+import { purchaseCourse } from "@/actions/Etudiant/purchase-course";
+import PurchaseButton from "@/app/(dashboard)/(routes)/search/_components/purchase-course-btn";
 
 interface CourseCardProps {
   id: string;
@@ -18,7 +21,7 @@ interface CourseCardProps {
   description: string;
 }
 
-export const CourseCard = ({
+export const CourseCard =async ({
   id,
   title,
   imageUrl,
@@ -28,6 +31,14 @@ export const CourseCard = ({
   category,
   description,
 }: CourseCardProps) => {
+
+  const user=await auth()
+  const userId=user?.user.id as string
+
+
+  const onclick = async (courseId:string) => {
+    await purchaseCourse({courseId,userId})
+  }
   return (
     <div className="p-4 bg-white flex flex-col border rounded-lg">
       <div className="relative w-full aspect-video rounded-xl mb-4">
@@ -64,13 +75,16 @@ export const CourseCard = ({
         </Badge>
       </div>
       <div></div>
-      <div>
+      <div className="flex justify-between items-center">
         <div className="mt-6 ">
           <Button variant={"primary"}>
             <Link href={`/course/${id}`} className="flex items-center gap-x-3 ">
               <Eye size={18} /> View Course
             </Link>
           </Button>
+        </div>
+        <div className="mt-6 ">
+          <PurchaseButton courseId={id} userId={userId}/>
         </div>
       </div>
     </div>

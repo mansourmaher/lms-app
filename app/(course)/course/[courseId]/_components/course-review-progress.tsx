@@ -42,9 +42,6 @@ export default function ReviewProgress({ courseId }: Props) {
     React.useState<number>(0);
   const [average, setAverage] = React.useState<number>(0);
 
-  const toggleTooltip = () => {
-    setTooltipVisible(!tooltipVisible);
-  };
   useEffect(() => {
     const getFivestarsCount = async () => {
       const fivestars = await getFivestarscount(courseId as string);
@@ -70,6 +67,7 @@ export default function ReviewProgress({ courseId }: Props) {
 
     getFivestarsCount();
     getForstarscountt();
+
     getThreestarsCountt();
     gettwostarsCount();
     getonestarsCount();
@@ -102,13 +100,14 @@ export default function ReviewProgress({ courseId }: Props) {
 
   return (
     <HoverCard>
-      <HoverCardTrigger className="cursor-pointer">
+      <HoverCardTrigger className="cursor-pointer w-auto " asChild>
         <p>
           Ratings: {total} <br />
         </p>
       </HoverCardTrigger>
       <HoverCardContent>
-        <div className="flex items-center mb-4">
+        {total !== 0 && (
+        <div className="flex  mb-4">
           {[...Array(5)].map((_, index) => {
             const currentRating = index + 1;
             return (
@@ -134,6 +133,8 @@ export default function ReviewProgress({ courseId }: Props) {
               </div>
             );
           })}
+          
+         
           <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
             {average.toFixed(1)}
           </p>
@@ -143,10 +144,21 @@ export default function ReviewProgress({ courseId }: Props) {
           <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
             5
           </p>
-        </div>
+          
+          </div>
+          )}
+        
         <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
           {total} global ratings
         </p>
+        {total == 0 ?(
+          <p>
+            No ratings yet
+          </p>
+        ):(
+          <>
+        
+        
         <div className="flex items-center mt-4">
           <a
             href="#"
@@ -232,6 +244,8 @@ export default function ReviewProgress({ courseId }: Props) {
             {percentageofonestars}%{""}
           </span>
         </div>
+        </>
+        )}
       </HoverCardContent>
     </HoverCard>
   );

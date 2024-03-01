@@ -10,9 +10,9 @@ import { Button } from "@/components/ui/button"
 // You can use a Zod schema here if you want.
 
 
-export const columns: ColumnDef<Course>[] = [
+export const columns2: ColumnDef<Course>[] = [
   {
-    accessorKey: "title",
+    accessorKey: "course.title",
     header: ({column})=>{
       return(
         <Button
@@ -26,12 +26,23 @@ export const columns: ColumnDef<Course>[] = [
     },
   },
   {
-    accessorKey: "price",
+    accessorKey: "course.price",
     header: "price",
   },
   {
-    accessorKey: "isPublished",
+    accessorKey: "course.isPublished",
     header: "isPublished",
+    
   },
+  {
+    accessorKey: "user.name",
+    header: "name",
+  },
+ 
+  {
+    accessorKey: "progress",
+    header: "progress",
+    
+  }
   
 ]

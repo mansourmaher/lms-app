@@ -25,42 +25,36 @@ import { DialogContent } from "../ui/dialog";
 import { Progress } from "../ui/progress";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { UploadButton, useUploadThing } from "@/lib/uploadthing";
+import { cn } from "@/lib/utils";
 
 const UploadDropzone = () => {
   const [isUploading, setIsUploading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const {startUpload}=useUploadThing("teacherAccess",{
-    onUploadProgress:(progress)=>{
+  const { startUpload } = useUploadThing("teacherAccess", {
+    onUploadProgress: (progress) => {
       setUploadProgress(progress);
-    }
-
+    },
   });
-  
 
-  
   return (
-    <Dropzone onDrop={async(acceptedFiles) =>{ setIsUploading(true)
-      
-     
-      
-      const res=await startUpload(acceptedFiles);
-      if(res)
-      {
-        console.log(res[0].url);
-        await axios.post("/api/teacherAccess", {fileUrl:res[0].url}).then(() => {
-          toast.success("Your request has been submitted successfully ");
-        });
-       
-        
-      }
-      
+    <Dropzone
+      onDrop={async (acceptedFiles) => {
+        setIsUploading(true);
 
+        const res = await startUpload(acceptedFiles);
+        if (res) {
+          console.log(res[0].url);
+          await axios
+            .post("/api/teacherAccess", { fileUrl: res[0].url })
+            .then(() => {
+              toast.success("Your request has been submitted successfully ");
+            });
+        }
 
-      
-      setUploadProgress(100);
-    }
-    }>
-      {({ getRootProps, getInputProps,acceptedFiles }) => (
+        setUploadProgress(100);
+      }}
+    >
+      {({ getRootProps, getInputProps, acceptedFiles }) => (
         <section>
           <div
             {...getRootProps()}
@@ -71,47 +65,41 @@ const UploadDropzone = () => {
                 htmlFor="file"
                 className="flex flex-col items-center justify-center w-full  hover:bg-gray-100  rounded-lg cursor-pointer"
               >
-                
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <Cloud className="h-6 w-6 text-gray-500" />
                   <p className="text-sm text-gray-500">
                     Drag and drop your file here or{" "}
                     <span className="text-primary">browse</span>
                   </p>
-
                 </div>
-                {
-                  acceptedFiles && acceptedFiles[0] ?(
-                    <div className="max-w-xs bg-white flex items-center rounded-md overflow-hidden outiline outline-[1px] outline-primary">
-                      <div className="px-3 py-2 h-4 flex flex-row place-items-center">
-                        <File className="h-4 w-4 text-primary" />
-
-
-                      </div>
-                      <div className="px-3 py-2 h-full text-sm truncate">
-                        {acceptedFiles[0].name}
-                      </div>
-                      </div>
-
-                  ):(
-                    null
-                  )
-                }
-                {
-                  isUploading ? (
-                    <div className="w-full mt-4 max-w-xs mx-auto ">
-                      <Progress  value={uploadProgress} className="h-1  w-full bg-zinc-200"/>
+                {acceptedFiles && acceptedFiles[0] ? (
+                  <div className="max-w-xs bg-white flex items-center rounded-md overflow-hidden outiline outline-[1px] outline-primary">
+                    <div className="px-3 py-2 h-4 flex flex-row place-items-center">
+                      <File className="h-4 w-4 text-primary" />
                     </div>
-                  ):(
-                    null)
-                }
-
-                
+                    <div className="px-3 py-2 h-full text-sm truncate">
+                      {acceptedFiles[0].name}
+                    </div>
+                  </div>
+                ) : null}
+                {isUploading ? (
+                  <div className="w-full mt-4 max-w-xs mx-auto ">
+                    <Progress
+                      value={uploadProgress}
+                      className={cn(
+                        "h-1",
+                        uploadProgress === 100 ? "bg-primary" : "bg-gray-300"
+                      )}
+                    />
+                    <span className="items-center justify-center flex mt-2 text-gray-500">
+                      Uploading {uploadProgress}%
+                    </span>
+                  </div>
+                ) : null}
               </label>
               <input {...getInputProps()} />
             </div>
           </div>
-         
         </section>
       )}
     </Dropzone>
@@ -149,11 +137,11 @@ export const AccesTeacher = () => {
       </DialogTrigger>
       <DialogContent>
         <UploadDropzone />
-       <div className="flex justify-end">
-        <Button onClick={()=>setIsOpen(false)} className="mr-2">Cancel</Button>
-        
+        <div className="flex justify-end">
+          <Button onClick={() => setIsOpen(false)} className="mr-2">
+            Cancel
+          </Button>
         </div>
-          
       </DialogContent>
     </Dialog>
   );
