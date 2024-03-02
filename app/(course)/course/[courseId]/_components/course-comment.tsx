@@ -4,14 +4,40 @@ import { getCourseComments } from "@/actions/course/get-course-comments";
 import Image from "next/image";
 import CommentRating from "./comment-rating";
 import { ReactOnComment } from "@/actions/course/react-comment";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 interface CommentListProps {
   comments: Awaited<ReturnType<typeof getCourseComments>> | null;
-  courseId: string |undefined;
+  courseId: string | undefined;
 }
 
 export default function CommentList({ comments, courseId }: CommentListProps) {
+
+  const router = useRouter();
+
+
+  const isLikes = async (
+    isLike: boolean,
+    commentId: string,
+    courseId: string
+  ) => {
+    
+    await axios.post("/api/reactcomment", {
+      isLikes: isLike,
+      comment: commentId,
+      courseId: courseId,
+    }).then(() => {
+      router.refresh()
+    }
+    );
+  };
   
+
+  
+
   if (!comments) {
     return (
       <div className="flex items-center justify-center h-96">
@@ -74,17 +100,13 @@ export default function CommentList({ comments, courseId }: CommentListProps) {
                     </div>
                     <div className="flex items-center space-x-2">
                       <button
-                        onClick={() =>
-                          ReactOnComment(true, comment.id, courseId!)
-                        }
+                        onClick={() => isLikes(true, comment.id, courseId!)}
                         className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
                       >
                         {comment.likes} Like
                       </button>
                       <button
-                        onClick={() =>
-                          ReactOnComment(false, comment.id, courseId!)
-                        }
+                        onClick={() => isLikes(false, comment.id, courseId!)}
                         className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
                       >
                         {comment.dislikes} Dislike
