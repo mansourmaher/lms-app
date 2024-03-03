@@ -32,7 +32,7 @@ import { getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-incl
 
 
 interface DataTableProps<TData, TValue> {
-    columns: Awaited<ReturnType<typeof getCourseIncludeProgresse>>[]
+    columns: ColumnDef<TData, TValue>[]
     data: Awaited<ReturnType<typeof getCourseIncludeProgresse>>
 }
 
@@ -72,6 +72,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
+      {/*@ts-ignore*/}
       <DataTableToolbar table={table} />
       <div className="rounded-md border">
         <Table>
