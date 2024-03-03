@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Logo } from "./logo";
 import { SideBarRoutes } from "./sidebarroutes";
 
@@ -15,7 +16,9 @@ export const Sidebar = () => {
         "
     >
       <div className="p-6">
+        <Link href="/dashb"> 
         <Logo />
+        </Link>
       </div>
       <div className="w-full flex flex-cols pt-8">
         <SideBarRoutes />
