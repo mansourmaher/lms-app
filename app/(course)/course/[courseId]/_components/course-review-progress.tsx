@@ -64,6 +64,7 @@ export default function ReviewProgress({ courseId }: Props) {
       const fivestars = await getOnetarscount(courseId as string);
       setOnestars(fivestars!);
     };
+    setTotal(fivestars + fourstars + threestars + twostars + onestars);
 
     getFivestarsCount();
     getForstarscountt();
@@ -71,7 +72,7 @@ export default function ReviewProgress({ courseId }: Props) {
     getThreestarsCountt();
     gettwostarsCount();
     getonestarsCount();
-    setTotal(fivestars + fourstars + threestars + twostars + onestars);
+    
 
     setPercentageoffivestars(Math.round((fivestars / total) * 100));
 

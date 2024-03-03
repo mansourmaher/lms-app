@@ -10,17 +10,17 @@ export default async function Home() {
   if (!user) {
     redirect("/sign-in");
   }
-  const top2Couses=await getTop2Courses()
+  //const top2Couses=await getTop2Courses()
  
-  const allUserCourse=await getAllCourseIncludeProgresse()
+  //const allUserCourse=await getAllCourseIncludeProgresse()
   
-  const courseUserIncludeProgress=await getCourseIncludeProgresse()
+  //const courseUserIncludeProgress=await getCourseIncludeProgresse()
   
 
   return (
     <div>
       {JSON.stringify(user)}
-      {JSON.stringify(allUserCourse)}
+      
       {/* <ListCourse /> */}
     </div>
   );

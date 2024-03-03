@@ -100,6 +100,7 @@ export const columns = [
   columnHelper.accessor((row) => row.progress, {
     id: "status",
     header: "Status",
+    
     cell: (info) => {
       return (
         <div>

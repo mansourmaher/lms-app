@@ -33,20 +33,14 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("status") && (
+        {table.getColumn("progress") && (
           <DataTableFacetedFilter
-            column={table.getColumn("status")}
+            column={table.getColumn("progress")}
             title="Status"
             options={statuses}
           />
         )}
-        {table.getColumn("priority") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("priority")}
-            title="Priority"
-            options={priorities}
-          />
-        )}
+        
         {isFiltered && (
           <Button
             variant="ghost"

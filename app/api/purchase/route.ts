@@ -15,11 +15,11 @@ export async function POST(req:Request):Promise<void | Response>
                 userId: userId
             }
         })
-        console.log("asbaa1")
+      
         if (existingPurchase) {
             return  Response.json({message:"Course already purchased"}, { status: 401 });
         }
-        console.log("asbaa2")
+        
         const purchase= await db.courseUser.create({
             data: {
                 courseId: courseId,

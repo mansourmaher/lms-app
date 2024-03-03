@@ -5,6 +5,7 @@ import {
   getCoursesCountByTeacher,
   getTeacherReviewCount,
 } from "@/actions/course/get-courses-count-by-teacher";
+import { getCountUserInEachCourse } from "@/actions/teacher/get-count-user-in-each-course";
 import { getTeacherRating } from "@/actions/teacher/get-teacher-rating";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +22,7 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
   const [totalCourse, setTotalCourse] = useState(0);
   const [totalReview, setTotalReview] = useState(0);
   const [teacherRating, setTeacherRating] = useState(0);
+  const [totalStudent, setTotalStudent] = useState(0);
 
   useEffect(() => {
     const getCourseCount = async () => {
@@ -34,7 +36,10 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
     const getRating = async () => {
       const rating = await getTeacherRating(course!.userId);
       setTeacherRating(rating);
-      console.log("ratinhé+"+rating);
+
+      const students=await getCountUserInEachCourse(course!.userId);
+      setTotalStudent(students);
+      
     }
     getCourseCount();
     getreviewCount();
@@ -47,14 +52,14 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
         <Avatar>
           <AvatarImage
             alt="Profile picture"
-            src="/placeholder.svg?height=100&width=100"
+            src={course?.user?.image || "/images/avatar-placeholder.png"}
           />
           <AvatarFallback>JP</AvatarFallback>
         </Avatar>
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold">Jose Portilla</h2>
+              <h2 className="text-xl font-semibold">{course?.user?.name}</h2>
               <p className="text-sm text-gray-500">
                 Head of Data Science, Pierian Data Inc.
               </p>
@@ -102,7 +107,7 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
                 </div>
               </div>
               <div className="flex items-center gap-x-2">
-                <Users className="w-4 h-4" /> 1,000,000 students
+                <Users className="w-4 h-4" /> {totalStudent} students
               </div>
               <div className="flex items-center gap-x-2">
                 <PlayCircle className="w-4 h-4 text-blue-400" />

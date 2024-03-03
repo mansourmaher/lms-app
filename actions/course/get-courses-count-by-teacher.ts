@@ -9,6 +9,7 @@ export async function getCoursesCountByTeacher(teacherId: string) {
   const courses = await db.course.findMany({
     where: {
       userId: teacherId,
+      isPublished: true,
     },
   });
   return courses.length;
