@@ -34,13 +34,20 @@ export async function getCourseIncludeProgresse() {
         where:{
             course:{
                 userId:userId,
-                isPublished:true
-            }
+                isPublished:true,
+                
+                
+            },
+            
         },
         include:{
             course:true,
+            
             user:true
+
+            
         }
+
 
   
 }
