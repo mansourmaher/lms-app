@@ -26,17 +26,17 @@ export const labels = [
 
 export const statuses = [
   {
-    value: 100,
+    value: "Completed", // "Completed
     label: "Completed",
     icon: QuestionMarkCircledIcon,
   },
   {
-    value: 0,
+    value: "Not started", // "Not started"
     label: "Not started",
     icon: CircleIcon,
   },
   {
-    value: 33.33333333333333,
+    value: "In progress", // "In progress"
     label: "In Progress",
     icon: StopwatchIcon,
   },

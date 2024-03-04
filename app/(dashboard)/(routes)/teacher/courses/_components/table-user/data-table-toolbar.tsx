@@ -33,9 +33,9 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("progress") && (
+        {table.getColumn("status") && (
           <DataTableFacetedFilter
-            column={table.getColumn("progress")}
+            column={table.getColumn("status")}
             title="Status"
             options={statuses}
           />

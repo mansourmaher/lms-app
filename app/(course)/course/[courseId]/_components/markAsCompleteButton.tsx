@@ -11,17 +11,19 @@ interface markAsCompleteButtonProps {
   disabled?: boolean;
 
   chapterId: string;
+  courseId: string;
 }
 
 export default function MarkAsCompleteButton({
  
   disabled,
+  courseId,
 
   chapterId,
 }: markAsCompleteButtonProps) {
 
     const onclick=(chapterId:string)=>{
-        markAsComplete(chapterId)
+        markAsComplete(chapterId, courseId)
         toast.success("Chapter marked as complete")
         
         window.location.reload()

@@ -32,13 +32,9 @@ export const columns = [
               {info.row.original.course.title}
             </div>
             <div className="text-xs text-gray-500">
-              
-               <div className="flex  space-x-2">
-              
-                Publised At {" "}
-               
-                {/*@ts-ignore*/}
-              {format(info.row.original.course.createdAt, "dd/MM/yyyy")}
+              <div className="flex  space-x-2">
+                Publised At {/*@ts-ignore*/}
+                {format(info.row.original.course.createdAt, "dd/MM/yyyy")}
               </div>
             </div>
           </div>
@@ -97,26 +93,32 @@ export const columns = [
     },
   }),
   //@ts-ignore
-  columnHelper.accessor((row) => row.progress, {
+  columnHelper.accessor((row) => row.status, {
     id: "status",
     header: "Status",
-    
     cell: (info) => {
       return (
-        <div>
-          {info.getValue() === 100 && (
-            <Badge variant="green">Completed</Badge>
-          )}
-          {info.getValue() < 100 && info.getValue() > 0 && (
-            <Badge variant="yellow">In progress</Badge>
-          )}
-          {info.getValue() === 0 && (
-            <Badge variant="slate">Not started</Badge>
-          )}
-
+        <div className="flex space-x-2 items-center">
+          <span>
+            {/*@ts-ignore*/}
+            {info.row.original.status === "Completed" && (
+              <Badge variant="green">Completed</Badge>
+            )}
+            {/*@ts-ignore*/}
+            {info.row.original.status === "In progress" && (
+              <Badge variant="yellow">In progress</Badge>
+            )}
+            {/*@ts-ignore*/}
+            {info.row.original.status === "Not started" && (
+              <Badge variant="slate">Not started</Badge>
+            )}
+          </span>
         </div>
       );
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   }),
- 
+  
 ];

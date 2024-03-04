@@ -3,30 +3,31 @@
 generator dbml {
   provider = "prisma-dbml-generator"
 }
+
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch","fullTextIndex"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
-  provider = "cockroachdb"
-  url      = env("DATABASE_URL")
+  provider     = "cockroachdb"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  
-  access_token       String?  
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -38,127 +39,128 @@ enum UserRole {
   ADMIN
   TEACHER
 }
+
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  password      String?
-  role          UserRole  @default(STUDENT)
-  image         String?
-  createdAt     DateTime?  @default(now())
-  accounts      Account[]
-  teacherAccess Boolean @default(false)
+  id             String           @id @default(cuid())
+  name           String?
+  email          String?          @unique
+  emailVerified  DateTime?
+  password       String?
+  role           UserRole         @default(STUDENT)
+  image          String?
+  createdAt      DateTime?        @default(now())
+  accounts       Account[]
+  teacherAccess  Boolean          @default(false)
   teacherRequest TeacherRequest[]
-  filier       String? 
-  origin        Origin?
-  
+  filier         String?
+  origin         Origin?
+
   about        String?
-  DateOfBirth    DateTime?
+  DateOfBirth  DateTime?
   courseReview CourseReview[]
-  course Course[]
-  courseUser CourseUser[]
+  course       Course[]
+  courseUser   CourseUser[]
 }
+
 model Origin {
-  id String @id @default(uuid())
+  id     String @id @default(uuid())
   userId String @unique
-  user User @relation(fields: [userId], references: [id])
-  value String
-  label String
-  flag String
+  user   User   @relation(fields: [userId], references: [id])
+  value  String
+  label  String
+  flag   String
   region String
-  lalng Int[]
-  
+  lalng  Int[]
 }
-model TeacherRequest{
-  id String @id @default(uuid())
-  userId String
-  status String @default("pending")
+
+model TeacherRequest {
+  id        String   @id @default(uuid())
+  userId    String
+  status    String   @default("pending")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  url String
-  user User @relation(fields: [userId], references: [id])
-
+  url       String
+  user      User     @relation(fields: [userId], references: [id])
 }
-model VerificationToken{
-  id String @id @default(uuid())
-  email String
-  token String
+
+model VerificationToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String
   expires DateTime
 
   @@unique([email, token])
-
 }
-model PasswordResetToken{
-  id String @id @default(uuid())
-  email String
-  token String
+
+model PasswordResetToken {
+  id      String   @id @default(uuid())
+  email   String
+  token   String
   expires DateTime
 
   @@unique([email, token])
-
 }
 
-model Course{
-  id String @id @default(uuid())
+model Course {
+  id     String @id @default(uuid())
   userId String
-  user  User? @relation(fields: [userId],references: [id])
+  user   User?  @relation(fields: [userId], references: [id])
 
-  title String 
+  title       String
   description String?
-  imageUrl String?
-  price Float?
-  isPublished Boolean @default(false)
-  categoryId String?
-  category Category? @relation(fields: [categoryId], references: [id])
-  chapters Chapter[]
-  purchases Purchase[]
+  imageUrl    String?
+  price       Float?
+  isPublished Boolean    @default(false)
+  categoryId  String?
+  category    Category?  @relation(fields: [categoryId], references: [id])
+  chapters    Chapter[]
+  purchases   Purchase[]
 
   attachment Attachment[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  quiz Quiz[]
-  review CourseReview[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  quiz       Quiz[]
+  review     CourseReview[]
   courseUser CourseUser[]
 
   @@index([categoryId])
-  
 }
-model CourseUser{
-  id String @id @default(uuid())
-  userId String
-  user  User? @relation(fields: [userId],references: [id])
-  courseId String
-  course Course @relation(fields: [courseId], references: [id])
+
+model CourseUser {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User?    @relation(fields: [userId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  status    String   @default("Not started")
+
   @@unique([userId, courseId])
 }
-model CourseReview{
-  id String @id @default(uuid())
-  userId String?
-  user  User? @relation(fields: [userId],references: [id])
-  starts Int?
-  comment String?
+
+model CourseReview {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  starts    Int?
+  comment   String?
   createdAt DateTime @default(now())
-  likes Int? @default(0)
-  dislikes Int? @default(0)
+  likes     Int?     @default(0)
+  dislikes  Int?     @default(0)
 
   courseId String
-  course Course @relation(fields: [courseId], references: [id])
-  
-  
-  
-
+  course   Course @relation(fields: [courseId], references: [id])
 }
-model Attachment{
-  id String @id @default(uuid())
-  name String
-  url String
-  courseId String
-  course Course @relation(fields: [courseId], references: [id])
+
+model Attachment {
+  id        String   @id @default(uuid())
+  name      String
+  url       String
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
   chapterId String
-  chapter Chapter @relation(fields: [chapterId], references: [id])
+  chapter   Chapter  @relation(fields: [chapterId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -166,105 +168,98 @@ model Attachment{
   @@index([chapterId], name: "chapterId")
 }
 
-model Category{
-  id String @id @default(uuid())
-  name String
-  courses Course[]
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  courses   Course[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Chapter{
-  id String @id @default(uuid())
-  title String
-  descreption String? 
-  videoUrl String?
-  resources Attachment[]
-  toDo String?
+model Chapter {
+  id          String       @id @default(uuid())
+  title       String
+  descreption String?
+  videoUrl    String?
+  resources   Attachment[]
+  toDo        String?
 
-  position Int 
+  position    Int
   isPublished Boolean @default(false)
-  isFree Boolean @default(false)
+  isFree      Boolean @default(false)
 
-  muxData MuxData?
+  muxData  MuxData?
   courseId String
-  course Course @relation(fields: [courseId], references: [id])
-  
-  userProgress UserProgress[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  quiz Quiz[]
+  course   Course   @relation(fields: [courseId], references: [id])
 
+  userProgress UserProgress[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  quiz         Quiz[]
 
   @@index([courseId])
-
-
-
 }
-model MuxData{
+
+model MuxData {
   id String @id @default(uuid())
-  
+
   playbackId String
-  assetId String
+  assetId    String
 
-  chapterId String @unique
-  chapter Chapter @relation(fields: [chapterId], references: [id])
-
-
+  chapterId String  @unique
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
 }
 
-model UserProgress{
-  id String @id @default(uuid())
-  userId String
+model UserProgress {
+  id        String  @id @default(uuid())
+  userId    String
   chapterId String
-  chapter Chapter @relation(fields: [chapterId], references: [id])
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
 
   isCompleted Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([chapterId])
   @@unique([userId, chapterId])
+  @@index([chapterId])
 }
-model Purchase{
-  id String @id @default(uuid())
-  userId String
+
+model Purchase {
+  id       String @id @default(uuid())
+  userId   String
   courseId String
-  course Course @relation(fields: [courseId], references: [id])
+  course   Course @relation(fields: [courseId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([userId, courseId])
 }
-model Quiz{
-  id String @id @default(uuid())
+
+model Quiz {
+  id       String @id @default(uuid())
   question String
-  
-  answer String
-  courseId String
-  course Course @relation(fields: [courseId], references: [id])
-  createdAt DateTime @default(now())
+
+  answer    String
+  courseId  String
+  course    Course    @relation(fields: [courseId], references: [id])
+  createdAt DateTime  @default(now())
   chapterId String
-  chapter Chapter @relation(fields: [chapterId], references: [id])
-  options Options[]
+  chapter   Chapter   @relation(fields: [chapterId], references: [id])
+  options   Options[]
   //
 
   @@index([courseId], name: "courseId")
   @@index([chapterId], name: "chapterId")
-
-  
 }
 
-model Options{
-  id String @id @default(uuid())
-  options String[]
+model Options {
+  id            String   @id @default(uuid())
+  options       String[]
   correctOption String
-  quizId String
-  quiz Quiz @relation(fields: [quizId], references: [id])
+  quizId        String
+  quiz          Quiz     @relation(fields: [quizId], references: [id])
 
   @@index([quizId], name: "quizId")
 }
-
-

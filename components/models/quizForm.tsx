@@ -309,6 +309,7 @@ export const QuizForm = ({
                   : false || dipslayResult === false
               }
               chapterId={chapterId}
+              courseId={courseId}
              
             />
           </AlertDialogFooter>

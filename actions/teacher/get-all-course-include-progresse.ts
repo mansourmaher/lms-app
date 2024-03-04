@@ -35,8 +35,7 @@ export async function getCourseIncludeProgresse() {
             course:{
                 userId:userId,
                 isPublished:true,
-                
-                
+      
             },
             
         },
