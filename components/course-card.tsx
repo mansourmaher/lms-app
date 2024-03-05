@@ -40,53 +40,52 @@ export const CourseCard =async ({
     await purchaseCourse({courseId,userId})
   }
   return (
-    <div className="p-4 bg-white flex flex-col border rounded-lg">
-      <div className="relative w-full aspect-video rounded-xl mb-4">
-        <Image
-          className=" w-full object-cover rounded-xl"
-          src={imageUrl}
-          alt="Course Image"
-          fill
-        />
+    <div className="p-4 bg-white flex flex-col border border-gray-300 rounded-lg shadow-lg">
+    <div className="relative w-full h-48 rounded-xl overflow-hidden mb-4">
+      <img
+        className="w-full h-full object-cover"
+        src={imageUrl}
+        alt="Course Image"
+      />
+    </div>
+    <hr className="border-t border-gray-400 mb-4" />
+  
+    <h1 className="text-lg font-semibold text-gray-800">{title}</h1>
+    <p className="text-sm text-gray-600 mt-1.5 line-clamp-3 h-14 mb-6">{description}</p>
+    <div className="flex flex-wrap justify-between items-center mt-3">
+      <div className="mb-2 md:mb-0">
+        <span className="inline-flex items-center bg-gray-100 border border-gray-400 text-gray-800 px-2 py-1 rounded-md mr-2">{category}</span>
       </div>
-      <hr className="border-t border-muted-foreground mb-4" />
-
-      <h1 className="text-lg font-semibold">{title}</h1>
-      <p className="text-sm text-muted-foreground mt-1.5  line-clamp-3 h-14 mb-6">
-        {description}
-      </p>
-      <div className="flex flex-row justify-between items-center mt-3">
-        <div className=" -mx-1">
-          <Badge variant="yellow" className="mr-2">{category}</Badge>
-        </div>
-
-        <div className=" -mx-1">
-          <Badge variant="outline">
-            <BookOpen size={14} className="mr-2" />
-            {chapterLenght} chapters
-          </Badge>
-        </div>
-        <Badge variant="primary">
+      <div className="mb-2 md:mb-0">
+        <span className="inline-flex items-center bg-gray-100 border border-gray-400 text-gray-800 px-2 py-1 rounded-md mr-2">
+          <BookOpen size={14} className="mr-2" />
+          {chapterLenght} chapters
+        </span>
+      </div>
+      <div className="mb-2 md:mb-0">
+        <span className="inline-flex items-center bg-gray-100 border border-gray-400 text-gray-800 px-2 py-1 rounded-md mr-2">
           <DollarSign size={14} className="mr-2" />
           {price} D
-        </Badge>
-        <Badge variant="green" className="mr-2">
-          <ReviewProgress courseId={id} />
-        </Badge>
+        </span>
       </div>
-      <div></div>
-      <div className="flex justify-between items-center">
-        <div className="mt-6 ">
-          <Button variant={"primary"}>
-            <Link href={`/course/${id}`} className="flex items-center gap-x-3 ">
-              <Eye size={18} /> View Course
-            </Link>
-          </Button>
-        </div>
-        <div className="mt-6 ">
-          <PurchaseButton courseId={id} userId={userId}/>
-        </div>
+      <div>
+        <span className="inline-flex items-center bg-green-400 text-gray-800 px-2 py-1 rounded-md mr-2">
+          <ReviewProgress courseId={id} />
+        </span>
       </div>
     </div>
+    <div className="flex flex-wrap justify-between items-center mt-6">
+      <div className="mb-2 md:mb-0">
+        <Button variant="primary">
+          <Link href={`/course/${id}`} className="flex items-center gap-x-3 text-white">
+            <Eye size={18} /> View Course
+          </Link>
+        </Button>
+      </div>
+      <div>
+        <PurchaseButton courseId={id} userId={userId}/>
+      </div>
+    </div>
+  </div>
   );
 };
