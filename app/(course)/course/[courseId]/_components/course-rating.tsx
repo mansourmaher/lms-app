@@ -35,8 +35,10 @@ export default function CourseRating({ courseId }: RatingProps) {
   };
   const onclick =async () => {
     setIsDisabled(true);
+    console.log(rating,"comment"+ comment, courseId);
     
     await CommentCourse(rating, comment, courseId!)
+   
     setIsDisabled(false);
     toast.success("Comment added");
     setRating(0);
@@ -83,12 +85,16 @@ export default function CourseRating({ courseId }: RatingProps) {
           <p> {labels[rating]}</p>
         </div>
         <div className="w-full pl-16 pr-32">
-          <Editor value="" onChange={() => {}} width="w-full"></Editor>
+          <Editor
+            value={comment}
+            onChange={setComment}
+            
+          />
         </div>
         <div className="flex flex-row justify-end pr-32">
           <Button
-            disabled={(rating === 0 && comment === "") || isDisabled}
-            className="bg-blue-400 hover:bg-blue-500"
+            disabled={(rating === 0 || comment === "") || isDisabled}
+            className="bg-blue-500 hover:bg-blue-500/80"
             onClick={onclick}
           >
             submit

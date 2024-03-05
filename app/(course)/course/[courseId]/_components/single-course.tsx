@@ -16,18 +16,18 @@ interface SingleCourseProps {
   comments: Awaited<ReturnType<typeof getCourseComments>> | null;
 }
 
-export default function SingleCourse({ course,comments }: SingleCourseProps) {
+export default function SingleCourse({ course, comments }: SingleCourseProps) {
   const [isShowComments, setIsShowComments] = React.useState(false);
-  
-
-  
 
   const toggleComments = () => {
     setIsShowComments(!isShowComments);
   };
   return (
     <div>
-      <CourseHedaer />
+      <div className="ml-4">
+        <CourseHedaer courseName={course?.title!} />
+      </div>
+
       <CourseImage />
       <CourseBtn onchange={toggleComments} isShowComments={isShowComments} />
       <div className="m-8">{course?.description}</div>
@@ -45,8 +45,10 @@ export default function SingleCourse({ course,comments }: SingleCourseProps) {
       </div>
 
       <div className="m-8">
-        {comments!.length !==0 && <CommentList comments={comments} courseId={course?.id} />}
-        </div>
+        {comments!.length !== 0 && (
+          <CommentList comments={comments} courseId={course?.id} />
+        )}
+      </div>
     </div>
   );
 }

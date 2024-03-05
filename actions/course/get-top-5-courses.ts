@@ -5,10 +5,14 @@ import { getFivestarscount, getForstarscount, getOnetarscount, getThreestarscoun
 
 
 
-export async function getTop2Courses() {
+export async function getTop3Courses() {
     const courses = await db.course.findMany({
         include:{
-            review:true
+            review:true,
+            chapters:true,
+            category:true,
+            
+
         }
     })
 
@@ -22,7 +26,7 @@ export async function getTop2Courses() {
         }
     }
     ))
-    const top5Courses = coursesWithAvgOfRatings.sort((a,b)=>b.avg-a.avg).slice(0,2)
+    const top5Courses = coursesWithAvgOfRatings.sort((a,b)=>b.avg-a.avg).slice(0,3)
     return top5Courses
 
    

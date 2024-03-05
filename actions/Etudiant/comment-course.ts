@@ -8,6 +8,7 @@ export const CommentCourse=async(stars:number,review:string,courseId:string)=>{
 
     const user=await auth()
     const userId=user?.user.id as string
+    console.log("comment"+review)
 
 
     const comment=await db.courseReview.create({

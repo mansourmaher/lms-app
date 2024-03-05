@@ -1,4 +1,3 @@
-import { getTop2Courses } from "@/actions/course/get-top-5-courses";
 import { getAllCourseIncludeProgresse, getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-include-progresse";
 import { auth } from "@/auth";
 

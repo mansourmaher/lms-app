@@ -1,6 +1,11 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import EtudiantChapterAction from "../../_components/EtudiantChapter-action";
+import Link from "next/link";
+import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa";
+import ChapterHeader from "./_components/chapter-header";
+import { useRouter } from "next/navigation";
 
 const ChapterPage = async ({
   params,
@@ -9,6 +14,16 @@ const ChapterPage = async ({
 }) => {
   const user = await auth();
   const userId = user?.user.id as string;
+  
+
+  const courseName = await db.course.findUnique({
+    where: {
+      id: params.courseId,
+    },
+    select: {
+      title: true,
+    },
+  });
 
   const chapter = await db.chapter.findUnique({
     where: {
@@ -18,9 +33,35 @@ const ChapterPage = async ({
       course: true,
     },
   });
+  
+    const currentPostion = chapter?.position;
+    const nextChapter = await db.chapter.findFirst({
+      where: {
+        courseId: params.courseId,
+        position: currentPostion! + 1,
+      },
+    });
+    const previewsChapter = await db.chapter.findFirst({
+      where: {
+        courseId: params.courseId,
+        position: currentPostion! - 1,
+      },
+    });
+
+   
+
+
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container">
+      <ChapterHeader
+        courseId={params.courseId}
+        chapter={chapter}
+        courseName={courseName?.title!}
+        nextChapter={nextChapter}
+        previewsChapter={previewsChapter}
+        
+      />
       <h1 className="text-3xl font-bold mb-4">
         Chapter Page {params.chapterId}
       </h1>

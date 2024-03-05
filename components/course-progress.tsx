@@ -3,6 +3,7 @@ import { getProgress } from "@/actions/course/get-progress";
 import React, { useEffect, useState } from "react";
 import { Progress } from "./ui/progress";
 import { cn } from "@/lib/utils";
+import { CiTrophy } from "react-icons/ci";
 
 interface CourseProgressProps {
   courseId: string | undefined;
@@ -20,7 +21,7 @@ export default function CourseProgress({
       {/* <div>
               <Progress value={userProgress} max={100} />   
          </div> */}
-      <div className="relative size-40">
+      <div className="relative size-10">
         <svg
           className="size-full"
           width="36"
@@ -55,7 +56,7 @@ export default function CourseProgress({
 
         <div className="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
           <span className="text-center text-2xl font-bold text-gray-800 dark:text-white">
-            {userProgress}%
+            <CiTrophy />
           </span>
         </div>
       </div>

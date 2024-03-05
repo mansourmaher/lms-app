@@ -12,7 +12,7 @@ const TeacherCoursePage = async() => {
   const courses=await teacherGetMyCourses()
   //const courseIncludeProgress=await getAllCourseIncludeProgresse()
   const courseUserIncludeProgress=await getCourseIncludeProgresse()
-  console.log("courseUserIncludeProgress",courseUserIncludeProgress)
+  
  
   
 
