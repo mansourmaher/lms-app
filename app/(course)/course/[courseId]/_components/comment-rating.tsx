@@ -12,7 +12,7 @@ export default function CommentRating(
   { stars }: CommentRatingProps
 ) {
   return (
-    <div className='flex flex-row mt-3'>
+    <div className='flex flex-row '>
       {
         Array.from({ length: 5 }).map((_, i) => (
           <svg

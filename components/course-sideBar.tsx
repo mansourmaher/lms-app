@@ -5,6 +5,7 @@ import { getProgress } from "@/actions/course/get-progress";
 import CourseProgress from "./course-progress";
 import { db } from "@/lib/db";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { MobileSidebar } from "@/app/(dashboard)/_components/mobilesidebar";
 
 interface CourseSideBarProps {
   courseId: string;
@@ -93,7 +94,8 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
           </p>
           <p>
             You Progression Now is{" "}
-            <span className="text-base">{userProgress}%</span> <br />
+            <span className="text-base">{Math.round(userProgress)}%</span>{" "}
+            <br />
             {userProgress === 100 && "Congratulations"}
             {userProgress < 100 && userProgress > 0 && "Keep Going"}
             {userProgress === 0 && "Start Now"}

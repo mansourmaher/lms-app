@@ -16,29 +16,27 @@ interface CourseCardProps {
   imageUrl: string;
   chapterLenght: number;
   price: number;
-  progress: number;
+
   category: string;
   description: string;
 }
 
-export const CourseCard =async ({
+export const CourseCard = async ({
   id,
   title,
   imageUrl,
   chapterLenght,
   price,
-  progress,
+
   category,
   description,
 }: CourseCardProps) => {
+  const user = await auth();
+  const userId = user?.user.id as string;
 
-  const user=await auth()
-  const userId=user?.user.id as string
-
-
-  const onclick = async (courseId:string) => {
-    await purchaseCourse({courseId,userId})
-  }
+  const onclick = async (courseId: string) => {
+    await purchaseCourse({ courseId, userId });
+  };
   return (
     <div className="p-4 bg-white flex flex-col border rounded-lg">
       <div className="relative w-full aspect-video rounded-xl mb-4">
@@ -55,11 +53,14 @@ export const CourseCard =async ({
       <p className="text-sm text-muted-foreground mt-1.5  line-clamp-3 h-14 mb-6">
         {description}
       </p>
-      <div className="flex flex-row justify-between items-center mt-3">
-        <div className=" -mx-1">
-          <Badge variant="yellow" className="mr-2">{category}</Badge>
-        </div>
+      <div className="flex">
+        {" "}
+        <Badge variant="yellow" className="mr-2">
+          {category}
+        </Badge>
+      </div>
 
+      <div className="flex flex-row-2 justify-between items-center mt-3 ">
         <div className=" -mx-1">
           <Badge variant="outline">
             <BookOpen size={14} className="mr-2" />
@@ -84,7 +85,7 @@ export const CourseCard =async ({
           </Button>
         </div>
         <div className="mt-6 ">
-          <PurchaseButton courseId={id} userId={userId}/>
+          <PurchaseButton courseId={id} userId={userId} />
         </div>
       </div>
     </div>

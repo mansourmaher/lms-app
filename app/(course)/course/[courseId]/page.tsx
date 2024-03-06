@@ -19,7 +19,7 @@ const CoursePage = async ({
 
   return (
     <>
-      <SingleCourse course={course} comments={comments} />
+      <SingleCourse course={course} comments={comments} userId={userId} />
     </>
   );
 };

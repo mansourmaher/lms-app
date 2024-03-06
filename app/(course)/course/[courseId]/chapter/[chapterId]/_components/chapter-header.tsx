@@ -35,6 +35,7 @@ export default function ChapterHeader({
       router.push(`/course/${courseId}/chapter/${previewsChapter.id}`);
     }
   };
+  const isLastChapter = nextChapter === null;
 
   return (
     <div className="flex m-8 justify-between ">
@@ -53,17 +54,19 @@ export default function ChapterHeader({
       </div>
       <div>
         <div className="flex gap-x-6 ">
-          <div className="flex text-blue-500 hover:text-blue-500/80">
-            <Button
+          <div className="flex ">
+            {chapter?.position !==1 && 
+              <Button
               variant={"outline"}
               className="flex hover:text-blue-500/80"
               onClick={handelPreviewsChapter}
             >
               <FaArrowLeft className="text-2xl mx-2" />
               <p>Previews</p>
-            </Button>
+            </Button>}
           </div>
-          <div className="flex text-blue-500 ">
+          <div className="flex">
+            {!isLastChapter && (
             <Button
               variant={"outline"}
               className="flex hover:text-blue-500/80"
@@ -72,6 +75,7 @@ export default function ChapterHeader({
               <p className="">Next </p>
               <FaArrowRight className="text-2xl mx-2 " />
             </Button>
+            )}
           </div>
         </div>
         <div></div>

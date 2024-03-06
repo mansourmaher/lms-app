@@ -37,10 +37,9 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
       const rating = await getTeacherRating(course!.userId);
       setTeacherRating(rating);
 
-      const students=await getCountUserInEachCourse(course!.userId);
+      const students = await getCountUserInEachCourse(course!.userId);
       setTotalStudent(students);
-      
-    }
+    };
     getCourseCount();
     getreviewCount();
     getRating();
@@ -65,29 +64,31 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
               </p>
             </div>
             <div className="flex">
-            {[...Array(5)].map((_, index) => {
-        const currentRating = index + 1;
-        return (
-          <div key={currentRating} className="flex flex-row space-x-2">
-            <label>
-              <input
-                type="radio"
-                name="rate"
-                value={currentRating}
-                checked={teacherRating === currentRating}
-                readOnly
-                className="hidden"
-              />
-              <FaStar
-                className={cn(
-                  "text-2xl",
-                  teacherRating >= currentRating ? "text-yellow-400" : "text-gray-400"
-                )}
-              />
-            </label>
-          </div>
-        );
-      })}
+              {[...Array(5)].map((_, index) => {
+                const currentRating = index + 1;
+                return (
+                  <div key={currentRating} className="flex flex-row space-x-2">
+                    <label>
+                      <input
+                        type="radio"
+                        name="rate"
+                        value={currentRating}
+                        checked={teacherRating === currentRating}
+                        readOnly
+                        className="hidden"
+                      />
+                      <FaStar
+                        className={cn(
+                          "text-2xl",
+                          teacherRating >= currentRating
+                            ? "text-yellow-400"
+                            : "text-gray-400"
+                        )}
+                      />
+                    </label>
+                  </div>
+                );
+              })}
             </div>
           </div>
           <p className="mt-2 text-gray-700">
@@ -97,39 +98,39 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
             publications and patents in various fields such as microfluidics,
             materials science, and data science technologies.
           </p>
-          <div className="flex flex-row justify-between items-center">
-            <div className="flex flex-row space-x-6 mt-6">
-              <div className="flex items-center gap-x-2">
+          <div className="md:flex md:flex-row md:justify-between md:items-center flex flex-col space-y-2">
+            <div className="md:flex flex-row md:space-x-6 mt-6 md:items-center">
+              <div className="flex  items-center gap-x-2">
                 <Medal className="w-4 h-4 text-blue-400" />
-                <div className="flex gap-x-1">
+                <div className="md:flex md:gap-x-1 flex gap-x-2">
                   <div className="text-blue-400">{totalReview}</div>
                   <div className="text-blue-400">Review</div>
                 </div>
               </div>
-              <div className="flex items-center gap-x-2">
-                <Users className="w-4 h-4" /> {totalStudent} students
+              <div className="md:flex items-center gap-x-2 text-blue-400">
+                <div className="flex  items-center space-x-2">
+                  <Users className="w-4 h-4" />
+                  <div>{totalStudent} students</div>
+                </div>
               </div>
-              <div className="flex items-center gap-x-2">
-                <PlayCircle className="w-4 h-4 text-blue-400" />
-                <div className="flex flex-row gap-x-1 items-center">
-                  <div className="text-blue-400 text-lg">{totalCourse}</div>
-                  <div className="text-blue-400">Toalt course</div>
+              <div className="md:flex  items-center gap-x-2">
+                <div className="flex  items-center space-x-2">
+                  <PlayCircle className="w-4 h-4 text-blue-400" />
+                  <div className="md:flex flex-row md:gap-x-1 items-center">
+                    <div className="text-blue-400 ">{totalCourse} {" "} Courses</div>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="">
-              {
-                course?.user?.createdAt ? (
-                  <Badge variant="secondary">
-                    Instructor since {new Date(course?.user?.createdAt).getFullYear()}
-                    </Badge>
-                ):(
-                  <Badge variant="secondary">
-                    No date
-                    </Badge>
-                )
-
-              }
+              {course?.user?.createdAt ? (
+                <Badge variant="secondary">
+                  Instructor since{" "}
+                  {new Date(course?.user?.createdAt).getFullYear()}
+                </Badge>
+              ) : (
+                <Badge variant="secondary">No date</Badge>
+              )}
             </div>
           </div>
         </div>

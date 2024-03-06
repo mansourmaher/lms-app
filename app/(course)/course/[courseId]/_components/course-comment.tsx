@@ -7,14 +7,24 @@ import { useRouter } from "next/navigation";
 import { BiSolidLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import CourseRating from "./course-rating";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface CommentListProps {
   comments: Awaited<ReturnType<typeof getCourseComments>> | null;
   courseId: string | undefined;
+  userId: string;
 }
 
-export default function CommentList({ comments, courseId }: CommentListProps) {
+export default function CommentList({
+  comments,
+  courseId,
+  userId,
+}: CommentListProps) {
   const router = useRouter();
+  const [isEdititng, setIsEditing] = useState(false);
+  const [idCommentToEdit, setIdCommentToEdit] = useState("");
 
   const isLikes = async (
     isLike: boolean,
@@ -41,6 +51,10 @@ export default function CommentList({ comments, courseId }: CommentListProps) {
       </div>
     );
   }
+  const toggleEditing = (id: string | undefined) => {
+    setIsEditing(!isEdititng);
+    setIdCommentToEdit(id!);
+  };
   return (
     <>
       <div>
@@ -65,9 +79,15 @@ export default function CommentList({ comments, courseId }: CommentListProps) {
               <div className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
                 <div className="items-center justify-between mb-3 sm:flex">
                   <time className="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">
-                    <div className="flex gap-x-2">
-                      <p>Commented on</p>
-                      {new Date(comment.createdAt).toLocaleDateString()}
+                    <div className="flex gap-x-2 items-center">
+                      <div>
+                        <CommentRating stars={comment.starts!} />
+                      </div>
+                      <div className="flex gap-x-2">
+                        {" "}
+                        <p>Commented on</p>
+                        {new Date(comment.createdAt).toLocaleDateString()}
+                      </div>
                     </div>
                   </time>
                   <div className="text-sm font-normal text-gray-500 lex dark:text-gray-300">
@@ -95,35 +115,67 @@ export default function CommentList({ comments, courseId }: CommentListProps) {
                     )}
                   </div>
                 </div>
-                <div className="flex flex-row ">
-                  <CommentRating stars={comment.starts!} />
+
+                <div>
+                  <div></div>
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center space-x-2"></div>
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => isLikes(true, comment.id, courseId!)}
-                        className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
-                      >
-                        <div className="flex gap-x-1 items-center ">
-                          <BiSolidLike className="text-blue-500" size={18} />
-                          <p className="text-blue-500">{comment.likes}</p>{" "}
-                        </div>
-                      </button>
-                      <button
-                        onClick={() => isLikes(false, comment.id, courseId!)}
-                        className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
-                      >
-                        <div className="flex gap-x-1 items-center">
-                          <BiDislike className="text-red-500" size={18} />
-                          <p className="text-red-500">
-                            {comment.dislikes}
-                          </p>{" "}
-                        </div>
-                      </button>
+                  <div
+                    className={`flex ${
+                      isEdititng ? "flex-col" : "flex-row justify-between"
+                    } items-center ${cn({
+                      "mt-3 ml-2 mr-1":
+                        isEdititng && idCommentToEdit === comment.id,
+                    })}`}
+                  >
+                    <div>
+                      {comment.user?.id === userId ? (
+                        <button
+                          onClick={() => toggleEditing(comment.id)}
+                          className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
+                        >
+                          {isEdititng && idCommentToEdit === comment.id
+                            ? "Cancel"
+                            : "Edit"}
+                        </button>
+                      ) : null}
+                      {isEdititng && idCommentToEdit === comment.id ? (
+                        <CourseRating
+                          initailComment={comment.comment!}
+                          initialRating={comment.starts!}
+                          courseId={courseId!}
+                          isUpdating={true}
+                          commentId={comment.id}
+                        />
+                      ) : null}
                     </div>
+                    {!isEdititng ? (
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => isLikes(true, comment.id, courseId!)}
+                          className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
+                        >
+                          <div className="flex gap-x-1 items-center ">
+                            <BiSolidLike className="text-blue-500" size={18} />
+                            <p className="text-blue-500">
+                              {comment.likes}
+                            </p>{" "}
+                          </div>
+                        </button>
+                        <button
+                          onClick={() => isLikes(false, comment.id, courseId!)}
+                          className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
+                        >
+                          <div className="flex gap-x-1 items-center">
+                            <BiDislike className="text-red-500" size={18} />
+                            <p className="text-red-500">
+                              {comment.dislikes}
+                            </p>{" "}
+                          </div>
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </div>

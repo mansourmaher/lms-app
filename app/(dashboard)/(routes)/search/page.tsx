@@ -28,11 +28,10 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   });
 
   const courses = await getCourses({
-    userId: userId,
     title: searchParams.title!,
     category: searchParams.category!,
   });
-  const topThreeCourses = await getTop3Courses();
+  //const topThreeCourses = await getTop3Courses();
   return (
     <>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
@@ -41,8 +40,13 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       <div className="p-6 space-y-6 ">
         <Categories items={categories} />
         {/*<TopThreeCourses  items={topThreeCourses} />*/}
-
-        <CoursesList items={courses} />
+        {!courses ? (
+          <div>
+            <h1>No courses found</h1>
+          </div>
+        ) : (
+          <CoursesList items={courses} />
+        )}
       </div>
     </>
   );

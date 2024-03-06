@@ -14,9 +14,10 @@ import CommentList from "./course-comment";
 interface SingleCourseProps {
   course: Awaited<ReturnType<typeof getCourseById>>;
   comments: Awaited<ReturnType<typeof getCourseComments>> | null;
+  userId: string;
 }
 
-export default function SingleCourse({ course, comments }: SingleCourseProps) {
+export default function SingleCourse({ course, comments,userId }: SingleCourseProps) {
   const [isShowComments, setIsShowComments] = React.useState(false);
 
   const toggleComments = () => {
@@ -46,7 +47,7 @@ export default function SingleCourse({ course, comments }: SingleCourseProps) {
 
       <div className="m-8">
         {comments!.length !== 0 && (
-          <CommentList comments={comments} courseId={course?.id} />
+          <CommentList comments={comments} courseId={course?.id} userId={userId} />
         )}
       </div>
     </div>
