@@ -7,10 +7,16 @@ import { logout } from "@/actions/logout";
 import { UserButton } from "./Auth/user-button";
 import { SearchInput } from "./search_input";
 
-export const NavbarRoutes = () => {
-  const pathname = usePathname();
+import { Notifications } from "@prisma/client";
+import { getAllNotifications } from "@/actions/teacher/get-all-notifications";
+import TeacherNotification from "./Auth/teacher-notifications";
 
-  console.log("pathnae" + pathname);
+interface NavbarRoutesProps {
+  notifications: Awaited<ReturnType<typeof getAllNotifications>>;
+  userId:string |undefined
+}
+export const NavbarRoutes = ({ notifications,userId }: NavbarRoutesProps) => {
+  const pathname = usePathname();
 
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isPalayerPage = pathname?.includes("/chapter");
@@ -18,21 +24,22 @@ export const NavbarRoutes = () => {
 
   return (
     <>
-    {
-      isSearchPage &&(
-        <div className="hidden md:block"><SearchInput /></div>
-        
-      )
-    }
-    <div className=" gap-x-2 ml-auto flex ">
-      <UserButton />
+      {isSearchPage && (
+        <div className="hidden md:block">
+          <SearchInput />
+        </div>
+      )}
 
-      <Link href="/teacher/courses">
-        <Button size="sm" variant="ghost">
-          Teacher mode
-        </Button>
-      </Link>
-    </div>
+      <div className="items-center gap-x-2 ml-auto flex ">
+        <UserButton />
+        <TeacherNotification notifications={notifications} userId={userId} />
+
+        <Link href="/teacher/courses">
+          <Button size="sm" variant="ghost">
+            Teacher mode
+          </Button>
+        </Link>
+      </div>
     </>
   );
 };

@@ -41,6 +41,8 @@ Table User {
   courseReview CourseReview [not null]
   course Course [not null]
   courseUser CourseUser [not null]
+  teacher Notifications [not null]
+  student Notifications [not null]
 }
 
 Table Origin {
@@ -229,6 +231,16 @@ Table Options {
   quiz Quiz [not null]
 }
 
+Table Notifications {
+  id String [pk]
+  teacher String [not null]
+  user User [not null]
+  student String [not null]
+  studentNotif User [not null]
+  message String [not null]
+  createdAt DateTime [default: `now()`, not null]
+}
+
 Enum UserRole {
   STUDENT
   ADMIN
@@ -270,3 +282,7 @@ Ref: Quiz.courseId > Course.id
 Ref: Quiz.chapterId > Chapter.id
 
 Ref: Options.quizId > Quiz.id
+
+Ref: Notifications.teacher > User.id
+
+Ref: Notifications.student > User.id

@@ -60,6 +60,8 @@ model User {
   courseReview CourseReview[]
   course       Course[]
   courseUser   CourseUser[]
+  teacher Notifications[] @relation("teacher")
+  student Notifications[] @relation("student")
 }
 
 model Origin {
@@ -262,4 +264,14 @@ model Options {
   quiz          Quiz     @relation(fields: [quizId], references: [id])
 
   @@index([quizId], name: "quizId")
+}
+
+model Notifications {
+  id           String   @id @default(uuid())
+  teacher String
+  user         User     @relation("teacher", fields: [teacher], references: [id])
+  student       String
+  studentNotif User     @relation("student", fields: [student], references: [id])
+  message      String
+  createdAt    DateTime @default(now())
 }

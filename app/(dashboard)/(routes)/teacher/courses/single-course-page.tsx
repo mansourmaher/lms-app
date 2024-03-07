@@ -13,6 +13,7 @@ import { teacherGetMyCourses } from "@/actions/teacher/teacher-getMy-courses";
 import { DataTable2 } from "./_components/data-table2";
 import { DataTable } from "./_components/table-user/data-table";
 import { columns } from "./_components/table-user/columns";
+import TeacherNotifications from "@/components/Auth/teacher-notifications";
 
 interface SingleCoursePageProps {
   courses: Awaited<ReturnType<typeof teacherGetMyCourses>>;
