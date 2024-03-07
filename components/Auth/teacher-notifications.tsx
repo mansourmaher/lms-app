@@ -48,7 +48,7 @@ export default function TeacherNotification({
             </span>
           )}
           <div className="bg-muted rounded-full  border p-1">
-            <Bell className="w-[28px] h-[28px] text-muted-foreground " />
+            <Bell className="w-[25px] h-[25px] text-muted-foreground " />
           </div>
         </button>
       </PopoverTrigger>
