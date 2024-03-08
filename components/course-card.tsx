@@ -53,18 +53,14 @@ export const CourseCard = async ({
       <p className="text-sm text-muted-foreground mt-1.5  line-clamp-3 h-14 mb-6">
         {description}
       </p>
-      <div className="flex ">
-        <Badge variant="yellow" className="m-2">
-          {category}
-        </Badge>
-      </div>
-      <div className="flex flex-row justify-between items-center ml-3 mr-6">
-        <div className=" -mx-1">
-          <Badge variant="green" className="mr-2">
-            <ReviewProgress courseId={id} />
+      <ReviewProgress courseId={id} />
+
+      <div className="flex flex-row justify-between items-center md:flex-cols-3  ">
+        <div className="flex ">
+          <Badge variant="yellow" className="m-2">
+            {category}
           </Badge>
         </div>
-
         <div className=" -mx-1">
           <Badge variant="outline">
             <BookOpen size={14} className="mr-2" />

@@ -8,6 +8,7 @@ import { pusherClient } from "@/lib/pusher";
 import { Notifications } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "../ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface TeacherNotificationProps {
   notifications: Awaited<ReturnType<typeof getAllNotifications>>;
@@ -34,7 +35,7 @@ export default function TeacherNotification({
     };
   }, [notifications]);
   return (
-    <Popover>
+    <Popover >
       <PopoverTrigger asChild>
         <button
           className={cn(
@@ -52,8 +53,8 @@ export default function TeacherNotification({
           </div>
         </button>
       </PopoverTrigger>
-      <PopoverContent asChild className="w-full mt-6">
-        <div className="bg-white shadow-md p-4">
+      <PopoverContent asChild className="w-full mt-6 p-0 h-[20px]" align="center">
+        <div className="bg-white shadow-md ">
           <div
             id="dropdownNotification"
             className="z-20  w-full max-w-sm bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-gray-700"
@@ -62,18 +63,20 @@ export default function TeacherNotification({
             <div className="block px-4 py-2 font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white">
               Notifications
             </div>
+
             {notification.length === 0 && (
               <div className="text-center py-4 text-gray-500 dark:text-gray-400">
                 No notifications
               </div>
             )}
-
-            {notification.map((notification) => (
-              <SingleNotifications
-                key={notification.id}
-                notifcation={notification}
-              />
-            ))}
+            <ScrollArea className="rounded-md border ">
+              {notification.map((notification) => (
+                <SingleNotifications
+                  key={notification.id}
+                  notifcation={notification}
+                />
+              ))}
+            </ScrollArea>
           </div>
         </div>
       </PopoverContent>

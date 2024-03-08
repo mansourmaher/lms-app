@@ -4,8 +4,8 @@ import { SearchInput } from "@/components/search_input";
 import { getCourses } from "@/actions/course/get-courses";
 import { auth } from "@/auth";
 import { CoursesList } from "@/components/courses-list";
-import { getTop3Courses } from "@/actions/course/get-top-5-courses";
 import TopThreeCourses from "./_components/top-three-courses";
+import { getTop3Courses } from "@/actions/course/get-top-5-courses";
 
 export const dynamic = "force-dynamic";
 
@@ -31,7 +31,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     title: searchParams.title!,
     category: searchParams.category!,
   });
-  //const topThreeCourses = await getTop3Courses();
+  const topThreeCourses = await getTop3Courses();
   return (
     <>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
@@ -39,7 +39,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       </div>
       <div className="p-6 space-y-6 ">
         <Categories items={categories} />
-        {/*<TopThreeCourses  items={topThreeCourses} />*/}
+        <TopThreeCourses items={topThreeCourses} />
         {!courses ? (
           <div>
             <h1>No courses found</h1>
