@@ -1,19 +1,13 @@
 "use client";
 
-import { getCourses } from "@/actions/course/get-courses";
 import {
-  getAllCourseIncludeProgresse,
-  getCourseIncludeProgresse,
+  getCourseIncludeProgresse
 } from "@/actions/teacher/get-all-course-include-progresse";
-import React from "react";
 import CourseButton from "./_components/course-button";
 
-import { columns2 } from "./_components/column2";
 import { teacherGetMyCourses } from "@/actions/teacher/teacher-getMy-courses";
-import { DataTable2 } from "./_components/data-table2";
 import { DataTable } from "./_components/table-user/data-table";
 import { columns } from "./_components/table-user/columns";
-import TeacherNotifications from "@/components/Auth/teacher-notifications";
 
 interface SingleCoursePageProps {
   courses: Awaited<ReturnType<typeof teacherGetMyCourses>>;

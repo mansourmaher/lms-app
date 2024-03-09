@@ -26,23 +26,24 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
 
   useEffect(() => {
     const getCourseCount = async () => {
-      const count = await getCoursesCountByTeacher(course!.userId);
+      const count = await getCoursesCountByTeacher(course!.userId!);
       setTotalCourse(count);
     };
     const getreviewCount = async () => {
-      const count = await getTeacherReviewCount(course!.userId);
+      const count = await getTeacherReviewCount(course!.userId!);
       setTotalReview(count);
     };
     const getRating = async () => {
-      const rating = await getTeacherRating(course!.userId);
+      const rating = await getTeacherRating(course!.userId!);
       setTeacherRating(rating);
 
-      const students = await getCountUserInEachCourse(course!.userId);
+      const students = await getCountUserInEachCourse(course!.userId!);
       setTotalStudent(students);
     };
     getCourseCount();
     getreviewCount();
     getRating();
+    console.log("course", course);
   });
 
   return (

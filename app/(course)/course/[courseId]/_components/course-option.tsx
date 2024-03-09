@@ -12,9 +12,10 @@ import { get } from "http";
 import { getCoursesCountByTeacher } from "@/actions/course/get-courses-count-by-teacher";
 import { FaEyeSlash } from "react-icons/fa";
 import ReviewProgress from "./course-review-progress";
+import { getCourseById } from "@/actions/course/get-course-byId";
 
 interface CourseOptionProps {
-  course: Course | null;
+  course: Awaited<ReturnType<typeof getCourseById>> | null;
 }
 
 export default function CourseOption({ course }: CourseOptionProps) {
@@ -45,7 +46,11 @@ export default function CourseOption({ course }: CourseOptionProps) {
           <div className="flex flex-row items-center gap-6">
             <FcStatistics size={40} className="text-blue-400" />
 
-            <ReviewProgress courseId={course?.id!} />
+            <ReviewProgress
+              courseId={course?.id!}
+              totalReviews={course!.totalReviews}
+              avg={course!.avg}
+            />
           </div>
         </div>
       </div>

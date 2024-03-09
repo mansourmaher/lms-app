@@ -5,11 +5,11 @@ import { NextResponse } from "next/server"
 
 export async function POST(req:Request,{params}:{params:{chapterId:string,courseId:string}})
 {
-    const data=await req.json()
-    if(!data){
-        return new NextResponse("No data send",{status:400})
+    const { fileName, fileUrl } = await req.json();
+    if(!fileUrl){
+        return new NextResponse("No fileUrl send",{status:400})
     }
-    console.log("data .todo"+data.toDo)
+    
     const user=await auth()
     if(!user)
     {
@@ -22,7 +22,8 @@ export async function POST(req:Request,{params}:{params:{chapterId:string,course
             courseId:params.courseId,
         },
         data:{
-            toDo:data.toDo
+            toDoName:fileName,
+            toDo:fileUrl
         }
     })
     return new NextResponse(JSON.stringify(chapter),{status:200})

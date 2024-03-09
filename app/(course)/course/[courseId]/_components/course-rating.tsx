@@ -121,6 +121,7 @@ export default function CourseRating({
                 disabled={rating === 0 || comment === "" || isDisabled}
                 className="bg-blue-500 hover:bg-blue-500/80 mb-3"
                 onClick={onclick}
+                variant="primary"
               >
                 {isUpdating ? "Update" : "Comment"} 
               </Button>

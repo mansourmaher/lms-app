@@ -1,11 +1,7 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import EtudiantChapterAction from "../../_components/EtudiantChapter-action";
-import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa6";
-import { FaArrowLeft } from "react-icons/fa";
 import ChapterHeader from "./_components/chapter-header";
-import { useRouter } from "next/navigation";
 
 const ChapterPage = async ({
   params,

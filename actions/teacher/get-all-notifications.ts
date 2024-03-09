@@ -9,7 +9,8 @@ export async function getAllNotifications() {
     const notifiedUserId=user?.user.id as string
     const notifications=await db.notifications.findMany({
         where:{
-            teacher:notifiedUserId
+            teacher:notifiedUserId,
+            
         },
         include:{
             studentNotif:true

@@ -19,6 +19,8 @@ interface CourseCardProps {
 
   category: string;
   description: string;
+  avg?: number;
+  totalReviews?: number;
 }
 
 export const CourseCard = async ({
@@ -30,6 +32,8 @@ export const CourseCard = async ({
 
   category,
   description,
+  avg,
+  totalReviews,
 }: CourseCardProps) => {
   const user = await auth();
   const userId = user?.user.id as string;
@@ -53,8 +57,9 @@ export const CourseCard = async ({
       <p className="text-sm text-muted-foreground mt-1.5  line-clamp-3 h-14 mb-6">
         {description}
       </p>
-      <ReviewProgress courseId={id} />
-
+      <div className="px-2">
+        <ReviewProgress courseId={id} avg={avg!} totalReviews={totalReviews!} />
+      </div>
       <div className="flex flex-row justify-between items-center md:flex-cols-3  ">
         <div className="flex ">
           <Badge variant="yellow" className="m-2">

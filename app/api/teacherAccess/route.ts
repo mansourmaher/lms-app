@@ -8,7 +8,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: Request, res: NextApiResponse) {
   const user = await auth();
   const { fileUrl } = await req.json();
-  console.log("url" + fileUrl)
+  
 
   if (!fileUrl) {
     return new NextResponse("URL is required", { status: 400 });
@@ -26,7 +26,8 @@ export async function POST(req: Request, res: NextApiResponse) {
   if (fileUrl && user.user.id) {
     await db.teacherRequest.create({
       data: {
-        url: fileUrl,
+        title:fileUrl.name,
+        url: fileUrl.url,
         userId: user.user.id
       }
     });
@@ -43,9 +44,9 @@ export async function POST(req: Request, res: NextApiResponse) {
       from: 'onboarding@resend.dev',
       to: "mansourmaher77@gmail.com",
       subject: "Teacher Access Request",
-        html: `<p>Teacher ${user.user.name} has requested access to be a teacher.<br>
-        This is what they put as their url: ${fileUrl}<br>
-         Click <a href="${confirmLin}">here</a> to confirm the request or <a href="${declinedLink}">here</a> to decline the request</p>`,
+      html: `<p>Teacher ${user.user.name} has requested access to be a teacher.<br>
+      This is the file they uploaded: <a href="${fileUrl.url}">${fileUrl.name}</a><br>
+      Click <a href="${confirmLin}">here</a> to confirm the request or <a href="${declinedLink}">here</a> to decline the request</p>`,
     });
   }
 

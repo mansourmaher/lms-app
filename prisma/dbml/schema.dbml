@@ -41,6 +41,7 @@ Table User {
   courseReview CourseReview [not null]
   course Course [not null]
   courseUser CourseUser [not null]
+  report Report [not null]
   teacher Notifications [not null]
   student Notifications [not null]
 }
@@ -58,6 +59,7 @@ Table Origin {
 
 Table TeacherRequest {
   id String [pk]
+  title String [not null]
   userId String [not null]
   status String [not null, default: 'pending']
   createdAt DateTime [default: `now()`, not null]
@@ -163,6 +165,7 @@ Table Chapter {
   descreption String
   videoUrl String
   resources Attachment [not null]
+  toDoName String
   toDo String
   position Int [not null]
   isPublished Boolean [not null, default: false]
@@ -174,6 +177,19 @@ Table Chapter {
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   quiz Quiz [not null]
+  report Report [not null]
+}
+
+Table Report {
+  id String [pk]
+  userId String [not null]
+  user User [not null]
+  chapterId String [not null]
+  chapter Chapter [not null]
+  work String
+  workUrl String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
 }
 
 Table MuxData {
@@ -239,6 +255,7 @@ Table Notifications {
   studentNotif User [not null]
   message String [not null]
   createdAt DateTime [default: `now()`, not null]
+  isRead Boolean [not null, default: false]
 }
 
 Enum UserRole {
@@ -270,6 +287,10 @@ Ref: Attachment.courseId > Course.id
 Ref: Attachment.chapterId > Chapter.id
 
 Ref: Chapter.courseId > Course.id
+
+Ref: Report.userId > User.id
+
+Ref: Report.chapterId > Chapter.id
 
 Ref: MuxData.chapterId - Chapter.id
 

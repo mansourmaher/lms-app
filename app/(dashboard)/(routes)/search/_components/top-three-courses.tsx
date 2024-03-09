@@ -31,6 +31,8 @@ export default function TopThreeCourses({ items }: Props) {
             price={course.price!}
             category={course.category?.name!}
             description={course.description!}
+            avg={course.avg}
+            totalReviews={course.totalReviews!}
           />
         ))}
       </div>

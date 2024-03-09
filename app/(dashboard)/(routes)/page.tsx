@@ -24,8 +24,6 @@ export default async function Home() {
     <div>
       {JSON.stringify(user)}
 
-      <ReviewProgress courseId="zc" />
-
       {/* <ListCourse /> */}
     </div>
   );

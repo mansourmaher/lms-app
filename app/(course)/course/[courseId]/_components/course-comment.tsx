@@ -4,12 +4,14 @@ import { getCourseComments } from "@/actions/course/get-course-comments";
 import CommentRating from "./comment-rating";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { BiSolidLike } from "react-icons/bi";
+import { BiLike, BiSolidLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CourseRating from "./course-rating";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Recycle, Trash } from "lucide-react";
 
 interface CommentListProps {
   comments: Awaited<ReturnType<typeof getCourseComments>> | null;
@@ -116,9 +118,7 @@ export default function CommentList({
                   </div>
                 </div>
 
-                <div>
-                  <div></div>
-                </div>
+                <div></div>
 
                 <div>
                   <div
@@ -131,14 +131,27 @@ export default function CommentList({
                   >
                     <div>
                       {comment.user?.id === userId ? (
-                        <button
-                          onClick={() => toggleEditing(comment.id)}
-                          className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
-                        >
-                          {isEdititng && idCommentToEdit === comment.id
-                            ? "Cancel"
-                            : "Edit"}
-                        </button>
+                        <div className="flex gap-x-3 pl-2 pt-4">
+                          <Button
+                            onClick={() => toggleEditing(comment.id)}
+                            variant={isEdititng ? "secondary" : "primary"}
+                            className=""
+                            size="sm"
+                          >
+                            {isEdititng && idCommentToEdit === comment.id ? (
+                              "Cancel"
+                            ) : (
+                              <div className="flex gap-x-2 p-2">
+                                <Recycle className="h-4 w-4" />
+                              </div>
+                            )}
+                          </Button>
+                          <Button variant="destructive" size="sm">
+                            <div className="flex gap-x-2 p-2">
+                              <Trash className="h-4 w-4" />
+                            </div>
+                          </Button>
+                        </div>
                       ) : null}
                       {isEdititng && idCommentToEdit === comment.id ? (
                         <CourseRating
@@ -151,29 +164,52 @@ export default function CommentList({
                       ) : null}
                     </div>
                     {!isEdititng ? (
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() => isLikes(true, comment.id, courseId!)}
-                          className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
-                        >
-                          <div className="flex gap-x-1 items-center ">
-                            <BiSolidLike className="text-blue-500" size={18} />
-                            <p className="text-blue-500">
-                              {comment.likes}
-                            </p>{" "}
-                          </div>
-                        </button>
-                        <button
-                          onClick={() => isLikes(false, comment.id, courseId!)}
-                          className="text-xs font-semibold text-gray-500 hover:underline dark:text-gray-300"
-                        >
-                          <div className="flex gap-x-1 items-center">
-                            <BiDislike className="text-red-500" size={18} />
-                            <p className="text-red-500">
-                              {comment.dislikes}
-                            </p>{" "}
-                          </div>
-                        </button>
+                      <div className="flex items-center gap-x-2">
+                        {/* <div className="flex items-center space-x-2 pt-2">
+                          <Button
+                            onClick={() => isLikes(true, comment.id, courseId!)}
+                            variant="primary"
+                            size="sm"
+                          >
+                            <div className="flex gap-x-1 items-center ">
+                              <BiSolidLike className="text-white" size={18} />
+                              <p className="text-white">{comment.likes}</p>{" "}
+                            </div>
+                          </Button>
+                        </div> */}
+                        <div className="flex items-center space-x-2 pt-2">
+                          <Button
+                            onClick={() =>
+                              isLikes(true, comment.id, courseId!)
+                            }
+                            variant="primary"
+                            size="sm"
+                          >
+                            <div className="flex gap-x-1 items-center">
+                              <BiLike className="text-white" size={18} />
+                              <p className="text-white">
+                                {comment.likes}
+                              </p>{" "}
+                            </div>
+                          </Button>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2 pt-2">
+                          <Button
+                            onClick={() =>
+                              isLikes(false, comment.id, courseId!)
+                            }
+                            variant="destructive"
+                            size="sm"
+                          >
+                            <div className="flex gap-x-1 items-center">
+                              <BiDislike className="text-white" size={18} />
+                              <p className="text-white">
+                                {comment.dislikes}
+                              </p>{" "}
+                            </div>
+                          </Button>
+                        </div>
                       </div>
                     ) : null}
                   </div>

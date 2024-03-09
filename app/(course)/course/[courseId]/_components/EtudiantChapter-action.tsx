@@ -5,6 +5,7 @@ import QuizForm from "@/components/models/quizForm";
 import { Chapter } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
+import { CompteRendu } from "@/components/models/edtudiant-compte-rendu";
 
 interface EtudiantChapterActionProps {
   courseId: string;
@@ -34,6 +35,7 @@ export default function EtudiantChapterAction({
       {/* <MarkAsCompleteButton  chapterId={chapterId} userId={userId}  /> */}
       <QuizForm chapterId={chapterId} courseId={courseId} />
       <button onClick={downloadPdf}>Download PDF</button>
+      <CompteRendu  chapterId={chapterId}  />
     </div>
   );
 }

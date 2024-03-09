@@ -15,6 +15,14 @@ interface ChapterHeaderProps {
   nextChapter?: any;
   previewsChapter?: any;
 }
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 export default function ChapterHeader({
   courseId,
@@ -39,34 +47,45 @@ export default function ChapterHeader({
 
   return (
     <div className="flex m-8 justify-between ">
-      <div className="flex text-xl">
-        <Link href={`/course/${courseId}`}>
-          <div className="flex ">
-            <span className="text-blue-500">
-              Courses -{">"} {courseName}
-            </span>
-          </div>
-        </Link>
-        <p>
-          <span className="mx-2">-{">"}</span>
-          {chapter?.title}
-        </p>
-      </div>
-      <div>
-        <div className="flex gap-x-6 ">
-          <div className="flex ">
-            {chapter?.position !==1 && 
-              <Button
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/search">Courses</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href={`/course/${courseId}`}>
+              {courseName}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbPage className="text-blue-600">
+              {chapter?.title}
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <div className="flex gap-x-6 ">
+        <div className="flex ">
+          {chapter?.position !== 1 && (
+            <Button
               variant={"outline"}
               className="flex hover:text-blue-500/80"
               onClick={handelPreviewsChapter}
             >
               <FaArrowLeft className="text-2xl mx-2" />
               <p>Previews</p>
-            </Button>}
-          </div>
-          <div className="flex">
-            {!isLastChapter && (
+            </Button>
+          )}
+        </div>
+        <div className="flex">
+          {!isLastChapter && (
             <Button
               variant={"outline"}
               className="flex hover:text-blue-500/80"
@@ -75,11 +94,10 @@ export default function ChapterHeader({
               <p className="">Next </p>
               <FaArrowRight className="text-2xl mx-2 " />
             </Button>
-            )}
-          </div>
+          )}
         </div>
-        <div></div>
       </div>
+      <div></div>
     </div>
   );
 }

@@ -1,13 +1,10 @@
 import { Category, Course } from "@prisma/client";
 import { CourseCard } from "./course-card";
 import Bannner from "./banner";
+import { getCourses } from "@/actions/course/get-courses";
 
-type CourseWithTypeWithProgressWithCategory = Course & {
-  category: Category | null;
-  chapters: { id: string }[];
-};
 interface CoursesListProps {
-  items: CourseWithTypeWithProgressWithCategory[];
+  items: Awaited<ReturnType<typeof getCourses>>;
 }
 export const CoursesList = ({ items }: CoursesListProps) => {
   return (
@@ -24,6 +21,8 @@ export const CoursesList = ({ items }: CoursesListProps) => {
             price={course.price!}
             category={course.category?.name!}
             description={course.description!}
+            avg={course.avg!}
+            totalReviews={course.totalReviews!}
           />
         ))}
       </div>

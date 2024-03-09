@@ -42,7 +42,7 @@ export default function SingleCourse({ course, comments,userId }: SingleCoursePr
       <hr className="m-8" />
 
       <div className="flex flex-row">
-        <CourseRating courseId={course?.id!} readonly={false} />
+        <CourseRating courseId={course?.id!} readonly={false}  />
       </div>
 
       <div className="m-8">

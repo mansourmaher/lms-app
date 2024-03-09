@@ -5,10 +5,10 @@ import { Course } from "@prisma/client";
 
 
 
-export  async function  getCourseComments(course:Course | null) {
+export  async function  getCourseComments(courseId:string ) {
      const comments =await db.courseReview.findMany({
         where: {
-        courseId: course?.id,
+        courseId: courseId,
         },
    
     include: {
@@ -17,7 +17,7 @@ export  async function  getCourseComments(course:Course | null) {
     },
 
     orderBy: {
-      createdAt: "asc",
+      likes: "desc",
     },
   })
   

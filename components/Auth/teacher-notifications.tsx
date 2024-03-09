@@ -69,7 +69,7 @@ export default function TeacherNotification({
                 No notifications
               </div>
             )}
-            <ScrollArea className="rounded-md border ">
+            <ScrollArea className="h-[500px]  rounded-md border p-4">
               {notification.map((notification) => (
                 <SingleNotifications
                   key={notification.id}

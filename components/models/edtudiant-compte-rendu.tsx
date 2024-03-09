@@ -1,36 +1,25 @@
-import { Toaster, toast } from "react-hot-toast";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogOverlay,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog";
+import { toast } from "react-hot-toast";
 import { Cloud, File, Plus } from "lucide-react";
-import { FileUpload } from "../file-upload";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
-import { isTeacherHaveRequestPending } from "@/actions/getRequestByTeacherId";
-import { useSession } from "next-auth/react";
-import { set } from "date-fns";
-import { AlertDialogCancel } from "@radix-ui/react-alert-dialog";
 import { Button } from "../ui/button";
 
 import Dropzone from "react-dropzone";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { DialogContent } from "../ui/dialog";
 import { Progress } from "../ui/progress";
-import { ourFileRouter } from "@/app/api/uploadthing/core";
-import { UploadButton, useUploadThing } from "@/lib/uploadthing";
+import { useUploadThing } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 
- const UploadDropzone = () => {
+interface CompteRenduProps {
+  chapterId: string;
+}
+
+const UploadDropzone = ({ chapterId }: CompteRenduProps) => {
   const [isUploading, setIsUploading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const { startUpload } = useUploadThing("teacherAccess", {
+  const { startUpload } = useUploadThing("compteRendu", {
     onUploadProgress: (progress) => {
       setUploadProgress(progress);
     },
@@ -45,10 +34,14 @@ import { cn } from "@/lib/utils";
         const res = await startUpload(acceptedFiles);
         if (res) {
           await axios
-            .post("/api/teacherAccess", { fileUrl: res[0] })
+            .post(`/api/etudiant/compteRendu `, {
+              chapterId: chapterId,
+              workUrl: res[0].url,
+              workName: res[0].name,
+            })
             .then(() => {
               setProcessing(false);
-              toast.success("Your request has been submitted successfully ");
+              toast.success("Your work was uploaded successfully");
             });
         }
 
@@ -115,21 +108,9 @@ import { cn } from "@/lib/utils";
     </Dropzone>
   );
 };
-export const AccesTeacher = () => {
+export const CompteRendu = ({ chapterId }: CompteRenduProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  // const onSubmit = async (values: any) => {
-  //   try {
-  //     setIsLoading(true);
-  //     await axios.post("/api/teacherAccess", values).then(() => {
-  //       toast.success("Your request has been submitted successfully ");
-  //     });
-  //   } catch (error) {
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   return (
     <Dialog
@@ -146,7 +127,7 @@ export const AccesTeacher = () => {
         </button>
       </DialogTrigger>
       <DialogContent>
-        <UploadDropzone />
+        <UploadDropzone chapterId={chapterId} />
         <div className="flex justify-end">
           <Button onClick={() => setIsOpen(false)} className="mr-2">
             Cancel

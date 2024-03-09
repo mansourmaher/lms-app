@@ -60,8 +60,9 @@ model User {
   courseReview CourseReview[]
   course       Course[]
   courseUser   CourseUser[]
-  teacher Notifications[] @relation("teacher")
-  student Notifications[] @relation("student")
+  report       Report[]
+  teacher      Notifications[] @relation("teacher")
+  student      Notifications[] @relation("student")
 }
 
 model Origin {
@@ -77,6 +78,7 @@ model Origin {
 
 model TeacherRequest {
   id        String   @id @default(uuid())
+  title     String
   userId    String
   status    String   @default("pending")
   createdAt DateTime @default(now())
@@ -184,7 +186,9 @@ model Chapter {
   descreption String?
   videoUrl    String?
   resources   Attachment[]
-  toDo        String?
+  toDoName    String?
+
+  toDo String?
 
   position    Int
   isPublished Boolean @default(false)
@@ -198,8 +202,23 @@ model Chapter {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   quiz         Quiz[]
+  report       Report[]
 
   @@index([courseId])
+}
+
+model Report{
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  chapterId String
+  chapter   Chapter  @relation(fields: [chapterId], references: [id])
+  work      String?
+  workUrl   String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
 }
 
 model MuxData {
@@ -268,10 +287,11 @@ model Options {
 
 model Notifications {
   id           String   @id @default(uuid())
-  teacher String
+  teacher      String
   user         User     @relation("teacher", fields: [teacher], references: [id])
-  student       String
+  student      String
   studentNotif User     @relation("student", fields: [student], references: [id])
   message      String
   createdAt    DateTime @default(now())
+  isRead       Boolean  @default(false)
 }
