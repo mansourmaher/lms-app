@@ -126,6 +126,7 @@ model Course {
   quiz       Quiz[]
   review     CourseReview[]
   courseUser CourseUser[]
+  report     Report[]
 
   @@index([categoryId])
 }
@@ -207,18 +208,23 @@ model Chapter {
   @@index([courseId])
 }
 
-model Report{
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+model Report {
+  id String @id @default(uuid())
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+  userId   String
+
+  user      User    @relation(fields: [userId], references: [id])
   chapterId String
-  chapter   Chapter  @relation(fields: [chapterId], references: [id])
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
   work      String?
   workUrl   String?
- 
+  grade     Float?
+  note      String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 }
 
 model MuxData {

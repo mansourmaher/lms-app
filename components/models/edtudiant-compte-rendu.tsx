@@ -14,9 +14,10 @@ import { cn } from "@/lib/utils";
 
 interface CompteRenduProps {
   chapterId: string;
+  courseId: string;
 }
 
-const UploadDropzone = ({ chapterId }: CompteRenduProps) => {
+const UploadDropzone = ({ chapterId, courseId }: CompteRenduProps) => {
   const [isUploading, setIsUploading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { startUpload } = useUploadThing("compteRendu", {
@@ -35,6 +36,7 @@ const UploadDropzone = ({ chapterId }: CompteRenduProps) => {
         if (res) {
           await axios
             .post(`/api/etudiant/compteRendu `, {
+              courseId: courseId,
               chapterId: chapterId,
               workUrl: res[0].url,
               workName: res[0].name,
@@ -108,7 +110,7 @@ const UploadDropzone = ({ chapterId }: CompteRenduProps) => {
     </Dropzone>
   );
 };
-export const CompteRendu = ({ chapterId }: CompteRenduProps) => {
+export const CompteRendu = ({ chapterId, courseId }: CompteRenduProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -127,7 +129,7 @@ export const CompteRendu = ({ chapterId }: CompteRenduProps) => {
         </button>
       </DialogTrigger>
       <DialogContent>
-        <UploadDropzone chapterId={chapterId} />
+        <UploadDropzone chapterId={chapterId} courseId={courseId} />
         <div className="flex justify-end">
           <Button onClick={() => setIsOpen(false)} className="mr-2">
             Cancel

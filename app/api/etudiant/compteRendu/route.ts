@@ -12,9 +12,10 @@ export async function POST(req:Request)
 
         const user=await auth()
         const userId=user?.user.id as string
-        const {chapterId,workUrl,workName}=await req.json()
+        const {chapterId,workUrl,workName,courseId}=await req.json()
         const createCompteRendu=await db.report.create({
             data:{
+                courseId:courseId,
                 userId:userId,
                 chapterId:chapterId,
                 workUrl:workUrl,

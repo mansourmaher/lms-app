@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import EtudiantChapterAction from "../../_components/EtudiantChapter-action";
 import ChapterHeader from "./_components/chapter-header";
+import { hasReportChapter } from "@/actions/Etudiant/has-report-chapter";
 
 const ChapterPage = async ({
   params,
@@ -43,6 +44,8 @@ const ChapterPage = async ({
         position: currentPostion! - 1,
       },
     });
+    const existingReport = await hasReportChapter(params.chapterId);
+
 
    
 
@@ -87,6 +90,7 @@ const ChapterPage = async ({
             chapterId={chapter.id}
             userId={userId}
             chapter={chapter}
+            existingReport={existingReport}
           />
         </>
       ) : (

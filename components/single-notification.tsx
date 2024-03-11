@@ -29,7 +29,7 @@ export default function SingleNotifications({
             <Avatar className="h-10 w-10 ">
               <AvatarImage
                 className="rounded-full"
-                src={notifcation?.studentNotif.image!}
+                src={notifcation?.studentNotif.image || ""} // i want to do the creation time - current time
                 alt={notifcation?.studentNotif.name!}
               />
               <AvatarFallback className="uppercase">
