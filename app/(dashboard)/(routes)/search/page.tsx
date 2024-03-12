@@ -31,7 +31,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     title: searchParams.title!,
     category: searchParams.category!,
   });
-  // const topThreeCourses = await getTop3Courses();
+   const topThreeCourses = await getTop3Courses();
   return (
     <>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
@@ -39,7 +39,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       </div>
       <div className="p-6 space-y-6 ">
         <Categories items={categories} />
-        {/* <TopThreeCourses items={topThreeCourses} /> */}
+         <TopThreeCourses items={topThreeCourses} /> 
         {!courses ? (
           <div>
             <h1>No courses found</h1>

@@ -134,7 +134,7 @@ export default function CommentList({
                         <div className="flex gap-x-3 pl-2 pt-4">
                           <Button
                             onClick={() => toggleEditing(comment.id)}
-                            variant={isEdititng ? "secondary" : "primary"}
+                            variant="ghost"
                             className=""
                             size="sm"
                           >
@@ -146,7 +146,7 @@ export default function CommentList({
                               </div>
                             )}
                           </Button>
-                          <Button variant="destructive" size="sm">
+                          <Button variant="ghost" size="sm">
                             <div className="flex gap-x-2 p-2">
                               <Trash className="h-4 w-4" />
                             </div>
@@ -179,34 +179,28 @@ export default function CommentList({
                         </div> */}
                         <div className="flex items-center space-x-2 pt-2">
                           <Button
-                            onClick={() =>
-                              isLikes(true, comment.id, courseId!)
-                            }
-                            variant="primary"
+                            onClick={() => isLikes(true, comment.id, courseId!)}
+                            variant="ghost"
                             size="sm"
                           >
                             <div className="flex gap-x-1 items-center">
-                              <BiLike className="text-white" size={18} />
-                              <p className="text-white">
-                                {comment.likes}
-                              </p>{" "}
+                              <BiLike className="" size={18} />
+                              <p className="">{comment.likes}</p>{" "}
                             </div>
                           </Button>
                         </div>
-                        
+
                         <div className="flex items-center space-x-2 pt-2">
                           <Button
                             onClick={() =>
                               isLikes(false, comment.id, courseId!)
                             }
-                            variant="destructive"
+                            variant="ghost"
                             size="sm"
                           >
                             <div className="flex gap-x-1 items-center">
-                              <BiDislike className="text-white" size={18} />
-                              <p className="text-white">
-                                {comment.dislikes}
-                              </p>{" "}
+                              <BiDislike className="" size={18} />
+                              <p className="">{comment.dislikes}</p>{" "}
                             </div>
                           </Button>
                         </div>

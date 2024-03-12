@@ -29,7 +29,7 @@ export default function SingleCourse({ course, comments,userId }: SingleCoursePr
         <CourseHedaer courseName={course?.title!} />
       </div>
 
-      <CourseImage />
+      <CourseImage img={course.imageUrl!} />
       <CourseBtn onchange={toggleComments} isShowComments={isShowComments} />
       <div className="m-8">{course?.description}</div>
       <div className="m-8">
