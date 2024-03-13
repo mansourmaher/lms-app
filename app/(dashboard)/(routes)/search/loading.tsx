@@ -5,14 +5,23 @@ export default function Loading() {
     <>
       <div className="flex gap-8 mt-6 ">
         {new Array(10).fill(0).map((_, i) => (
-          <div className="py-2 px-3 text-sm border border-slate-200 rounded-full flex items-center gap-x-1 animate-pulse">
-            <div className="h-4 w-4 bg-gray-300 rounded-full"></div>
-            <div className="h-4 w-16 bg-gray-300 rounded-full"></div>
+          <div
+            key={i}
+           
+          >
+            <div className="py-2 px-3 text-sm border border-slate-200 rounded-full flex items-center gap-x-1 animate-pulse">
+              <div className="h-4 w-4 bg-gray-300 rounded-full"></div>
+              <div className="h-4 w-16 bg-gray-300 rounded-full"></div>
+              
+            </div>
           </div>
         ))}
       </div>
       <div className="grid grid-cols-3  gap-8 mt-12">
         {new Array(6).fill(0).map((_, i) => (
+          <div
+            key={i}
+            className="p-4 bg-gray-200 animate-pulse flex flex-col border rounded-lg">
           <div className="p-4 bg-gray-200 animate-pulse flex flex-col border rounded-lg">
             <div className="relative w-full aspect-w-16 aspect-h-9 rounded-xl mb-4">
               <div className="absolute inset-0 bg-gray-300 rounded-xl"></div>
@@ -42,6 +51,7 @@ export default function Loading() {
                 <div className="h-10 bg-gray-300 rounded"></div>
               </div>
             </div>
+          </div>
           </div>
         ))}
       </div>

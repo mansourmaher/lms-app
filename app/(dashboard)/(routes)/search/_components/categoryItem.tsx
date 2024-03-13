@@ -4,18 +4,40 @@ import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IconType } from "react-icons";
 import qs from "query-string";
+import {
+  FcEngineering,
+  FcFilmReel,
+  FcMultipleDevices,
+  FcMusic,
+  FcOldTimeCamera,
+  FcSportsMode,
+  FcSalesPerformance,
+} from "react-icons/fc";
+import { Category } from "@prisma/client";
+import IconComponent from "./icon-components";
 
 interface CategoryItemProps {
   label: string;
-  icon?: IconType;
+
   value: string;
 }
 
 export const CategoryItem = ({
   label,
-  icon: Icon,
+
   value,
 }: CategoryItemProps) => {
+  const iconsMap: Record<Category["name"], IconType> = {
+    "Computer Science": FcMultipleDevices,
+    Mathematics: FcEngineering,
+    Physics: FcOldTimeCamera,
+    Chemistry: FcSalesPerformance,
+    Biology: FcSportsMode,
+    Economics: FcFilmReel,
+    Business: FcSalesPerformance,
+    Psychology: FcMusic,
+    History: FcOldTimeCamera,
+  };
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -46,7 +68,7 @@ export const CategoryItem = ({
       )}
       type="button"
     >
-      {Icon && <Icon size={20} />}
+      <IconComponent Icon={iconsMap[label as Category["name"]]} />
       <div className="truncate"> {label}</div>
     </button>
   );

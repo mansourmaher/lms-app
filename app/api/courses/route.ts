@@ -1,7 +1,64 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { Category, Course } from "@prisma/client";
 import next from "next";
 import { NextResponse } from "next/server";
+
+type CourseWidhProgressWidhCategory = Course &{
+  category:Category | null
+  chapters:{id:string}[]
+  review?:{id:string}[]
+  avg?:number
+  totalReviews?:number
+}
+type GetCourses={
+    
+  title:string
+  category:string
+}
+
+export async function GET(){
+  try {
+    console.log("get courses");
+    const courses=await db.course.findMany({
+      where:{
+          isPublished:true,
+          
+      },
+      include:{
+         
+          category:true,
+          chapters:{
+              where:{
+                  isPublished:true
+              },
+              
+              select:{
+                  id:true
+              },
+              
+          },
+          review:{
+              select:{
+                  id:true
+              }
+          },
+          
+        
+      },
+      orderBy:{
+          createdAt:"desc"
+      }
+  })
+    return new Response(JSON.stringify(courses), { status: 200 });
+  } catch (error) {
+    return new Response("error while fetching course" + error, {
+      status: 500,
+    });
+  }
+}
+
+
 
 export async function POST(req: Request):  Promise<void | Response> {
   try {
@@ -50,15 +107,15 @@ export async function PUT(req: Request, params: { courseId: string }):  Promise<
   }
 }
 
-export async function GET(req: Request, params: { courseId: string }): Promise<void | Response> {
-  try {
-    const courses=  await db.course.findMany({
+// export async function GET(req: Request, params: { courseId: string }): Promise<void | Response> {
+//   try {
+//     const courses=  await db.course.findMany({
       
-        })
-    return new Response(JSON.stringify(courses), { status: 200 });
-  } catch (error) {
-    return new Response("error while fetching course" + error, {
-      status: 500,
-    });
-  }
-}
+//         })
+//     return new Response(JSON.stringify(courses), { status: 200 });
+//   } catch (error) {
+//     return new Response("error while fetching course" + error, {
+//       status: 500,
+//     });
+//   }
+// }

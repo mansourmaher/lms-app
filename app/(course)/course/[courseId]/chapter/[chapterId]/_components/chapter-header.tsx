@@ -50,20 +50,25 @@ export default function ChapterHeader({
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/search">Courses</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href={`/course/${courseId}`}>
-              {courseName}
+            <BreadcrumbLink asChild>
+              <Link href="/">Home</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbSeparator />
+            <BreadcrumbLink asChild>
+              <Link href="/search">Courses</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/course/${courseId}`}>{courseName}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            
             <BreadcrumbPage className="text-blue-600">
               {chapter?.title}
             </BreadcrumbPage>
