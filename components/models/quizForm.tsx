@@ -17,6 +17,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MarkAsCompleteButton from "@/app/(course)/course/[courseId]/_components/markAsCompleteButton";
+import { hasReportChapter } from "@/actions/Etudiant/has-report-chapter";
 
 const formSchema = z.object({
   question: z.string().min(1, {
@@ -39,13 +40,13 @@ const formSchema = z.object({
 interface ConfirmModelProps {
   chapterId: string;
   courseId: string;
-  
+  hasreport: boolean;
 }
 
 export const QuizForm = ({
   chapterId,
   courseId,
- 
+  hasreport,
 }: ConfirmModelProps) => {
   const {
     register,
@@ -66,7 +67,6 @@ export const QuizForm = ({
   const [seccondAvailable, setSeccondAvailable] = useState(10);
   const [options, setOptions] = useState([]);
   const [isFalse, setIsFalse] = useState(false);
-  
 
   const cureentQuestion = useMemo(() => {
     //@ts-ignore
@@ -304,13 +304,13 @@ export const QuizForm = ({
 
             <MarkAsCompleteButton
               disabled={
-                wrongAnswer > correctAnswer
+                hasreport === false || wrongAnswer > correctAnswer
                   ? true
                   : false || dipslayResult === false
               }
               chapterId={chapterId}
               courseId={courseId}
-             
+              mustUploadwork={!hasreport && correctAnswer > wrongAnswer}
             />
           </AlertDialogFooter>
         </AlertDialogContent>

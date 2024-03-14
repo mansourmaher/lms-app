@@ -35,30 +35,30 @@ export const ChapterSidebarItem = ({
           className="  text-left bg-white text-gray-800  border-gray-200 hover:border-gray-300 hover:shadow-md hover:bg-slate-200/80 transition-all duration-200 ease-in-out gap-x-6 border-radius-2xl px-4 py-2 rounded-full border"
           disabled={isLocked && !isPurchased}
         >
+          
           <div className="flex gap-x-1 items-center">
-          {isLocked && !isPurchased ? (
-            <LockKeyhole size={16} className="text-gray-500" />
-          ) : (
-            <Eye size={16} className="text-gray-500" />
-          )}
-          <div>
-            <span className="ml-2">{label}</span>
-          </div>
+            {isLocked && !isPurchased ? (
+              <LockKeyhole size={16} className="text-gray-500" />
+            ) : (
+              <Eye size={16} className="text-gray-500" />
+            )}
+            <div>
+              <span className="ml-2">{label}</span>
+            </div>
           </div>
 
           {isCompleted ? (
             <>
-            <CheckCircle size={16} className="text-green-500" />
+              <CheckCircle size={16} className="text-green-500" />
 
-            <span className="text-green-500 ml-2">Completed</span>
+              <span className="text-green-500 ml-2">Completed</span>
             </>
-          ):(
+          ) : (
             <>
-            <TimerReset size={16} className="text-yellow-500" />
-            <span className="text-yellow-500 ml-2">In Progress</span>
+              <TimerReset size={16} className="text-yellow-500" />
+              <span className="text-yellow-500 ml-2">In Progress</span>
             </>
           )}
-          
         </Button>
       </div>
     </div>

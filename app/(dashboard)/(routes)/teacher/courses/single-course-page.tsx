@@ -10,14 +10,14 @@ import { DataTable } from "./_components/table-user/data-table";
 import { columns } from "./_components/table-user/columns";
 
 interface SingleCoursePageProps {
-  courses: Awaited<ReturnType<typeof teacherGetMyCourses>>;
+  
   couresesIncludeProgress: Awaited<
     ReturnType<typeof getCourseIncludeProgresse>
   >;
 }
 
 export default function SingleCoursePage({
-  courses,
+ 
   couresesIncludeProgress,
 }: SingleCoursePageProps) {
   return (

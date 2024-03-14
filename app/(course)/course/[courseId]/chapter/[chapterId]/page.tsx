@@ -3,6 +3,10 @@ import { db } from "@/lib/db";
 import EtudiantChapterAction from "../../_components/EtudiantChapter-action";
 import ChapterHeader from "./_components/chapter-header";
 import { hasReportChapter } from "@/actions/Etudiant/has-report-chapter";
+import ChapterTitle from "./_components/chapter-title";
+import ChapterVedio from "./_components/chapter-vedio";
+import ChapterOption from "./_components/chapter-btns";
+import ChapterDescreption from "./_components/chapter-descreption";
 
 const ChapterPage = async ({
   params,
@@ -11,7 +15,6 @@ const ChapterPage = async ({
 }) => {
   const user = await auth();
   const userId = user?.user.id as string;
-  
 
   const courseName = await db.course.findUnique({
     where: {
@@ -30,26 +33,21 @@ const ChapterPage = async ({
       course: true,
     },
   });
-  
-    const currentPostion = chapter?.position;
-    const nextChapter = await db.chapter.findFirst({
-      where: {
-        courseId: params.courseId,
-        position: currentPostion! + 1,
-      },
-    });
-    const previewsChapter = await db.chapter.findFirst({
-      where: {
-        courseId: params.courseId,
-        position: currentPostion! - 1,
-      },
-    });
-    const existingReport = await hasReportChapter(params.chapterId);
 
-
-   
-
-
+  const currentPostion = chapter?.position;
+  const nextChapter = await db.chapter.findFirst({
+    where: {
+      courseId: params.courseId,
+      // position: currentPostion! + 1,
+    },
+  });
+  const previewsChapter = await db.chapter.findFirst({
+    where: {
+      courseId: params.courseId,
+      // position: currentPostion! - 1,
+    },
+  });
+  const existingReport = await hasReportChapter(params.chapterId);
 
   return (
     <div className="container">
@@ -59,43 +57,43 @@ const ChapterPage = async ({
         courseName={courseName?.title!}
         nextChapter={nextChapter}
         previewsChapter={previewsChapter}
-        
       />
-      <h1 className="text-3xl font-bold mb-4">
-        Chapter Page {params.chapterId}
-      </h1>
-
+      <ChapterTitle />
+      {/* <ChapterDescreption descreption={chapter?.descreption!} /> */}
+      <ChapterVedio videosrc={chapter?.videoUrl} />
+      <ChapterOption
+        chapterId={params.chapterId}
+        courseId={params.courseId}
+        existingReport={existingReport}
+      />
       {/* Check if chapter data exists */}
-      {chapter ? (
+      {/* {chapter ? (
         <>
           {/* Iterate over chapter properties */}
-          {Object.entries(chapter).map(([key, value]) => (
+      {/* {Object.entries(chapter).map(([key, value]) => (
             <div key={key} className="mb-2">
               <span className="font-bold">{key}:</span> {JSON.stringify(value)}
             </div>
-          ))}
-
-          {/* Display video if available */}
-          {chapter.videoUrl && (
+          ))} */}
+      {/* Display video if available */}
+      {/* {chapter.videoUrl && (
             <div className="mt-4">
               <h3 className="text-lg font-semibold mb-2">Video</h3>
               <video width="100%" controls>
                 <source src={chapter.videoUrl} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-            </div>
-          )}
-          <EtudiantChapterAction
+            </div> */}
+      {/* )} */}
+      {/* <EtudiantChapterAction
             courseId={chapter.course.id}
             chapterId={chapter.id}
             userId={userId}
             chapter={chapter}
             existingReport={existingReport}
-          />
-        </>
-      ) : (
-        <p className="text-red-500">Chapter not found</p>
-      )}
+          /> */}
+      {/* </> */}
+      {/* )} */}
     </div>
   );
 };

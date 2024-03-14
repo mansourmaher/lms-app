@@ -11,13 +11,22 @@ import { DialogContent } from "../ui/dialog";
 import { Progress } from "../ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
+import { revalidatePath } from "next/cache";
 
 interface CompteRenduProps {
   chapterId: string;
   courseId: string;
+  isUpdating?: boolean;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-const UploadDropzone = ({ chapterId, courseId }: CompteRenduProps) => {
+const UploadDropzone = ({
+  chapterId,
+  courseId,
+  onChange,
+  value,
+}: CompteRenduProps) => {
   const [isUploading, setIsUploading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { startUpload } = useUploadThing("compteRendu", {
@@ -44,6 +53,7 @@ const UploadDropzone = ({ chapterId, courseId }: CompteRenduProps) => {
             .then(() => {
               setProcessing(false);
               toast.success("Your work was uploaded successfully");
+              onChange && onChange(res[0].url);
             });
         }
 
@@ -110,7 +120,13 @@ const UploadDropzone = ({ chapterId, courseId }: CompteRenduProps) => {
     </Dropzone>
   );
 };
-export const CompteRendu = ({ chapterId, courseId }: CompteRenduProps) => {
+export const CompteRendu = ({
+  chapterId,
+  courseId,
+  isUpdating,
+  value,
+  onChange,
+}: CompteRenduProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -124,12 +140,17 @@ export const CompteRendu = ({ chapterId, courseId }: CompteRenduProps) => {
       }}
     >
       <DialogTrigger onClick={() => setIsOpen(true)} asChild>
-        <button className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white">
-          <Plus className="h-6 w-6" />
-        </button>
+        <Button variant="ghost" size="sm">
+          {isUpdating ? "Update your work" : "Upload your work"}
+        </Button>
       </DialogTrigger>
       <DialogContent>
-        <UploadDropzone chapterId={chapterId} courseId={courseId} />
+        <UploadDropzone
+          chapterId={chapterId}
+          courseId={courseId}
+          value={value}
+          onChange={onChange}
+        />
         <div className="flex justify-end">
           <Button onClick={() => setIsOpen(false)} className="mr-2">
             Cancel

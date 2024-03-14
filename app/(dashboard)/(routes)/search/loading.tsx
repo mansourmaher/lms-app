@@ -3,7 +3,7 @@ import React from "react";
 export default function Loading() {
   return (
     <>
-      <div className="flex gap-8 mt-6 ">
+      <div className="flex gap-8 m-6 ">
         {new Array(10).fill(0).map((_, i) => (
           <div
             key={i}

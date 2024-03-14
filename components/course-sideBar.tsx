@@ -59,7 +59,7 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
 
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
-      <div className="pl-8 pt-6 flex flex-col border-b">
+      <div className="pl-8 pt-3 flex flex-col border-b">
         <div className="flex gap-x-3 items-center mt-4">
           <Avatar className="h-10 w-10 ">
             <AvatarImage

@@ -142,13 +142,13 @@ export default function CommentList({
                               "Cancel"
                             ) : (
                               <div className="flex gap-x-2 p-2">
-                                <Recycle className="h-4 w-4" />
+                                <Recycle className="h-4 w-4 text-blue-400" />
                               </div>
                             )}
                           </Button>
                           <Button variant="ghost" size="sm">
                             <div className="flex gap-x-2 p-2">
-                              <Trash className="h-4 w-4" />
+                              <Trash className="h-4 w-4 text-red-400" />
                             </div>
                           </Button>
                         </div>
@@ -182,9 +182,10 @@ export default function CommentList({
                             onClick={() => isLikes(true, comment.id, courseId!)}
                             variant="ghost"
                             size="sm"
+                            className="text-blue-400"
                           >
                             <div className="flex gap-x-1 items-center">
-                              <BiLike className="" size={18} />
+                              <BiLike className="text-blue-400" size={18} />
                               <p className="">{comment.likes}</p>{" "}
                             </div>
                           </Button>
@@ -197,9 +198,10 @@ export default function CommentList({
                             }
                             variant="ghost"
                             size="sm"
+                            className="text-red-400"
                           >
                             <div className="flex gap-x-1 items-center">
-                              <BiDislike className="" size={18} />
+                              <BiDislike className="text-red-400" size={18} />
                               <p className="">{comment.dislikes}</p>{" "}
                             </div>
                           </Button>

@@ -15,6 +15,11 @@ export async function getCourseById(courseId: string, userId: string) {
           review: true,
           user:true,
           category: true,
+          chapters: {
+            select: {
+              id:true
+            }
+          },
           
             
             

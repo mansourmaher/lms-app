@@ -37,7 +37,7 @@ export default function CourseRating({
   initailComment,
   initialRating,
   isUpdating,
-  commentId
+  commentId,
 }: RatingProps) {
   const initialeRating = initialRating ? initialRating : 0;
   const initailCommente = initailComment ? initailComment : "";
@@ -56,7 +56,7 @@ export default function CourseRating({
     console.log(rating, "comment" + comment, courseId);
 
     if (isUpdating) {
-      await UpdateComment(commentId!,rating!, comment!, courseId!);
+      await UpdateComment(commentId!, rating!, comment!, courseId!);
       setIsVisible(false);
       toast.success("Comment updated");
     } else {
@@ -74,9 +74,7 @@ export default function CourseRating({
     <>
       {isVisible && (
         <>
-          <hr />
-
-          <div className="flex flex-col gap-y-6 w-full mt-3">
+          <div className="flex flex-col gap-y-6 w-full ">
             <div className="flex flex-row gap-x-6 items-center">
               <p className=" flex ml-16 text-sm font-semibold">
                 You can Rate this coure and keep a comment below to help others
@@ -123,7 +121,7 @@ export default function CourseRating({
                 onClick={onclick}
                 variant="primary"
               >
-                {isUpdating ? "Update" : "Comment"} 
+                {isUpdating ? "Update" : "Comment"}
               </Button>
             </div>
           </div>

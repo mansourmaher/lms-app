@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface CourseImageProps {
@@ -10,11 +11,12 @@ export default function CourseImage({ img }: CourseImageProps) {
       <div className="text-2xl font-bold">
         the title of the courses will display here
       </div>
-      <div>
-        <img
+      <div className="relative w-full h-[550px] aspect-video rounded-xl mb-4">
+        <Image
+          className=" w-full object-cover rounded-xl"
           src={img}
-          alt="course image"
-          className="w-full h-96 object-cover rounded-lg"
+          alt="Course Image"
+          fill
         />
       </div>
     </div>

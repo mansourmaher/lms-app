@@ -1,56 +1,68 @@
 "use client";
 
-import { Course } from "@prisma/client";
-import React from "react";
-import { FcRating, FcStatistics } from "react-icons/fc";
-import { FcDoughnutChart } from "react-icons/fc";
 import { CiVideoOn } from "react-icons/ci";
-import { TbCategory, TbCategoryMinus, TbEyeSearch } from "react-icons/tb";
-import { IoIosStats } from "react-icons/io";
-import TeacherCardCourse from "./teacher-card-course";
-import { get } from "http";
-import { getCoursesCountByTeacher } from "@/actions/course/get-courses-count-by-teacher";
-import { FaEyeSlash } from "react-icons/fa";
-import ReviewProgress from "./course-review-progress";
 import { getCourseById } from "@/actions/course/get-course-byId";
+import { Signal, Users } from "lucide-react";
 
 interface CourseOptionProps {
   course: Awaited<ReturnType<typeof getCourseById>> | null;
+  courseTotalPurchased: number;
 }
 
-export default function CourseOption({ course }: CourseOptionProps) {
+export default function CourseOption({
+  course,
+  courseTotalPurchased,
+}: CourseOptionProps) {
   return (
     <div>
-      <hr />
-      <div className="flex flex-row justify-between items-center m-6 mr-16">
-        <div className="mb-6">
-          <div className="mb-3 text-sm font-semibold">Skill Level</div>
-          <div className="flex flex-row items-center gap-6">
-            <IoIosStats size={40} className="text-blue-400 " />
-
-            <div>Beginner</div>
-          </div>
-        </div>
-        <div className="mb-6">
-          <div className="mb-3 text-sm font-semibold">Skill Level</div>
-          <div className="flex flex-row items-center gap-6">
+      <hr className="mx-8" />
+      <div className="flex flex-row justify-between items-center mx-16 my-8">
+        <div className="flex flex-row items-end">
+          <div className="flex flex-col items-start space-y-2">
             <div>
-              <CiVideoOn size={40} className="text-blue-400" />
+              <span className="text-lg font-semibold">Skill Level</span>
             </div>
-            <div>Leesons</div>
+            <div className="rounded-full border p-3 border-blue-500">
+              <Signal size={30} className="text-blue-600" />
+            </div>
+          </div>
+          <div>
+            <p>
+              <span className="">beginner</span>
+            </p>
           </div>
         </div>
-
-        <div className="mb-6">
-          <div className="mb-3 text-sm font-semibold">Skill Level</div>
-          <div className="flex flex-row items-center gap-6">
-            <FcStatistics size={40} className="text-blue-400" />
-
-            <ReviewProgress
-              courseId={course?.id!}
-              totalReviews={course!.totalReviews}
-              avg={course!.avg}
-            />
+        <div className="flex flex-row items-end">
+          <div className="flex flex-col items-start space-y-2">
+            <div>
+              <span className="text-lg font-semibold">Lessons</span>
+            </div>
+            <div className="rounded-full border p-3 border-blue-500">
+              <CiVideoOn size={30} className="text-blue-600" />
+            </div>
+          </div>
+          <div>
+            <p>
+              <span className="">{course?.chapters?.length} Lessons</span>
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-row items-end">
+          <div className="flex flex-col items-start space-y-2">
+            <div>
+              <span className="text-lg font-semibold">Purchases</span>
+            </div>
+            <div className="rounded-full border p-3 border-blue-500">
+              <Users size={30} className="text-blue-600" />
+            </div>
+          </div>
+          <div>
+            <div>
+              <p>
+                <span className="">{courseTotalPurchased}</span>
+                {courseTotalPurchased === 1 ? " Purchase" : " Purchases"}
+              </p>
+            </div>
           </div>
         </div>
       </div>

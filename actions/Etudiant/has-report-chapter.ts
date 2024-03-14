@@ -12,6 +12,15 @@ export const  hasReportChapter = async (chapterId:string) => {
         where:{
             chapterId:chapterId,
             userId:userId
+        },
+        
+        select:{
+            id:true,
+            work: true,
+            workUrl: true,
+            note: true,
+            grade: true
+            
         }
     })
     if(existingReport){

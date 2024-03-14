@@ -47,7 +47,7 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
   });
 
   return (
-    <div className="w-full p-4">
+    <div className="p-4">
       <div className="flex items-start space-x-4">
         <Avatar>
           <AvatarImage

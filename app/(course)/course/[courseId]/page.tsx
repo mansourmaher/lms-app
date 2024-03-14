@@ -2,6 +2,8 @@ import { auth } from "@/auth";
 import { getCourseComments } from "@/actions/course/get-course-comments";
 import { getCourseById } from "@/actions/course/get-course-byId";
 import SingleCourse from "./_components/single-course";
+import { existingPurchase } from "@/actions/teacher/existing-purchase";
+import { totalPurchase } from "@/actions/course/total-purchase";
 
 const CoursePage = async ({
   params,
@@ -16,10 +18,18 @@ const CoursePage = async ({
 
   const course = await getCourseById(courseId, userId);
   const comments = await getCourseComments(course.id!);
+  const isuserPurchasedthiscourse = await existingPurchase(courseId);
+  const courseTotalPurchased = await totalPurchase(courseId);
 
   return (
     <>
-      <SingleCourse course={course} comments={comments} userId={userId} />
+      <SingleCourse
+        course={course}
+        comments={comments}
+        userId={userId}
+        isuserPurchasedthiscourse={isuserPurchasedthiscourse}
+        courseTotalPurchased={courseTotalPurchased}
+      />
     </>
   );
 };
