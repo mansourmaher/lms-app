@@ -44,7 +44,7 @@ export default function EtudiantChapterAction({
   return (
     <div>
       {/* <MarkAsCompleteButton  chapterId={chapterId} userId={userId}  /> */}
-      <QuizForm chapterId={chapterId} courseId={courseId} />
+      <QuizForm chapterId={chapterId} courseId={courseId} hasreport={false} />
       {/* <button onClick={downloadPdf}>Download PDF</button> */}
       {existingReport && !existingReport.note && <p>Upcoming</p>}
       {existingReport && existingReport.note && (
