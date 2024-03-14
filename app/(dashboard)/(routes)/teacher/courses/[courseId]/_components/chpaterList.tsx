@@ -73,6 +73,7 @@ export const ChapterList=({
                                 index={index}
                             >
                                 {(provided)=>(
+                                    //@ts-ignore
                                     <li
                                         ref={provided.innerRef}
                                         {...provided.draggableProps}
