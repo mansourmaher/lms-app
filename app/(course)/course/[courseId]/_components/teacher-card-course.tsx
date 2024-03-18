@@ -61,7 +61,7 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
             <div>
               <h2 className="text-xl font-semibold">{course?.user?.name}</h2>
               <p className="text-sm text-gray-500">
-                Head of Data Science, Pierian Data Inc.
+                {course?.user?.subtitle || "No subtitle"}
               </p>
             </div>
             <div className="flex">
@@ -93,11 +93,7 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
             </div>
           </div>
           <p className="mt-2 text-gray-700">
-            Jose Marcial Portilla has a BS and MS in Mechanical Engineering from
-            Santa Clara University and years of experience as a professional
-            instructor and trainer for Data Science and programming. He has
-            publications and patents in various fields such as microfluidics,
-            materials science, and data science technologies.
+            {course?.user?.about || "No about"}
           </p>
           <div className="md:flex md:flex-row md:justify-between md:items-center flex flex-col space-y-2">
             <div className="md:flex flex-row md:space-x-6 mt-6 md:items-center">
@@ -118,7 +114,7 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
                 <div className="flex  items-center space-x-2">
                   <PlayCircle className="w-4 h-4 text-blue-400" />
                   <div className="md:flex flex-row md:gap-x-1 items-center">
-                    <div className="text-blue-400 ">{totalCourse} {" "} Courses</div>
+                    <div className="text-blue-400 ">{totalCourse} Courses</div>
                   </div>
                 </div>
               </div>

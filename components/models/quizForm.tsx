@@ -179,9 +179,11 @@ export const QuizForm = ({
         <AlertDialogTrigger
           className="flex items-center gap-x-2"
           onClick={handleShowQuiz}
+          asChild
         >
-          <Plus size={25} />
-          <span>Show Quiz</span>
+          <Button className="rounded-full p-4" size="sm" variant="ghost">
+            <span>Start Quiz</span>
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent className="max-w-[40%]">
           <div className="flex flex-row justify-between">

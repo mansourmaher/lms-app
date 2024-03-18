@@ -18,24 +18,33 @@ type GetCourses={
     
     title:string
     category:string
+    teacher:string
 
 }
 export const getCourses=async({
     
     title,
     category,
+    teacher
     
 }:GetCourses):Promise<CourseWidhProgressWidhCategory[]>=>{
 
     try{
+       
        
         const courses=await db.course.findMany({
             where:{
                 isPublished:true,
                 title:{
                     contains:title
+                    
                 },
-                categoryId:category
+                categoryId:category,
+                user:{
+                    name:{
+                        contains:teacher
+                    }
+                }
             },
             include:{
                

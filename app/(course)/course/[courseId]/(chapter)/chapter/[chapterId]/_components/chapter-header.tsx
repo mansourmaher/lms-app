@@ -23,6 +23,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { MoveLeft, MoveRight } from "lucide-react";
 
 export default function ChapterHeader({
   courseId,
@@ -46,7 +47,7 @@ export default function ChapterHeader({
   const isLastChapter = nextChapter === null;
 
   return (
-    <div className="flex m-8 justify-between ">
+    <div className="flex m-8 justify-between items-center ">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -68,41 +69,44 @@ export default function ChapterHeader({
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            
             <BreadcrumbPage className="text-blue-600">
               {chapter?.title}
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-
-      <div className="flex gap-x-6 ">
-        <div className="flex ">
-          {chapter?.position !== 1 && (
-            <Button
-              variant={"outline"}
-              className="flex hover:text-blue-500/80"
-              onClick={handelPreviewsChapter}
-            >
-              <FaArrowLeft className="text-2xl mx-2" />
-              <p>Previews</p>
-            </Button>
-          )}
-        </div>
-        <div className="flex">
-          {!isLastChapter && (
-            <Button
-              variant={"outline"}
-              className="flex hover:text-blue-500/80"
-              onClick={handelNextChapter}
-            >
-              <p className="">Next </p>
-              <FaArrowRight className="text-2xl mx-2 " />
-            </Button>
-          )}
+      <div>
+        <div className="flex gap-x-6 ">
+          <div className="flex ">
+            {chapter?.position !== 1 && (
+              <Button
+                variant="ghost"
+                className="flex text-blue-500 hover:text-blue-500/80 rounded-full  p-4"
+                onClick={handelPreviewsChapter}
+                disabled={previewsChapter?.isFree === false}
+                size="sm"
+              >
+                <MoveLeft className="text-2xl mx-2" />
+                <span>{previewsChapter?.title} </span>
+              </Button>
+            )}
+          </div>
+          <div className="flex">
+            {!isLastChapter && (
+              <Button
+                variant="ghost"
+                className="flex text-blue-500 hover:text-blue-500/80 rounded-full  p-4"
+                onClick={handelNextChapter}
+                disabled={nextChapter?.isFree === false}
+                size="sm"
+              >
+                <span className="">{nextChapter.title} </span>
+                <MoveRight className="text-2xl mx-2 " />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
-      <div></div>
     </div>
   );
 }

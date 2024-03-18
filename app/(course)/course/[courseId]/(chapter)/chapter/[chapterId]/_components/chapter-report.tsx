@@ -16,14 +16,14 @@ interface ChapterOptionProps {
   existingReport: Awaited<ReturnType<typeof hasReportChapter>>;
 }
 
-export default function ChapterOption({
+export default function ChapterReport({
   chapterId,
   courseId,
   existingReport,
 }: ChapterOptionProps) {
   const router = useRouter();
   const [workUrl, setWorkUrl] = React.useState("");
-  console.log(workUrl, "workUrl");
+
   useEffect(() => {
     if (workUrl) {
       router.refresh();
@@ -34,12 +34,12 @@ export default function ChapterOption({
     router.refresh();
   };
   return (
-    <div className="my-16">
-      <div className="max-w-sm  my-16 bg-white rounded-lg shadow-md">
+    <div className="">
+      <div className="max-w-sm   bg-white rounded-lg shadow-md">
         <div className="flex justify-between px-5 py-4 border-b">
           <h3 className="text-lg font-semibold">Votre devoir</h3>
           <span className="text-sm font-semibold text-blue-600">
-            {existingReport ? "Remis" : "Non remis"}
+            {existingReport ? "Remis" : null}
           </span>
         </div>
         <div className="p-5">
@@ -82,6 +82,13 @@ export default function ChapterOption({
             </span>
           </div>
         )}
+        {!existingReport && (
+          <div className="px-5 py-4 border-t">
+            <span className="text-sm font-semibo">
+              You have not yet submitted your work
+            </span>
+          </div>
+        )}
         {existingReport && existingReport.note && (
           <div className="px-5 py-4 border-t">
             <span>
@@ -102,7 +109,6 @@ export default function ChapterOption({
           </div>
         )}
       </div>
-      <QuizForm chapterId={chapterId} courseId={courseId}  hasreport={!!existingReport} />
     </div>
   );
 }

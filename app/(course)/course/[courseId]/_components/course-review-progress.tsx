@@ -8,14 +8,25 @@ interface Props {
   courseId: string | undefined;
   avg?: number;
   totalReviews?: number;
+  isForCard?: boolean;
 }
 
-export default function ReviewProgress({ courseId, avg, totalReviews }: Props) {
+export default function ReviewProgress({
+  courseId,
+  avg,
+  totalReviews,
+  isForCard,
+}: Props) {
   return (
     <>
       <HoverCard>
         <HoverCardTrigger className="cursor-pointer w-auto " asChild>
-          <div className="flex justify-between items-center ">
+          <div
+            className={cn(
+              "flex  items-center",
+              isForCard ? "justify-between" : "justify-start"
+            )}
+          >
             <div className="flex mt-4 ">
               <div className="flex   mb-4">
                 {[...Array(5)].map((_, index) => {

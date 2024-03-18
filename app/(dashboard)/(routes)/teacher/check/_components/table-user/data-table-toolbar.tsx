@@ -1,33 +1,46 @@
-"use client"
+"use client";
 
-import { Input } from "@/components/ui/input"
-import { Cross2Icon } from "@radix-ui/react-icons"
-import { Table } from "@tanstack/react-table"
-import { DataTableFacetedFilter } from "./data-table-facedted.filter"
-import { Button } from "@/components/ui/button"
-import { DataTableViewOptions } from "./data-table-view-options"
-import { labels,priorities, statuses } from "./data/data"
-import { getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-include-progresse"
-
-
-
-
+import { Input } from "@/components/ui/input";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { Table } from "@tanstack/react-table";
+import { DataTableFacetedFilter } from "./data-table-facedted.filter";
+import { Button } from "@/components/ui/button";
+import { DataTableViewOptions } from "./data-table-view-options";
+import { labels, priorities, statuses, statuses2 } from "./data/data";
+import { getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-include-progresse";
+import React, { useEffect } from "react";
+import { any } from "zod";
+import { getCoursesName } from "@/actions/teacher/get-courses-name";
+import { DataCoursesFilter } from "./data-table-course-filter";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<Awaited<ReturnType<typeof getCourseIncludeProgresse>>>
+  table: Table<Awaited<ReturnType<typeof getCourseIncludeProgresse>>>;
 }
 
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0
+  const isFiltered = table.getState().columnFilters.length > 0;
+  const [courses, setCourses] = React.useState([] as any);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const courses=await getCoursesName();
+      setCourses(courses);
+    }
+    fetchData();
+
+  }, [table]);
+
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Filter tasks..."
-          value={(table.getColumn("course_title")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("course_title")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
             table.getColumn("course_title")?.setFilterValue(event.target.value)
           }
@@ -37,10 +50,24 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("status")}
             title="Status"
-            options={statuses}
+            options2={statuses2}
           />
         )}
-        
+        {table.getColumn("status") && (
+          <DataCoursesFilter
+            column={table.getColumn("course_title")}
+            title="Courses"
+            options2={courses}
+          />
+        )}
+        {/* {table.getColumn("course_title") && (
+          <DataCourseFilter
+            column={table.getColumn("course_title")}
+            title="Courses"
+            options2={labels}
+          />
+        )} */}
+
         {isFiltered && (
           <Button
             variant="ghost"
@@ -54,5 +81,5 @@ export function DataTableToolbar<TData>({
       </div>
       <DataTableViewOptions table={table} />
     </div>
-  )
+  );
 }

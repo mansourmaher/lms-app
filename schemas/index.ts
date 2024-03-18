@@ -46,7 +46,10 @@ export const ProfileSchema=z.object({
         region: z.string().min(0, { message: "Please select a country" }),
         lalng: z.array(z.number()).min(0, { message: "Please select a country" })
     
-    }).optional()
+    }).optional(),
+    subtitle:z.string().min(0,{message:"Please enter a valid subtitle"}).optional(),
+    patients:z.array(z.string()).min(0,{message:"Please select a patient"}).optional(),
+    
 })
 
 export const QuizSchema=z.object({

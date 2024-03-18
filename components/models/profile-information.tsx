@@ -29,6 +29,12 @@ import { User } from "next-auth";
 import Stepper from "./stepper";
 import { MdClose } from "react-icons/md";
 import { Origin } from "@prisma/client";
+import { Plus, X } from "lucide-react";
+import { Badge } from "../ui/badge";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { FormLabel } from "../ui/form";
+import { Label } from "../ui/label";
+import ProfileHeader from "./_components/ProfileHeader";
 
 interface ProfileInformationForm {
   location: string;
@@ -39,13 +45,12 @@ interface ProfileInformationForm {
 interface userDataProps {
   user: User;
 }
-interface data{
+interface data {
   date: Date;
   optionSelected: string;
   imageUrl: string;
   country: CountrySelectValue | undefined;
-  about:string
-
+  about: string;
 }
 
 export const ProfileInformation = () => {
@@ -59,13 +64,11 @@ export const ProfileInformation = () => {
   const initailImageUrl = user?.data?.user?.image
     ? user?.data?.user?.image
     : "";
-    const initialeAbout = user?.data?.user?.about
-    ? user?.data?.user?.about
-    : "";
-    const initialFilier=user?.data?.user?.filier || "";
+  const initialeAbout = user?.data?.user?.about ? user?.data?.user?.about : "";
+  const initialFilier = user?.data?.user?.filier || "";
 
   const initialeOrigin = user?.data?.user?.origin || {
-    id:"",
+    id: "",
     userId: "",
     value: "",
     label: "",
@@ -74,10 +77,10 @@ export const ProfileInformation = () => {
     lalng: [0, 0],
   };
 
-
-
   const [initailFilierValue, setInitailFilierValue] =
     useState<string>(initailFilier);
+    const initialSubtitle = user?.data?.user?.subtitle ? user?.data?.user?.subtitle : "";
+    const initialPatients = user?.data?.user?.patients ? user?.data?.user?.patients : [];
 
   const [currentStep, setCurrentStep] = useState(1);
   const [date, setDate] = useState<Date>(initialDate);
@@ -87,6 +90,9 @@ export const ProfileInformation = () => {
   const [isloading, setIsloading] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [origin, setOrigin] = useState<Origin>(initialeOrigin);
+  const [patient, setPatient] = useState<string>("");
+  const [patiants, setPatiants] = useState<string[]>(initialPatients);
+  const [subtitle, setSubtitle] = useState<string>(initialSubtitle);
 
   const steps = [
     {
@@ -96,6 +102,9 @@ export const ProfileInformation = () => {
       title: "Personal Information",
     },
     {
+      title: "Finish",
+    },
+    {
       title: "Profile Picture",
     },
   ];
@@ -103,12 +112,18 @@ export const ProfileInformation = () => {
 
   const [location, setLocation] = useState<CountrySelectValue>();
 
+  const onpatientPuch = async (data: any) => {
+    await setPatiants((prev) => {
+      const updatedOptions = [...prev, data];
+
+      setPatient("");
+
+      return updatedOptions;
+    });
+  };
+
   const handleNext = () => {
     setCurrentStep((prevStep) => {
-      if (prevStep === 3) {
-        return prevStep;
-      }
-
       if (prevStep === 2) {
         if (date && optionSelected && about) {
           return prevStep + 1;
@@ -127,8 +142,7 @@ export const ProfileInformation = () => {
         }
       }
 
-   
-      return prevStep;
+      return prevStep + 1;
     });
   };
 
@@ -143,13 +157,14 @@ export const ProfileInformation = () => {
       imageUrl: imageUrl as string,
       country: origin as CountrySelectValue,
       about: about as string,
+      subtitle: subtitle as string,
+      patients: patiants as string[],
     };
     await FillInformation(data)
       .then((res) => {
         if (res.success) {
           toast.success("Profile Information Added Successfully");
-        }
-        else{
+        } else {
           toast.error("Error Adding Profile Information");
         }
       })
@@ -165,13 +180,10 @@ export const ProfileInformation = () => {
         <AlertDialogTrigger className="flex items-center gap-x-2" asChild>
           <Button className="w-full ">Fill some information</Button>
         </AlertDialogTrigger>
-        <AlertDialogContent className="max-w-[50%]">
+        <AlertDialogContent className="max-w-[50%] overflow-hidden">
           <AlertDialogTitle className="flex justify-between items-center w-full">
-            <div>
-              <span>
-                For a better experience, you should fill some information.
-              </span>
-            </div>
+            <ProfileHeader user={user?.data?.user!} />
+
             <div>
               <AlertDialogTrigger asChild>
                 <button>
@@ -279,7 +291,7 @@ export const ProfileInformation = () => {
             </div>
           )}
 
-          {currentStep === 3 && (
+          {currentStep === 4 && (
             <div>
               <h1>{steps[2].title}</h1>
               <div>
@@ -344,6 +356,80 @@ export const ProfileInformation = () => {
                     className="mt-4 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 w-full rounded-md py-2"
                   >
                     submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {currentStep === 3 && (
+            <div>
+              <div className="flex flex-col gap-6">
+                <div>
+                  <Label>Subtitle</Label>
+                  <Input
+                    placeholder="You subtitle"
+                    onChange={(e) => setSubtitle(e.target.value)}
+                    value={subtitle}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between gap-x-3">
+                  <Input
+                    placeholder="You patiants"
+                    value={patient}
+                    onChange={(e) => setPatient(e.target.value)}
+                  />
+                  <button
+                    onClick={() => onpatientPuch(patient)}
+                    disabled={patient === ""}
+                    className="ml-4 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-1.5 py-1.5 text-center "
+                  >
+                    <Plus className="w-6 h-6 " />
+                  </button>
+                </div>
+              </div>
+              <div className="mt-3">
+                {patiants && (
+                  <div className="grid grid-cols-4 gap-x-2 gap-y-2">
+                    {patiants.map((option, index) => {
+                      if (option === null) return null;
+                      return (
+                        <Badge variant="outline" className="mt-2 p-1 relative">
+                          {option}
+                          <X
+                            onClick={() => {
+                              setPatiants((prev) => {
+                                const updatedOptions = prev.filter(
+                                  (opt) => opt !== option
+                                );
+
+                                return updatedOptions;
+                              });
+                            }}
+                            size="18"
+                            className=" cursor-pointer absolute top-0 right-0"
+                          ></X>
+                        </Badge>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-row justify-between gap-3 items-center">
+                <div className="flex-1">
+                  <button
+                    onClick={handelPrevious}
+                    className="mt-4 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 w-full rounded-md py-2"
+                  >
+                    Previews
+                  </button>
+                </div>
+                <div className="flex-1">
+                  <button
+                    onClick={handleNext}
+                    className="mt-4 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 w-full rounded-md py-2"
+                  >
+                    Next
                   </button>
                 </div>
               </div>

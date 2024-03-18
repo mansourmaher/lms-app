@@ -31,7 +31,7 @@ interface DataTableFacetedFilterProps<TData, TValue> {
   }[]
 }
 
-export function DataTableFacetedFilter<TData, TValue>({
+export function DataCoursesFilter<TData, TValue>({
   column,
   title,
   options2,
@@ -65,14 +65,17 @@ const selectedValues = new Set(filterValue.map(value => String(value)))
                   </Badge>
                 ) : (
                   options2
-                    .filter((option) => selectedValues.has(option.value))
+                  // @ts-ignore
+                    .filter((option) => selectedValues.has(option.title))
                     .map((option) => (
                       <Badge
                         variant="secondary"
-                        key={option.value}
+                        // @ts-ignore
+                        key={option.title}
                         className="rounded-sm px-1 font-normal"
                       >
-                        {option.label}
+                        {/** @ts-ignore */}
+                        {option.title}
                       </Badge>
                     ))
                 )}
@@ -88,15 +91,19 @@ const selectedValues = new Set(filterValue.map(value => String(value)))
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               {options2.map((option) => {
-                const isSelected = selectedValues.has(option.value)
+                {/** @ts-ignore */}
+                const isSelected = selectedValues.has(option.title)
                 return (
                   <CommandItem
-                    key={option.value}
+                  // @ts-ignore
+                    key={option.title}
                     onSelect={() => {
                       if (isSelected) {
-                        selectedValues.delete(option.value)
+                        {/** @ts-ignore */}
+                        selectedValues.delete(option.title)
                       } else {
-                        selectedValues.add(option.value)
+                        {/** @ts-ignore */}
+                        selectedValues.add(option.title)
                       }
                       const filterValues = Array.from(selectedValues)
                       column?.setFilterValue(
@@ -117,10 +124,13 @@ const selectedValues = new Set(filterValue.map(value => String(value)))
                     {option.icon && (
                       <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
                     )}
-                    <span>{option.label}</span>
-                    {facets?.get(option.value) && (
+                    {/** @ts-ignore */}
+                    <span>{option.title}</span>
+                    {/** @ts-ignore */}
+                    {facets?.get(option.title) && (
                       <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {facets.get(option.value)}
+                        {/** @ts-ignore */}
+                        {facets.get(option.title)}
                       </span>
                     )}
                   </CommandItem>

@@ -41,6 +41,19 @@ export const statuses = [
     icon: StopwatchIcon,
   },
 ];
+export const statuses2 = [
+  {
+    value: "pending", // "Completed
+    label: "Pending",
+    icon: QuestionMarkCircledIcon,
+  },
+  {
+    value: "validated", // "Not started"
+    label: "Validated",
+    icon: CircleIcon,
+  },
+  
+];
 
 export const priorities = [
   {

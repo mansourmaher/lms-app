@@ -13,6 +13,7 @@ export const dynamic = "force-dynamic";
 interface getCoursesParams {
   title?: string;
   category?: string;
+  teacher?: string;
 }
 
 interface SearchPageProps {
@@ -23,12 +24,13 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const courses = await getCourses({
     title: searchParams.title!,
     category: searchParams.category!,
+    teacher: searchParams.teacher!,
   });
 
   return (
     <>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
-        <SearchInput />
+        
       </div>
       <div className="p-6 space-y-6 ">
         <Categories />
