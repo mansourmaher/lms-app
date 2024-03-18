@@ -18,7 +18,7 @@ export async function getTeacherWithCoursesCount() {
         })
         return {
             ...teacher,
-            coursesCount
+            coursesCount 
         }
     }
     ))
