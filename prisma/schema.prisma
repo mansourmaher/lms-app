@@ -57,6 +57,8 @@ model User {
 
   about        String?
   DateOfBirth  DateTime?
+  subtitle     String?
+  patiants     String[]
   courseReview CourseReview[]
   course       Course[]
   courseUser   CourseUser[]
@@ -205,6 +207,7 @@ model Chapter {
   quiz         Quiz[]
   report       Report[]
 
+  @@unique([position, courseId])
   @@index([courseId])
 }
 
@@ -222,6 +225,7 @@ model Report {
   workUrl   String?
   grade     Float?
   note      String?
+  status    String @default("pending")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

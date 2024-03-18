@@ -10,12 +10,19 @@ import { SearchInput } from "./search_input";
 import { Notifications } from "@prisma/client";
 import { getAllNotifications } from "@/actions/teacher/get-all-notifications";
 import TeacherNotification from "./Auth/teacher-notifications";
+import TeacherSearchInput from "./teacher-search-input";
+import { getTeacherWithCoursesCount } from "@/actions/Etudiant/get-teacher-name";
 
 interface NavbarRoutesProps {
   notifications: Awaited<ReturnType<typeof getAllNotifications>>;
-  userId:string |undefined
+  userId: string | undefined;
+  teachers: Awaited<ReturnType<typeof getTeacherWithCoursesCount>>;
 }
-export const NavbarRoutes = ({ notifications,userId }: NavbarRoutesProps) => {
+export const NavbarRoutes = ({
+  notifications,
+  userId,
+  teachers,
+}: NavbarRoutesProps) => {
   const pathname = usePathname();
 
   const isTeacherPage = pathname?.startsWith("/teacher");
@@ -26,7 +33,10 @@ export const NavbarRoutes = ({ notifications,userId }: NavbarRoutesProps) => {
     <>
       {isSearchPage && (
         <div className="hidden md:block">
-          <SearchInput />
+          <div className="flex items-center ">
+            <SearchInput />
+            <TeacherSearchInput teachers={teachers} />
+          </div>
         </div>
       )}
 

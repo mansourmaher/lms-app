@@ -28,7 +28,7 @@ export const FillInformation=async(value:z.infer<typeof ProfileSchema>)=>
         console.log("country"+value.country)
         return {error:"invalid data"}
     }
-    const {date,optionSelected,imageUrl,about,country}=validateFiels.data
+    const {date,optionSelected,imageUrl,about,country,subtitle,patients}=validateFiels.data
 
     const existingOrigin=await db.origin.findFirst({
         where:{
@@ -82,7 +82,9 @@ export const FillInformation=async(value:z.infer<typeof ProfileSchema>)=>
             filier:optionSelected,
             
             image:imageUrl,
-            about:about
+            about:about,
+            patiants:patients,
+            subtitle:subtitle
 
 
         }

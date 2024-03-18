@@ -66,6 +66,8 @@ export const {
                 session.user.image = token.image;
                 session.user.createdAt = token.createdAt;
                 session.user.about = token.about;
+                session.user.patients = token.patients;
+                session.user.subtitle = token.subtitle;
               
                 
 
@@ -89,6 +91,8 @@ export const {
         token.createdAt=existingUser.createdAt
         token.about=existingUser.about
         token.origin=existingUser.origin
+        token.patients=existingUser.patiants
+        token.subtitle=existingUser.subtitle
         
         
         

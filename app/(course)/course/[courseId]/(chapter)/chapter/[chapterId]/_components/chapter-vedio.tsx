@@ -16,12 +16,18 @@ export default function ChapterVedio({ videosrc }: Props) {
   const router = useRouter();
 
   return (
-    <div className="m-8 space-y-6">
-      <div className="text-2xl font-bold">
-        the title of the courses will display here
+    <div className="ml-8 flex gap-x-2">
+      <div className="relative w-full h-[500px] aspect-video rounded-xl mb-4">
+        <Video
+          src={videosrc!}
+          onEnded={() => alert("end")}
+          controls
+          className="w-[500px] h-full"
+        />
       </div>
-      <div className="relative w-full h-[550px] aspect-video rounded-xl mb-4">
-        <Video src={videosrc!} onEnded={()=>alert("end")} controls className="w-[550px] h-full" />
+      <div>
+        {" "}
+        <hr className="h-1 w-full bg-slate-500" />
       </div>
     </div>
   );

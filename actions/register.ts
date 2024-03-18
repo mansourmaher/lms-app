@@ -27,7 +27,7 @@ export const register=async(values:z.infer<typeof RegisterSchema>)=>
     await db.user.create({data:{email,password:hassedPassword,name,role:role as UserRole}})
     const verificationToken=await generateVerificationToken(email)
 
-    //await sendVerificationEmail(verificationToken.email,verificationToken.token)
+    await sendVerificationEmail(verificationToken.email,verificationToken.token)
 
 
     return {succes:"Confirmation Email sent"}

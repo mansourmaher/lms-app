@@ -21,13 +21,13 @@ export const login=async(values:z.infer<typeof LoginSchema>)=>
     {
         return {error:"EMAIL DOES NOT EXIST"}
     }
-    // if(!existingUser.emailVerified)
-    // {
-    //     const verificationToken=await generateVerificationToken(existingUser.email)
-    //     await sendVerificationEmail(existingUser.email,verificationToken.token)
-    //     return {succes:"Confirmation Email sent"}
+     if(!existingUser.emailVerified)
+     {
+         const verificationToken=await generateVerificationToken(existingUser.email)
+         await sendVerificationEmail(existingUser.email,verificationToken.token)
+         return {succes:"Confirmation Email sent"}
 
-    // }
+     }
     existingUser.emailVerified=new Date()
     try{
         await signIn('credentials',{email,password,redirectTo:"/"})

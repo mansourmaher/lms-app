@@ -58,7 +58,7 @@ export const CourseCard = async ({
         {description}
       </p>
       <div className="px-2">
-        <ReviewProgress courseId={id} avg={avg!} totalReviews={totalReviews!} />
+        <ReviewProgress courseId={id} avg={avg!} totalReviews={totalReviews!} isForCard={true} />
       </div>
       <div className="flex flex-row justify-between items-center md:flex-cols-3  ">
         <div className="flex ">

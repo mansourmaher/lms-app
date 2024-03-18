@@ -12,6 +12,8 @@ export type ExtendedUser = DefaultSession["user"] & {
   origin: Origin;
   about: string;
   createdAt: Date;
+  subtitle: string;
+  patients: string[];
 };
 
 declare module "next-auth" {

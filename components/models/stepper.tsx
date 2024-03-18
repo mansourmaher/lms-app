@@ -9,7 +9,7 @@ interface StepperProps {
 
 const Stepper = ({ steps, currentStep, isFinished }: StepperProps) => {
   return (
-    <div className="w-full flex justify-center ml-16">
+    <div className="w-full flex justify-center ml-1">
       <div data-hs-stepper className="w-full">
         <ul className="relative flex flex-row gap-x-2">
           {steps.map((_, index) => (

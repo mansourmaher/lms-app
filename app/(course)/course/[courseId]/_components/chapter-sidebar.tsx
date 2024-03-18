@@ -27,15 +27,14 @@ export const ChapterSidebarItem = ({
   const router = useRouter();
 
   return (
-    <div className="flex pt-6 pl-6 ">
-      <div className="text-sm font-medium ">
+    <div className="flex pt-6 pl-4 pr-2  w-full">
+      <div className="text-sm font-medium flex flex-col w-full">
         <Button
           onClick={() => router.push(`/course/${courseId}/chapter/${id}`)}
           size={"lg"}
-          className="  text-left bg-white text-gray-800  border-gray-200 hover:border-gray-300 hover:shadow-md hover:bg-slate-200/80 transition-all duration-200 ease-in-out gap-x-6 border-radius-2xl px-4 py-2 rounded-full border"
+          className="  text-left bg-white text-gray-800  border-gray-200 hover:border-gray-300 hover:shadow-md hover:bg-slate-200/80 transition-all duration-200 ease-in-out gap-x-6 border-radius-2xl px-4 py-2 rounded-full border w-full "
           disabled={isLocked && !isPurchased}
         >
-          
           <div className="flex gap-x-1 items-center">
             {isLocked && !isPurchased ? (
               <LockKeyhole size={16} className="text-gray-500" />

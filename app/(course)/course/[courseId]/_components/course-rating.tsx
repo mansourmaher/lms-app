@@ -18,6 +18,7 @@ interface RatingProps {
   initialRating?: number;
   isUpdating?: boolean;
   commentId?: string;
+  
 }
 const labels: { [index: string]: string } = {
   0.5: "Useless",
@@ -38,6 +39,7 @@ export default function CourseRating({
   initialRating,
   isUpdating,
   commentId,
+ 
 }: RatingProps) {
   const initialeRating = initialRating ? initialRating : 0;
   const initailCommente = initailComment ? initailComment : "";

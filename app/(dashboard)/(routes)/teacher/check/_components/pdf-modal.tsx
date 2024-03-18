@@ -35,7 +35,7 @@ import PdfNote from "./pdf-note";
 interface PdfModalProps {
   info: any;
   work: any;
-  id: any;
+  id?: any;
 }
 
 export default function PdfModal({ info, work,id }: PdfModalProps) {
