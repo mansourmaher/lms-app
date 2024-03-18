@@ -13,7 +13,7 @@ export async function getTeacherWithCoursesCount() {
     const teachersWithCoursesCount=await Promise.all(teachers.map(async teacher=>{
         const coursesCount=await db.course.count({
             where:{
-                userId:teacher.user?.id
+                userId:teacher.user?.id 
             }
         })
         return {
