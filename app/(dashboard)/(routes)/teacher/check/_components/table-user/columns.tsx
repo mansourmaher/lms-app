@@ -1,22 +1,12 @@
 "use client";
 
-import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
 
-import { DataTableColumnHeader } from "./data-table-column-header";
-import { DataTableRowActions } from "./data-table-row-actions";
-import { labels, priorities, statuses } from "./data/data";
-import { Course } from "@prisma/client";
-import { get } from "http";
-import { getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-include-progresse";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Progress } from "@/components/ui/progress";
 import { getAllEtudiantWithCompteRendu } from "@/actions/teacher/get-all-etduiant-with-compte-rendu";
-import { Button } from "@/components/ui/button";
-import { Check, File } from "lucide-react";
 import PdfModal from "../pdf-modal";
 
 const columnHelper =
@@ -26,26 +16,35 @@ const columnHelper =
 
 export const columns = [
   //@ts-ignore
-  columnHelper.accessor((row) => row.user, {
+  columnHelper.accessor((row) => row.user.name, {
     id: "student",
     header: "Student",
+
     cell: (info) => {
       return (
         <div className="flex items-center gap-x-2.5 w-50">
-          <Avatar className="h-10 w-10 ">
+          <Avatar className="h-8 w-8 ">
             <AvatarImage
               className="rounded-full"
-              src={info.getValue()?.image || ""}
-              alt={info.getValue()?.name!}
+              src={
+                //@ts-ignore
+                info.row.original.user.image ? info.row.original.user.image : ""
+              }
             />
             <AvatarFallback className="uppercase">
-              {info.getValue()?.name![0]}
+              {/*@ts-ignore*/}
+              {info.row.original.user.name[0]}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col space-y-1">
-            <div className="text-sm font-medium">{info.getValue()?.name}</div>
+            <div className="text-sm font-medium">
+              {/*@ts-ignore*/}
+              {info.row.original.user.name}
+            </div>
+
             <div className="text-xs text-gray-500">
-              {info.getValue()?.email}
+              {/*@ts-ignore*/}
+              {info.row.original.user.email}
             </div>
           </div>
         </div>

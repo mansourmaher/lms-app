@@ -25,24 +25,20 @@ export function DataTableToolbar<TData>({
 
   useEffect(() => {
     const fetchData = async () => {
-      const courses=await getCoursesName();
+      const courses = await getCoursesName();
       setCourses(courses);
-    }
+    };
     fetchData();
-
   }, [table]);
-
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter tasks..."
-          value={
-            (table.getColumn("course_title")?.getFilterValue() as string) ?? ""
-          }
+          placeholder="Search your student"
+          value={(table.getColumn("student")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("course_title")?.setFilterValue(event.target.value)
+            table.getColumn("student")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
@@ -66,7 +62,7 @@ export function DataTableToolbar<TData>({
             title="Courses"
             options2={labels}
           />
-        )} */}
+        )}  */}
 
         {isFiltered && (
           <Button

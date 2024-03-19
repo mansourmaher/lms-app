@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { formatDistance } from "date-fns";
 import { markNotificationAsRead } from "@/actions/teacher/markNotificationAsread";
 import { Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface SingleNotificationsProps {
   notifcation: Awaited<ReturnType<typeof getAllNotifications>>[0];
@@ -15,6 +16,7 @@ export default function SingleNotifications({
   notifcation,
 }: SingleNotificationsProps) {
   const [wichCheck, setWichCheck] = React.useState(false);
+  const router = useRouter();
 
   const handelmakeread = async (id: string) => {
     setWichCheck(true);
@@ -23,14 +25,14 @@ export default function SingleNotifications({
 
   return (
     <div>
-      <div>
+      <div onClick={() => router.push('teacher/check')} className="cursor-pointer">
         <div className="flex  py-3 hover:bg-gray-100 dark:hover:bg-gray-700  border-b border-gray-300 dark:border-gray-700  transition-colors duration-200 ease-in-out">
           <div className="flex-shrink-0 mt-3">
             <Avatar className="h-10 w-10 ">
               <AvatarImage
                 className="rounded-full"
-                src={notifcation?.studentNotif.image || ""} // i want to do the creation time - current time
-                alt={notifcation?.studentNotif.name!}
+                src={notifcation?.studentNotif?.image || ""} // i want to do the creation time - current time
+                alt={notifcation?.studentNotif?.name!}
               />
               <AvatarFallback className="uppercase">
                 {notifcation?.studentNotif.name![0]}

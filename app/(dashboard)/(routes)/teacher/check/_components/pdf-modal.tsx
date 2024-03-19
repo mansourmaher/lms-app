@@ -6,7 +6,7 @@ import "react-pdf/dist/esm/Page/TextLayer.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,6 +31,7 @@ import {
 import { cn } from "@/lib/utils";
 import PdfModalFullScreen from "./pdfModal-full-screen";
 import PdfNote from "./pdf-note";
+import { getReportById } from "@/actions/teacher/get-reportById";
 
 interface PdfModalProps {
   info: any;
@@ -38,13 +39,14 @@ interface PdfModalProps {
   id?: any;
 }
 
-export default function PdfModal({ info, work,id }: PdfModalProps) {
+export default function PdfModal({ info, work, id }: PdfModalProps) {
   const { width, ref } = useResizeDetector();
   const [numPages, setNumPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [scale, setScale] = React.useState(1);
   const [renderedScale, setRenderedScale] = useState<number | null>(null);
   const isLoading = renderedScale !== scale;
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -132,6 +134,7 @@ export default function PdfModal({ info, work,id }: PdfModalProps) {
                   <ChevronUp className="w-5 h-5 transform rotate-180" />
                 </Button>
               </div>
+
               <PdfNote id={id} />
               <div className="space-x-2">
                 <DropdownMenu>

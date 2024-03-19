@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Expand } from "lucide-react";
-import React, { useState } from "react";
+import { Expand, Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { number, z } from "zod";
+import { number, string, z } from "zod";
 
 import {
   Form,
@@ -20,11 +20,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Editor } from "@/components/editor";
 import axios from "axios";
+import { getReportById } from "@/actions/teacher/get-reportById";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   note: z.string().min(2, {
     message: "Please enter a note",
   }),
+
   grade: z.number().int().min(0).max(20, {
     message: "Please enter a valid grade",
   }),
@@ -35,11 +38,27 @@ interface FormProps {
 }
 
 export default function PdfNote({ id }: FormProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [note, setNote] = useState("");
+  const [grade, setGrade] = useState(0);
+  const [souldBerefresh, setSouldBerefresh] = useState(false);
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
-  const [isOpen, setIsOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getReportById(id);
+      setNote(res?.note as string);
+      setGrade(res?.grade as number);
+      form.setValue("note", res?.note as string);
+      form.setValue("grade", res?.grade as number);
+    };
+    fetchData();
+  }, [id, souldBerefresh]);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     await axios
       .post("/api/teacher/keepNote", {
@@ -49,7 +68,7 @@ export default function PdfNote({ id }: FormProps) {
       })
       .then((res) => {
         setSuccessMessage(res.data.message);
-        form.reset();
+        setSouldBerefresh(!souldBerefresh);
       });
   };
   return (
@@ -88,6 +107,7 @@ export default function PdfNote({ id }: FormProps) {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="grade"
@@ -96,7 +116,7 @@ export default function PdfNote({ id }: FormProps) {
                   <FormLabel>Keep a Grade to you student</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Grade ..."
+                      placeholder="Grade"
                       {...field}
                       type="number"
                       min={0}
@@ -122,13 +142,22 @@ export default function PdfNote({ id }: FormProps) {
                 {successMessage}
               </div>
             )}
-
-            <Button
-              disabled={!form.formState.isValid || form.formState.isSubmitting}
-              type="submit"
-            >
-              Submit
-            </Button>
+            <div className="flex justify-end">
+              <Button
+                disabled={
+                  !form.formState.isValid || form.formState.isSubmitting
+                }
+                type="submit"
+                variant={"primary"}
+                //put it in the right
+              >
+                {form.formState.isSubmitting ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : (
+                  "Save"
+                )}
+              </Button>
+            </div>
           </form>
         </Form>
       </DialogContent>

@@ -12,7 +12,7 @@ const LayoutPage = async ({
 }) => {
   return (
     <div className="h-full">
-      <div className="hidden md:flex h-full w-80 flex-col fixed inset-y-0 z-50">
+      <div className="hidden md:flex h-full w-80 flex-col fixed inset-y-0 z-50 ">
         <CourseSideBar courseId={params.courseId!} />
       </div>
       <div className="m-8 w-10">

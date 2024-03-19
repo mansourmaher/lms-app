@@ -4,6 +4,7 @@ import { get } from 'http';
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { pusherServer } from '@/lib/pusher';
+import { revalidatePath } from 'next/cache';
 
 
 
@@ -21,7 +22,8 @@ export async function POST(req:Request)
             },
             data:{
                 grade:grade,
-                note:note
+                note:note,
+                status:"validated"
             }
                 
              })
@@ -43,6 +45,7 @@ export async function POST(req:Request)
             await pusherServer.trigger('notification', 'new-notification', {
                 notification
             });
+            revalidatePath('teacher/check')
             return  Response.json({message:"Work submitted you studnet will be notified"}, { status: 200 });
     }catch(e)
     {
