@@ -1,17 +1,11 @@
 "use client";
 
-import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
 
-import { DataTableColumnHeader } from "./data-table-column-header";
-import { DataTableRowActions } from "./data-table-row-actions";
-import { labels, priorities, statuses } from "./data/data";
-import { Course } from "@prisma/client";
-import { get } from "http";
 import { getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-include-progresse";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 
@@ -20,12 +14,14 @@ const columnHelper =
 
 export const columns = [
   //@ts-ignore
+
   columnHelper.accessor((row) => row.course.title, {
     id: "course_title",
     header: "Course Title",
+
     cell: (info) => {
       return (
-        <div className="flex items-center gap-x-2.5">
+        <div className="flex items-center gap-x-2.5  w-[180px]">
           <div className="flex flex-col space-y-1">
             <div className="text-sm font-semibold">
               {/*@ts-ignore*/}
@@ -46,7 +42,18 @@ export const columns = [
   columnHelper.accessor((row) => row.createdAt, {
     id: "dateDebut",
     header: "Start date",
-    cell: (info) => format(info.getValue(), "dd/MM/yyyy"),
+    cell: (info) => {
+      return (
+        <div className="text-xs ">
+          {/*@ts-ignore*/}
+          {new Date(info.row.original.createdAt).toLocaleDateString("en-us", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </div>
+      );
+    },
   }),
   //@ts-ignore
 
@@ -58,7 +65,7 @@ export const columns = [
     header: "Student",
     cell: (info) => {
       return (
-        <div className="flex items-center gap-x-2.5 w-20">
+        <div className="flex items-center gap-x-2.5 w-40">
           <Avatar className="h-10 w-10 ">
             <AvatarImage
               className="rounded-full"
@@ -85,7 +92,7 @@ export const columns = [
     header: "Progress",
     cell: (info) => {
       return (
-        <div className="flex space-x-2 items-center">
+        <div className="flex space-x-2 items-center w-60">
           <Progress value={info.getValue()} />
           <span className="text-xs">{Math.round(info.getValue()!)}%</span>
         </div>
@@ -117,8 +124,26 @@ export const columns = [
       );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      return value.includes(row.getValue(id));
     },
   }),
-  
+  //@ts-ignore
+  columnHelper.accessor((row) => row.classement, {
+    id: "classement",
+    header: "Classement",
+
+    cell: (info) => {
+      return (
+        <div className="">
+          <span className="text-xs w-3">
+            {/*@ts-ignore*/}
+            {info.row.original.classement === 0
+              ? "-"
+              : // @ts-ignore
+                info.row.original.classement}
+          </span>
+        </div>
+      );
+    },
+  }),
 ];

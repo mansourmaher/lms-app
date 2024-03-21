@@ -59,6 +59,7 @@ model User {
   DateOfBirth  DateTime?
   subtitle     String?
   patiants     String[]
+  points       Int?            @default(0)
   courseReview CourseReview[]
   course       Course[]
   courseUser   CourseUser[]
@@ -134,14 +135,15 @@ model Course {
 }
 
 model CourseUser {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User?    @relation(fields: [userId], references: [id])
-  courseId  String
-  course    Course   @relation(fields: [courseId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  status    String   @default("Not started")
+  id         String   @id @default(uuid())
+  userId     String
+  user       User?    @relation(fields: [userId], references: [id])
+  courseId   String
+  course     Course   @relation(fields: [courseId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  status     String   @default("Not started")
+  classement Int?     @default(0)
 
   @@unique([userId, courseId])
 }
@@ -207,7 +209,7 @@ model Chapter {
   quiz         Quiz[]
   report       Report[]
 
-  @@unique([position, courseId])
+  
   @@index([courseId])
 }
 
@@ -225,7 +227,7 @@ model Report {
   workUrl   String?
   grade     Float?
   note      String?
-  status    String @default("pending")
+  status    String  @default("pending")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

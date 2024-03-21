@@ -15,12 +15,14 @@ import { Input } from "../ui/input";
 import { LogoutButton } from "./logout-button";
 import { AccesTeacher } from "../models/acces-teacher";
 import { isTeacherHaveRequestPending } from "@/actions/getRequestByTeacherId";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ProfileInformation } from "../models/profile-information";
 import { formatDate } from "date-fns";
+import dynamic from "next/dynamic";
 
 export const UserButton = () => {
   const currentUser = getCurrentUser();
+  const Map=useMemo(()=>dynamic(()=>import("../Map"),{loading:()=><p>loading...</p>,ssr:false}),[currentUser?.origin?.lalng])
   
   const [isTeacherRequestPending, setIsTeacherRequestPending] = useState(false);
   useEffect(() => {
@@ -90,7 +92,9 @@ export const UserButton = () => {
         <Input value={originValue || ""} readOnly className="mt-2" />
         <Label>About</Label>
         <Input value={currentUser?.about || ""} readOnly className="mt-2" />
+        
       </div>
+      <Map center={currentUser?.origin.lalng} />
       <SheetFooter>
         <div>
           {currentUser?.role === "TEACHER" &&
@@ -108,7 +112,7 @@ export const UserButton = () => {
         </div>
         <div className="flex flex-row justify-between mt-4 w-full gap-3">
           <div className="flex-1">
-            <ProfileInformation />
+            <ProfileInformation isTeacherhasRequest={isTeacherRequestPending} />
           </div>
           <div className="flex-1">
             <LogoutButton>Logout</LogoutButton>

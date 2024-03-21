@@ -22,7 +22,7 @@ export default function ChapterButtons({
 
   return (
     <div>
-      <div className="ml-8">
+      <div className="ml-8 ">
         <div className="flex flex-row space-x-6 ">
           <Button
             variant={selected === 0 ? "primary" : "ghost"}

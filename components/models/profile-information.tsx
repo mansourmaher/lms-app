@@ -8,10 +8,8 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { CountrySelect, CountrySelectValue } from "../country-select";
-import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
-import { set } from "zod";
+import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
@@ -19,22 +17,17 @@ import { FileUpload } from "../file-upload";
 import Image from "next/image";
 import { BeatLoader } from "react-spinners";
 import Select from "react-select";
-import { fileURLToPath } from "url";
 import filiers from "@/data/filiers";
-import { ProfileSchema } from "@/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { FillInformation } from "@/actions/profile/fill-information";
 import { Button } from "../ui/button";
-import { User } from "next-auth";
 import Stepper from "./stepper";
 import { MdClose } from "react-icons/md";
 import { Origin } from "@prisma/client";
-import { Plus, X } from "lucide-react";
+import { Plus, Settings, User, X } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import { FormLabel } from "../ui/form";
 import { Label } from "../ui/label";
 import ProfileHeader from "./_components/ProfileHeader";
+import Setting from "./_components/setting";
 
 interface ProfileInformationForm {
   location: string;
@@ -43,7 +36,7 @@ interface ProfileInformationForm {
 }
 
 interface userDataProps {
-  user: User;
+  isTeacherhasRequest: boolean;
 }
 interface data {
   date: Date;
@@ -53,7 +46,7 @@ interface data {
   about: string;
 }
 
-export const ProfileInformation = () => {
+export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
   const user = useSession();
   const initialDate = user?.data?.user?.DateOfBirth
     ? new Date(user?.data?.user?.DateOfBirth)
@@ -79,8 +72,12 @@ export const ProfileInformation = () => {
 
   const [initailFilierValue, setInitailFilierValue] =
     useState<string>(initailFilier);
-    const initialSubtitle = user?.data?.user?.subtitle ? user?.data?.user?.subtitle : "";
-    const initialPatients = user?.data?.user?.patients ? user?.data?.user?.patients : [];
+  const initialSubtitle = user?.data?.user?.subtitle
+    ? user?.data?.user?.subtitle
+    : "";
+  const initialPatients = user?.data?.user?.patients
+    ? user?.data?.user?.patients
+    : [];
 
   const [currentStep, setCurrentStep] = useState(1);
   const [date, setDate] = useState<Date>(initialDate);
@@ -178,28 +175,63 @@ export const ProfileInformation = () => {
       <Toaster />
       <AlertDialog>
         <AlertDialogTrigger className="flex items-center gap-x-2" asChild>
-          <Button className="w-full ">Fill some information</Button>
+          <Button className="w-full ">Profile information</Button>
         </AlertDialogTrigger>
         <AlertDialogContent className="max-w-[50%] overflow-hidden">
           <AlertDialogTitle className="flex justify-between items-center w-full">
             <ProfileHeader user={user?.data?.user!} />
 
-            <div>
+            <div className="flex gap-x-1">
+              <div className="flex gap-x-3 cursor-pointer">
+                <Badge
+                  variant="outline"
+                  className="p-1"
+                  onClick={() => setCurrentStep(5)}
+                >
+                  <div className="flex items-center gap-x-1 p-1">
+                    {" "}
+                    <Settings size={18} />
+                    <span>Setting</span>
+                  </div>
+                </Badge>
+                <Badge
+                  variant="outline"
+                  className="p-1"
+                  onClick={() => setCurrentStep(1)}
+                >
+                  <div className="flex items-center gap-x-1 p-1">
+                    {" "}
+                    <User size={18} />
+                    <span>You Profile</span>
+                  </div>
+                </Badge>
+              </div>
               <AlertDialogTrigger asChild>
-                <button>
-                  <MdClose size={24} />
-                </button>
+                {currentStep !== 5 ? (
+                  <button>
+                    <MdClose size={24} />
+                  </button>
+                ) : null}
               </AlertDialogTrigger>
             </div>
           </AlertDialogTitle>
           <AlertDialogDescription></AlertDialogDescription>
-          <div className="">
-            <Stepper
-              steps={steps}
-              currentStep={currentStep}
-              isFinished={isFinished}
-            />
-          </div>
+          {currentStep === 5 ? (
+            <div>
+              <Setting
+                user={user?.data?.user!}
+                isTeacherhasRequest={isTeacherhasRequest}
+              />
+            </div>
+          ) : (
+            <div>
+              <Stepper
+                steps={steps}
+                currentStep={currentStep}
+                isFinished={isFinished}
+              />
+            </div>
+          )}
 
           {currentStep === 1 && (
             <div>

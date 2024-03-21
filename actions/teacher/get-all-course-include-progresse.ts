@@ -59,5 +59,6 @@ export async function getCourseIncludeProgresse() {
             progress
         })
     }
-    return courseUserIncludeProgress
+    const sortedCourseUserIncludeProgressByProgress=courseUserIncludeProgress.sort((a,b)=>b.progress-a.progress)
+    return sortedCourseUserIncludeProgressByProgress
 }

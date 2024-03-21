@@ -1,8 +1,8 @@
 "use client"
 import { CardWrapper } from "@/components/Auth/Card-wrapper";
 
-import { set, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
     Form,
@@ -13,14 +13,13 @@ import {
     FormField,
 
 
-} from "@/components/ui/form"
-import { ResetSchema } from "@/schemas"
-import { z } from "zod"
+} from "@/components/ui/form";
+import { ResetSchema } from "@/schemas";
+import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/Auth/Form-error"; 
+import { FormError } from "@/components/Auth/Form-error";
 import { FormSucces } from "@/components/Auth/Form-succes";
-import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
 import { Reset } from "@/actions/reset";
 

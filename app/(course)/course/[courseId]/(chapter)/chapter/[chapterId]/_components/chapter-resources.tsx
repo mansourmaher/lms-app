@@ -12,8 +12,8 @@ interface ChapterResourcesProps {
 export default function ChapterResources({ resources }: ChapterResourcesProps) {
   return (
     <div>
-      <ScrollArea className="h-[270px]  rounded-md  p-4">
-        {resources.map((resource, index) => (
+      <ScrollArea className="h-[200px]  rounded-md  p-4">
+        {resources?.map((resource, index) => (
           <>
             <ChapterResourcesItems
               key={resource.id}

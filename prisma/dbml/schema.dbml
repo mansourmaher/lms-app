@@ -40,6 +40,7 @@ Table User {
   DateOfBirth DateTime
   subtitle String
   patiants String[] [not null]
+  points Int [default: 0]
   courseReview CourseReview [not null]
   course Course [not null]
   courseUser CourseUser [not null]
@@ -123,6 +124,7 @@ Table CourseUser {
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   status String [not null, default: 'Not started']
+  classement Int [default: 0]
 
   indexes {
     (userId, courseId) [unique]
@@ -181,10 +183,6 @@ Table Chapter {
   updatedAt DateTime [not null]
   quiz Quiz [not null]
   report Report [not null]
-
-  indexes {
-    (position, courseId) [unique]
-  }
 }
 
 Table Report {

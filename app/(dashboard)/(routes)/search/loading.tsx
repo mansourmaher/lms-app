@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Loading() {
   return (
-    <>
+    <div className="mx-16">
       <div className="flex gap-8 m-6 ">
         {new Array(10).fill(0).map((_, i) => (
           <div
@@ -55,6 +55,6 @@ export default function Loading() {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

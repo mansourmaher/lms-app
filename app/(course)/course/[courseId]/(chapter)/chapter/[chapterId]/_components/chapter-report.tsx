@@ -5,6 +5,7 @@ import { removeReportChapter } from "@/actions/report/remove-report";
 import { CompteRendu } from "@/components/models/edtudiant-compte-rendu";
 import QuizForm from "@/components/models/quizForm";
 import SanitizeHTML from "@/components/sanitize-html";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -102,10 +103,11 @@ export default function ChapterReport({
                 </span>
               )}
             </span>
-
-            <div
-              dangerouslySetInnerHTML={{ __html: existingReport.note }}
-            ></div>
+            <ScrollArea className="h-40">
+              <div
+                dangerouslySetInnerHTML={{ __html: existingReport.note }}
+              ></div>
+            </ScrollArea>
           </div>
         )}
       </div>

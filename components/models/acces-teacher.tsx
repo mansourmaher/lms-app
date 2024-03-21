@@ -8,7 +8,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
-import { Cloud, File, Plus } from "lucide-react";
+import { Cloud, File, Plus, UploadCloud } from "lucide-react";
 import { FileUpload } from "../file-upload";
 import { useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
@@ -27,7 +27,7 @@ import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { UploadButton, useUploadThing } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 
- const UploadDropzone = () => {
+const UploadDropzone = () => {
   const [isUploading, setIsUploading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { startUpload } = useUploadThing("teacherAccess", {
@@ -95,9 +95,6 @@ import { cn } from "@/lib/utils";
                     <span className="items-center justify-center flex mt-2 text-gray-500">
                       {uploadProgress === 100 && processing ? (
                         <div className=" flex gap-x-2">
-                          <p>
-                            <BeatLoader size={8} color="#818CF8" />
-                          </p>
                           <p>Uploading</p>
                         </div>
                       ) : (
@@ -141,9 +138,11 @@ export const AccesTeacher = () => {
       }}
     >
       <DialogTrigger onClick={() => setIsOpen(true)} asChild>
-        <button className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white">
-          <Plus className="h-6 w-6" />
-        </button>
+        <div className="flex gap-x-2 cursor-pointer">
+          {" "}
+          <span className="text-blue-400">Get Access</span>
+          <UploadCloud className="h-6 w-6 text-blue-400" />
+        </div>
       </DialogTrigger>
       <DialogContent>
         <UploadDropzone />

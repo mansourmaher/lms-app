@@ -68,6 +68,8 @@ export const {
                 session.user.about = token.about;
                 session.user.patients = token.patients;
                 session.user.subtitle = token.subtitle;
+                session.user.password = token.password;
+                session.user.points = token.points;
               
                 
 
@@ -93,6 +95,8 @@ export const {
         token.origin=existingUser.origin
         token.patients=existingUser.patiants
         token.subtitle=existingUser.subtitle
+        token.password=existingUser.password
+        token.points=existingUser.points
         
         
         
