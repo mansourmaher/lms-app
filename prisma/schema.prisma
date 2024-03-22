@@ -157,6 +157,7 @@ model CourseReview {
   createdAt DateTime @default(now())
   likes     Int?     @default(0)
   dislikes  Int?     @default(0)
+  isMasqued Boolean  @default(false)
 
   courseId String
   course   Course @relation(fields: [courseId], references: [id])
@@ -304,6 +305,8 @@ model Notifications {
   student      String
   studentNotif User     @relation("student", fields: [student], references: [id])
   message      String
+  courseId     String?
+  chapterId    String?
   createdAt    DateTime @default(now())
   isRead       Boolean  @default(false)
 }

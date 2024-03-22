@@ -83,10 +83,7 @@ const Setting = ({ user, isTeacherhasRequest }: Props) => {
             You Request is Pending
           </Badge>
         ) : (
-          <Badge
-            className=" text-center rounded-md py-4"
-            variant="primary"
-          >
+          <Badge className=" text-center rounded-md py-4" variant="primary">
             <div className="flex items-center justify-center gap-x-2">
               <span className="text-center">
                 Congratulation you are a verified teacher
@@ -225,9 +222,7 @@ const Setting = ({ user, isTeacherhasRequest }: Props) => {
           user?.teacherAccess === false &&
           !isTeacherhasRequest ? (
             <AccesTeacher />
-          ) : (
-            null
-          )}
+          ) : null}
           <div className="mx-auto my-auto  ">
             <div className="flex flex-col gap-12 ">
               <div className="flex items-center justify-center gap-x-1">
@@ -235,8 +230,8 @@ const Setting = ({ user, isTeacherhasRequest }: Props) => {
               </div>
 
               <span className="text-center text-sm  ">
-                You have {user?.points} points, keep going reach 100 points to
-                get a free course
+                You have <span className="text-blue-400 underline">{user?.points}</span> points, keep going reach
+                100 points to get a free course
               </span>
             </div>
           </div>

@@ -2,7 +2,7 @@
 
 import { CiVideoOn } from "react-icons/ci";
 import { getCourseById } from "@/actions/course/get-course-byId";
-import { Signal, Users } from "lucide-react";
+import { ShoppingCart, Signal, Users } from "lucide-react";
 
 interface CourseOptionProps {
   course: Awaited<ReturnType<typeof getCourseById>> | null;
@@ -53,7 +53,7 @@ export default function CourseOption({
               <span className="text-lg font-semibold">Purchases</span>
             </div>
             <div className="rounded-full border p-3 border-blue-500">
-              <Users size={30} className="text-blue-600" />
+              <ShoppingCart size={30} className="text-blue-600" />
             </div>
           </div>
           <div>

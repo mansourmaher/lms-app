@@ -9,6 +9,7 @@ export  async function  getCourseComments(courseId:string ) {
      const comments =await db.courseReview.findMany({
         where: {
         courseId: courseId,
+        isMasqued:false
         },
    
     include: {

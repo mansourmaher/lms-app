@@ -23,6 +23,9 @@ interface DataTablePaginationProps<TData> {
 export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
+  useEffect(() => {
+    table.setPageSize(5);
+  }, []);
   
   return (
     <div className="flex items-center justify-between px-2">

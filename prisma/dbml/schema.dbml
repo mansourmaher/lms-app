@@ -140,6 +140,7 @@ Table CourseReview {
   createdAt DateTime [default: `now()`, not null]
   likes Int [default: 0]
   dislikes Int [default: 0]
+  isMasqued Boolean [not null, default: false]
   courseId String [not null]
   course Course [not null]
 }
@@ -264,6 +265,8 @@ Table Notifications {
   student String [not null]
   studentNotif User [not null]
   message String [not null]
+  courseId String
+  chapterId String
   createdAt DateTime [default: `now()`, not null]
   isRead Boolean [not null, default: false]
 }

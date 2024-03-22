@@ -18,7 +18,7 @@ const LayoutPage = async ({
       <div className="m-8 w-10">
         <CourseMobilesidebar courseId={params.courseId!} />
       </div>
-      <div className="md:pl-80 h-full">{children}</div>
+      <div className="md:pl-80 h-full  ">{children}</div>
     </div>
   );
 };

@@ -39,7 +39,9 @@ export async function POST(req:Request)
                 data:{
                     teacher:getStudent?.user?.id!,
                     student:userId,
-                    message:`${user?.user.name} has submitted your work`
+                    message:`${user?.user.name} has submitted your work`,
+                    courseId:getStudent?.courseId,
+                    chapterId:getStudent?.chapterId,
                 }
             })
             await pusherServer.trigger('notification', 'new-notification', {

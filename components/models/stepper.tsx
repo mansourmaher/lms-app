@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { CheckCheckIcon } from "lucide-react";
 import React from "react";
 
@@ -10,81 +11,92 @@ interface StepperProps {
 const Stepper = ({ steps, currentStep, isFinished }: StepperProps) => {
   return (
     <div className="w-full flex justify-center ml-1">
-      <div data-hs-stepper className="w-full">
-        <ul className="relative flex flex-row gap-x-2">
-          {steps.map((_, index) => (
-            <li
-              key={index}
-              className={`flex items-center gap-x-2 shrink basis-0 flex-1 group`}
-              data-hs-stepper-nav-item={`{
-                "index": ${index + 1}
-              }`}
-            >
-              <span
-                className={`min-w-7 min-h-7 group inline-flex items-center text-xs align-middle ${
-                  index + 1 === currentStep
-                    ? "text-primary"
-                    : index + 1 < currentStep
-                    ? "text-primary"
-                    : "text-gray-300"
-                }`}
-              >
-                <span
-                  className={`size-7 flex justify-center items-center flex-shrink-0 font-medium text-gray-800 rounded-full group-focus:bg-gray-200 dark:bg-gray-700 dark:text-white dark:group-focus:bg-gray-600 hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600
-                    ${index + 1 < currentStep ? "bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white" : ""} 
-                    ${
-                      index + 1 === currentStep
-                        ? "hs-stepper-active:bg-blue-600 hs-stepper-active:text-white"
-                        : ""
-                    } 
-                    ${
-                      (index + 1 < currentStep && isFinished) ||
-                      (index === steps.length - 1 && currentStep <= 2)
-                        ? "hs-stepper-success:bg-blue-600 hs-stepper-success:text-white"
-                        : ""
-                    } 
-                    ${
-                      (index + 1 === currentStep && isFinished) ||
-                      (index !== steps.length - 1 && currentStep <= 2) ||
-                      isFinished
-                        ? "hs-stepper-completed:bg-teal-500 hs-stepper-completed:group-focus:bg-teal-600"
-                        : ""
-                    }`}
-                >
-                  {index + 1 < currentStep ? <CheckCheckIcon size={18} /> : ""}
-                  {index + 1 === currentStep ? (
-                    <CheckCheckIcon size={18} />
-                  ) : (
-                    <span
-                      className={`hs-stepper-success:hidden hs-stepper-completed:hidden`}
-                    />
-                  )}
-                  <svg
-                    className={`hidden flex-shrink-0 size-3 hs-stepper-success:block`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="3"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
-                <span className="ms-2 text-sm font-medium text-gray-800">
-                  Step {index}
-                </span>
-              </span>
-              <div
-                className={`w-full h-px flex-1 bg-gray-200 group-last:hidden hs-stepper-success:bg-blue-600 hs-stepper-completed:bg-teal-600`}
-              ></div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ol className="flex items-center w-full p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 sm:p-4 sm:space-x-4 rtl:space-x-reverse">
+        <li className="flex items-center text-blue-600 dark:text-blue-500">
+          <span className="flex items-center justify-center w-5 h-5 me-2 text-xs border border-blue-600 rounded-full shrink-0 dark:border-blue-500">
+            1
+          </span>
+          Origin <span className="hidden sm:inline-flex sm:ms-2">Info</span>
+          <svg
+            className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 12 10"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m7 9 4-4-4-4M1 9l4-4-4-4"
+            />
+          </svg>
+        </li>
+        <li
+          className={cn(
+            "flex items-center",
+            currentStep > 1 && "text-blue-600 dark:text-blue-500"
+          )}
+        >
+          <span className="flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+            2
+          </span>
+          Personel <span className="hidden sm:inline-flex sm:ms-2">Info</span>
+          <svg
+            className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 12 10"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m7 9 4-4-4-4M1 9l4-4-4-4"
+            />
+          </svg>
+        </li>
+        <li
+          className={cn(
+            "flex items-center",
+            currentStep > 2 && "text-blue-600 dark:text-blue-500"
+          )}
+        >
+          <span className="flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+            3
+          </span>
+          Patients
+        </li>
+        <svg
+          className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 12 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m7 9 4-4-4-4M1 9l4-4-4-4"
+          />
+        </svg>
+        <li
+          className={cn(
+            "flex items-center",
+            currentStep > 3 && "text-blue-600 dark:text-blue-500"
+          )}
+        >
+          <span className="flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+            4
+          </span>
+          Profil <span className="hidden sm:inline-flex sm:ms-2">Photo</span>
+        </li>
+      </ol>
     </div>
   );
 };

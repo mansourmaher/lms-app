@@ -23,9 +23,29 @@ export default function SingleNotifications({
     await markNotificationAsRead(id);
   };
 
+  const handelOnclick = (message: string) => {
+    message.split(" ")[2] === "purchased" &&
+    router.push(`/teacher/courses`);
+    message.split(" ")[2] === "completed" &&
+    router.push(`/teacher/courses`);
+    
+    message.split(" ")[3] === "work" && alert("You student submit the work");
+    router.push(`/teacher/check`);
+    message.split(" ")[3] === "your" &&
+    router.push(`/course/${notifcation?.courseId}/chapter/${notifcation?.chapterId}`)
+
+    alert(message);
+  };
+
   return (
     <div>
-      <div onClick={() => router.push('teacher/check')} className="cursor-pointer">
+      <div
+        onClick={() => {
+          handelOnclick(notifcation?.message);
+          // router.push(`/teacher/check/${notifcation?.studentNotif.id}`);
+        }}
+        className="cursor-pointer"
+      >
         <div className="flex  py-3 hover:bg-gray-100 dark:hover:bg-gray-700  border-b border-gray-300 dark:border-gray-700  transition-colors duration-200 ease-in-out">
           <div className="flex-shrink-0 mt-3">
             <Avatar className="h-10 w-10 ">

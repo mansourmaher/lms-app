@@ -183,35 +183,36 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
 
             <div className="flex gap-x-1">
               <div className="flex gap-x-3 cursor-pointer">
-                <Badge
-                  variant="outline"
-                  className="p-1"
-                  onClick={() => setCurrentStep(5)}
-                >
-                  <div className="flex items-center gap-x-1 p-1">
-                    {" "}
-                    <Settings size={18} />
-                    <span>Setting</span>
-                  </div>
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="p-1"
-                  onClick={() => setCurrentStep(1)}
-                >
-                  <div className="flex items-center gap-x-1 p-1">
-                    {" "}
-                    <User size={18} />
-                    <span>You Profile</span>
-                  </div>
-                </Badge>
+                {currentStep !== 5 ? (
+                  <Badge
+                    variant="outline"
+                    className="p-1"
+                    onClick={() => setCurrentStep(5)}
+                  >
+                    <div className="flex items-center gap-x-1 p-1">
+                      {" "}
+                      <Settings size={18} />
+                      <span>Setting</span>
+                    </div>
+                  </Badge>
+                ) : (
+                  <Badge
+                    variant="outline"
+                    className="p-1"
+                    onClick={() => setCurrentStep(1)}
+                  >
+                    <div className="flex items-center gap-x-1 p-1">
+                      {" "}
+                      <User size={18} />
+                      <span>You Profile</span>
+                    </div>
+                  </Badge>
+                )}
               </div>
               <AlertDialogTrigger asChild>
-                {currentStep !== 5 ? (
-                  <button>
-                    <MdClose size={24} />
-                  </button>
-                ) : null}
+                <button>
+                  <MdClose size={24} />
+                </button>
               </AlertDialogTrigger>
             </div>
           </AlertDialogTitle>
@@ -235,7 +236,6 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
 
           {currentStep === 1 && (
             <div>
-              <h1>{steps[0].title}</h1>
               <CountrySelect
                 value={origin}
                 /* @ts-ignore */
@@ -254,8 +254,6 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
 
           {currentStep === 2 && (
             <div>
-              <h1>{steps[1].title}</h1>
-
               <div className="flex flex-row items-start">
                 <div className="flex-1 pr-4">
                   <div className="mt-3 mb-3">Your Birdhday</div>
@@ -325,7 +323,6 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
 
           {currentStep === 4 && (
             <div>
-              <h1>{steps[2].title}</h1>
               <div>
                 {isloading ? (
                   <div className="flex justify-center mt-3 mb-3">
@@ -397,7 +394,6 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
             <div>
               <div className="flex flex-col gap-6">
                 <div>
-                  <Label>Subtitle</Label>
                   <Input
                     placeholder="You subtitle"
                     onChange={(e) => setSubtitle(e.target.value)}

@@ -32,14 +32,14 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
   const nextChapter = await db.chapter.findFirst({
     where: {
       courseId: courseId,
-        position: currentPostion! + 1,
+        // position: currentPostion! + 1,
         isPublished: true,
     },
   });
   const previewsChapter = await db.chapter.findFirst({
     where: {
       courseId: courseId,
-       position: currentPostion! - 1,
+      //  position: currentPostion! - 1,
        isPublished: true,
     },
   });

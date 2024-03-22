@@ -66,7 +66,7 @@ export const markAsComplete = async (chapterId:string,courseId:string) => {
                 data:{
                     teacher:course?.userId!,
                     student:userId,
-                    message:`${user?.user.name} has completed the course`
+                    message:`${user?.user.name} has completed the course ${course?.title}`,
                 },
                 include:{
                     user:true,

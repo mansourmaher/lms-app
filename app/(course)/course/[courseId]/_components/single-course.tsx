@@ -12,6 +12,7 @@ import CourseRating from "./course-rating";
 import CommentList from "./course-comment";
 import CourseDescreption from "./course-descreption";
 import CourseStars from "./course-stars";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface SingleCourseProps {
   course: Awaited<ReturnType<typeof getCourseById>>;
@@ -62,12 +63,13 @@ export default function SingleCourse({
       </div>
       <hr className="mx-16" />
 
-      <div className="mt-8 mx-24">
+      <div className="mt-8 mx-24  ">
         {showcomments && comments!.length !== 0 && (
           <CommentList
             comments={comments}
             courseId={course?.id}
             userId={userId}
+            teacher={course?.userId!}
           />
         )}
       </div>

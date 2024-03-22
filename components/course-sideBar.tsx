@@ -59,8 +59,8 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
 
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
-      <div className="pl-4 pt-3 flex flex-col border-b">
-        <div className="flex gap-x-3 items-center mt-4">
+      <div className="pl-4 pt-3 flex flex-col border-b  ">
+        <div className="flex gap-x-2 items-center mt-4">
           <Avatar className="h-10 w-10 ">
             <AvatarImage
               className="rounded-full"
@@ -71,18 +71,20 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
               {user?.user.name![0]}
             </AvatarFallback>
           </Avatar>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col ">
             <div className="text-sm font-semibold">{user?.user.name}</div>
             <div className="text-xs text-gray-500">{user?.user.email}</div>
           </div>
-
-          <CourseProgress
-            userId={userId}
-            courseId={course?.id}
-            userProgress={userProgress}
-          />
+          <div className="flex flex-col items-center justify-center w-full">
+            {" "}
+            <CourseProgress
+              userId={userId}
+              courseId={course?.id}
+              userProgress={userProgress}
+            />
+          </div>
         </div>
-        <div className="mt-4 w-full text-gray-500 text-sm">
+        <div className="mt-4 w-full text-gray-500 text-sm text-center">
           <p>
             You have completed{" "}
             {
