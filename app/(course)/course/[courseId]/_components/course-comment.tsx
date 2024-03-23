@@ -14,6 +14,12 @@ import { Button } from "@/components/ui/button";
 import { MessageCircleOff, Recycle, Trash, X } from "lucide-react";
 import { masqueComment } from "@/actions/teacher/maque-comment";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface CommentListProps {
   comments: Awaited<ReturnType<typeof getCourseComments>> | null;
@@ -102,12 +108,24 @@ export default function CommentList({
                             <p>Commented on</p>
                             {new Date(comment.createdAt).toLocaleDateString()}
                             {istheteacherouner && (
-                              <div>
-                                <MessageCircleOff
-                                  className="h-4 w-4 cursor-pointer"
-                                  onClick={() => handelMasueComment(comment.id)}
-                                />
-                              </div>
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger>
+                                    {/* <MessageCircleOff
+                                      className="h-4 w-4 cursor-pointer"
+                                      onClick={() =>
+                                        handelMasueComment(comment.id)
+                                      }
+                                    /> */}
+                                    rvrnov
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p className="text-gray-900 dark:text-gray-300">
+                                      Hide comment
+                                    </p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
                             )}
                           </div>
                         </div>
@@ -278,12 +296,23 @@ export default function CommentList({
                             <p>Commented on</p>
                             {new Date(comment.createdAt).toLocaleDateString()}
                             {istheteacherouner && (
-                              <div>
-                                <MessageCircleOff
-                                  className="h-4 w-4 cursor-pointer"
-                                  onClick={() => handelMasueComment(comment.id)}
-                                />
-                              </div>
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger>
+                                    <MessageCircleOff
+                                      className="h-4 w-4 cursor-pointer"
+                                      onClick={() =>
+                                        handelMasueComment(comment.id)
+                                      }
+                                    />
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p className="text-gray-900 dark:text-gray-300">
+                                      Hide comment
+                                    </p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
                             )}
                           </div>
                         </div>

@@ -120,6 +120,8 @@ model Course {
   isPublished Boolean    @default(false)
   categoryId  String?
   category    Category?  @relation(fields: [categoryId], references: [id])
+  totalStars  Int?       @default(0)
+  totalReviews Int?      @default(0)
   chapters    Chapter[]
   purchases   Purchase[]
 

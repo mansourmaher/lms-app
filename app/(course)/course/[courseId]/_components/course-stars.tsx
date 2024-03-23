@@ -13,7 +13,7 @@ export default function CourseStars({ course }: CourseStarsProps) {
     <div>
       <ReviewProgress
         courseId={course?.id!}
-        totalReviews={course!.totalReviews}
+        totalReviews={course!.totalReviews!}
         avg={course!.avg}
       />
     </div>

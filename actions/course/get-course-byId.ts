@@ -28,9 +28,8 @@ export async function getCourseById(courseId: string, userId: string) {
           },
         },
       );
-      const Totalstars=await getFivestarscount(course!.id)*5+await getForstarscount(course!.id)*4+await getThreestarscount(course!.id)*3+await getTwostarscount(course!.id)*2+await getOnetarscount(course!.id)*1
-            const avg=Totalstars/course!.review.length
-            const totalReviews=course!.review.length
+      const avg=course?.totalStars!/course?.totalReviews!
+      const totalReviews=course?.totalReviews
             return {...course,avg,totalReviews}
        
 }

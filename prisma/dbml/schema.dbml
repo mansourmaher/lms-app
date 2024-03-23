@@ -104,6 +104,8 @@ Table Course {
   isPublished Boolean [not null, default: false]
   categoryId String
   category Category
+  totalStars Int [default: 0]
+  totalReviews Int [default: 0]
   chapters Chapter [not null]
   purchases Purchase [not null]
   attachment Attachment [not null]

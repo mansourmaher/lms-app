@@ -393,27 +393,40 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
           {currentStep === 3 && (
             <div>
               <div className="flex flex-col gap-6">
-                <div>
+                <div className="items-center justify-center gap-x-3">
                   <Input
                     placeholder="You subtitle"
                     onChange={(e) => setSubtitle(e.target.value)}
                     value={subtitle}
                   />
+                  <div className="">
+                    <span className="text-xs text-gray-500">
+                      Add professionnel headline like "Software Engineer"
+                    </span>
+                  </div>
                 </div>
-
-                <div className="flex items-center justify-between gap-x-3">
-                  <Input
-                    placeholder="You patiants"
-                    value={patient}
-                    onChange={(e) => setPatient(e.target.value)}
-                  />
-                  <button
-                    onClick={() => onpatientPuch(patient)}
-                    disabled={patient === ""}
-                    className="ml-4 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-1.5 py-1.5 text-center "
-                  >
-                    <Plus className="w-6 h-6 " />
-                  </button>
+                <div>
+                  <div className="flex items-center justify-between gap-x-3">
+                    <div className="flex-1 items-center">
+                      <Input
+                        placeholder="You patiants"
+                        value={patient}
+                        onChange={(e) => setPatient(e.target.value)}
+                      />
+                    </div>
+                    <button
+                      onClick={() => onpatientPuch(patient)}
+                      disabled={patient === ""}
+                      className="ml-4 text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-1.5 py-1.5 text-center "
+                    >
+                      <Plus className="w-6 h-6 " />
+                    </button>
+                  </div>
+                  <div>
+                    <span className="text-xs text-gray-500">
+                      Add your patients like "devloppent web" or "design"
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="mt-3">

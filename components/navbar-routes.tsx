@@ -31,14 +31,12 @@ export const NavbarRoutes = ({
 
   return (
     <>
-      {isSearchPage && (
-        <div className="hidden md:block">
-          <div className="flex items-center ">
-            <SearchInput />
-            <TeacherSearchInput teachers={teachers} />
-          </div>
+      <div className="hidden md:block">
+        <div className="flex items-center ">
+          {isSearchPage && <SearchInput />}
+          <TeacherSearchInput teachers={teachers} />
         </div>
-      )}
+      </div>
 
       <div className="items-center gap-x-2 ml-auto flex ">
         <UserButton />

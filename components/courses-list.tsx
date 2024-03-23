@@ -9,7 +9,6 @@ interface CoursesListProps {
 export const CoursesList = ({ items }: CoursesListProps) => {
   return (
     <div className="">
-      <Bannner title="Are you interested in learning something new? lets register and start learning" />
       <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3  gap-6">
         {items.map((course) => (
           <CourseCard
@@ -21,7 +20,7 @@ export const CoursesList = ({ items }: CoursesListProps) => {
             price={course.price!}
             category={course.category?.name!}
             description={course.description!}
-            avg={course.avg!}
+            avg={course.totalStars! / course.totalReviews!}
             totalReviews={course.totalReviews!}
           />
         ))}

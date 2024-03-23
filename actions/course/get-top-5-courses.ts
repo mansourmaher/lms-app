@@ -2,38 +2,74 @@
 
 import { db } from "@/lib/db";
 import { getFivestarscount, getForstarscount, getOnetarscount, getThreestarscount, getTwostarscount } from "./get-stars-number";
+import { getCourseRating } from "./get-course-rating";
 
 
 
 export async function getTop3Courses() {
     const courses = await db.course.findMany({
         where: {
-            isPublished: true
+            isPublished: true,
+            review: {
+                some: {
+                    starts: {
+                        gte: 1
+                    }
+                }
+            }
         },
         include:{
-            review:true,
-            chapters:true,
+            
+            chapters:{
+                where:{
+                    isPublished:true
+                },
+                select:{
+                    id:true
+                }
+            },
             category:true,
             
 
-        }
+        },
+        orderBy: {
+            
+            totalStars: 'desc'
+        },
+        take: 5
     })
-
     const coursesWithAvgOfRatings = await Promise.all(courses.map(async (course) => {
-       const Totalstars=await getFivestarscount(course.id)*5+await getForstarscount(course.id)*4+await getThreestarscount(course.id)*3+await getTwostarscount(course.id)*2+await getOnetarscount(course.id)*1
-         const totalReviews=course.review.length
-            const avg=Totalstars/totalReviews
+        const avg=course.totalStars!/course.totalReviews!
         return {
             ...course,
-            avg,
-            totalReviews
+            avg
         }
     }
     ))
     const exxludedCourses = coursesWithAvgOfRatings.filter(course=>course.avg>0)
-    const top5Courses = exxludedCourses.sort((a,b)=>b.avg-a.avg).slice(0,3)
+    const top5Courses = exxludedCourses.sort((a,b)=>b.avg-a.avg)
+    console.log(top5Courses)
+        return top5Courses
+
+
+
+    // const coursesWithAvgOfRatings = await Promise.all(courses.map(async (course) => {
+       
+    //      const totalReviews=course.review.length
+    //         const avg=await getCourseRating(course.id)
+    //     return {
+    //         ...course,
+    //         avg,
+    //         totalReviews
+    //     }
+    // }
+    // ))
+    // const exxludedCourses = coursesWithAvgOfRatings.filter(course=>course.avg>0)
+    // const top5Courses = exxludedCourses.sort((a,b)=>b.avg-a.avg).slice(0,5)
+
     
-    return top5Courses
+    
+   
 
    
 }

@@ -29,6 +29,7 @@ export const SearchInput = () => {
           title: debouncedValue,
           category: currentCategory,
           teacher: teacher,
+          level: searchParams.get("level"),
         },
       },
       { skipEmptyString: true, skipNull: true }

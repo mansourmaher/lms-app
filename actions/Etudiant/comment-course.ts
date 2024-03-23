@@ -19,6 +19,19 @@ export const CommentCourse=async(stars:number,review:string,courseId:string)=>{
             comment:review
         }
     })
+    const upgradeStars=await db.course.update({
+        where:{
+            id:courseId
+        },
+        data:{
+            totalStars:{
+                increment:stars
+            },
+            totalReviews:{
+                increment:1
+            }
+        }
+    })
     revalidatePath(`/course/${courseId}`)
    
    

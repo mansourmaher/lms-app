@@ -90,6 +90,10 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
                   </div>
                 );
               })}
+              <span>
+                {(Math.round(teacherRating * 100) / 100).toFixed(2)} (
+                {totalReview})
+              </span>
             </div>
           </div>
           <p className="mt-2 text-gray-700">

@@ -1,12 +1,9 @@
-import { db } from "@/lib/db";
 import { Categories } from "./_components/categories";
-import { SearchInput } from "@/components/search_input";
 import { getCourses } from "@/actions/course/get-courses";
-import { auth } from "@/auth";
 import { CoursesList } from "@/components/courses-list";
 import TopThreeCourses from "./_components/top-three-courses";
-import { getTop3Courses } from "@/actions/course/get-top-5-courses";
-import axios, { Axios } from "axios";
+import MenuBar from "./_components/menu-bar";
+import Bannner from "@/components/banner";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +11,7 @@ interface getCoursesParams {
   title?: string;
   category?: string;
   teacher?: string;
+  level?: string;
 }
 
 interface SearchPageProps {
@@ -25,13 +23,12 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     title: searchParams.title!,
     category: searchParams.category!,
     teacher: searchParams.teacher!,
+    level: searchParams.level!,
   });
 
   return (
     <>
-      <div className="px-6 pt-6 md:hidden md:mb-0 block">
-        
-      </div>
+      <div className="px-6 pt-6 md:hidden md:mb-0 block"></div>
       <div className="p-6 space-y-6 ">
         <Categories />
         <TopThreeCourses />
@@ -40,7 +37,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
             <h1>No courses found</h1>
           </div>
         ) : (
-          <CoursesList items={courses} />
+          <>
+            <Bannner title="Are you interested in learning something new? lets register and start learning" />
+            <MenuBar />
+            <CoursesList items={courses} />
+          </>
         )}
       </div>
     </>
