@@ -1,11 +1,9 @@
-import { get } from 'http';
 "use server"
 
-import { db } from "@/lib/db"
-import { getFivestarscount, getForstarscount, getOnetarscount, getThreestarscount, getTwostarscount } from "../course/get-stars-number"
-import { getTeacherRating } from "./get-teacher-rating"
-import { getTeacherReviewCount } from "../course/get-courses-count-by-teacher"
-import { getTotalPurchaseByteacherId } from "./get-total-purchase"
+import { db } from "@/lib/db";
+import { getTeacherRating } from "./get-teacher-rating";
+import { getTeacherReviewCount } from "../course/get-courses-count-by-teacher";
+import { getTotalPurchaseByteacherId } from "./get-total-purchase";
 
 
 

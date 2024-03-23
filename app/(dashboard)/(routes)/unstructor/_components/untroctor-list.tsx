@@ -1,9 +1,10 @@
-import { get_all_unstroctor } from "@/actions/teacher/get-all-unstroctor";
+
 import React from "react";
 import UnstroctorCard from "./untroctor-card";
+import { getAllUnstroctor } from "@/actions/teacher/get-all-unstroctor";
 
 interface UntroctorListProps {
-  teachers: Awaited<ReturnType<typeof get_all_unstroctor>>;
+  teachers: Awaited<ReturnType<typeof getAllUnstroctor>>;
 }
 
 export default function UntroctorList({ teachers }: UntroctorListProps) {

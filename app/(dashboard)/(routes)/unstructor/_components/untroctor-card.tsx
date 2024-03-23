@@ -1,4 +1,4 @@
-import { get_all_unstroctor } from "@/actions/teacher/get-all-unstroctor";
+import { getAllUnstroctor } from "@/actions/teacher/get-all-unstroctor";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,7 +6,7 @@ import { ChevronRightIcon, StarIcon } from "lucide-react";
 import React from "react";
 
 interface UnstroctorCardProps {
-  teachers: Awaited<ReturnType<typeof get_all_unstroctor>>[0];
+  teachers: Awaited<ReturnType<typeof getAllUnstroctor>>[0];
 }
 export default function UnstroctorCard({ teachers }: UnstroctorCardProps) {
   return (
