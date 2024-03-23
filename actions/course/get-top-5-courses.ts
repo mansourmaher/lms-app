@@ -48,7 +48,7 @@ export async function getTop3Courses() {
     ))
     const exxludedCourses = coursesWithAvgOfRatings.filter(course=>course.avg>0)
     const top5Courses = exxludedCourses.sort((a,b)=>b.avg-a.avg)
-    console.log(top5Courses)
+    
         return top5Courses
 
 
