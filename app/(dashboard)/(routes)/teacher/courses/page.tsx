@@ -10,7 +10,7 @@ import { auth } from "@/auth";
 const TeacherCoursePage = async () => {
   // const courses = await teacherGetMyCourses();
   //const courseIncludeProgress=await getAllCourseIncludeProgresse()
-  const courseUserIncludeProgress = await getCourseIncludeProgresse();
+  const courseUserIncludeProgress = await getCourseIncludeProgresse("679028c9-47d9-4c02-89de-b049b2cbc406");
 
   return (
     <div>

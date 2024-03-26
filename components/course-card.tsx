@@ -1,13 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { IconBadge } from "./icon-badge";
 import { BookOpen, DollarSign, Eye } from "lucide-react";
 import ReviewProgress from "@/app/(course)/course/[courseId]/_components/course-review-progress";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { FaEyeSlash } from "react-icons/fa";
 import { auth } from "@/auth";
-import { purchaseCourse } from "@/actions/Etudiant/purchase-course";
 import PurchaseButton from "@/app/(dashboard)/(routes)/search/_components/purchase-course-btn";
 
 interface CourseCardProps {
@@ -38,9 +35,6 @@ export const CourseCard = async ({
   const user = await auth();
   const userId = user?.user.id as string;
 
-  const onclick = async (courseId: string) => {
-    await purchaseCourse({ courseId, userId });
-  };
   return (
     <div className="p-4 bg-white flex flex-col border rounded-lg">
       <div className="relative w-full aspect-video rounded-xl mb-4">
@@ -58,7 +52,12 @@ export const CourseCard = async ({
         {description}
       </p>
       <div className="px-2">
-        <ReviewProgress courseId={id} avg={avg!} totalReviews={totalReviews!} isForCard={true} />
+        <ReviewProgress
+          courseId={id}
+          avg={avg!}
+          totalReviews={totalReviews!}
+          isForCard={true}
+        />
       </div>
       <div className="flex flex-row justify-between items-center md:flex-cols-3  ">
         <div className="flex ">

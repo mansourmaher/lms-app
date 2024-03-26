@@ -1,15 +1,5 @@
 import { Category } from "@prisma/client";
 
-import {
-  FcEngineering,
-  FcFilmReel,
-  FcMultipleDevices,
-  FcMusic,
-  FcOldTimeCamera,
-  FcSportsMode,
-  FcSalesPerformance,
-} from "react-icons/fc";
-import { IconType } from "react-icons";
 import { CategoryItem } from "./categoryItem";
 import { db } from "@/lib/db";
 

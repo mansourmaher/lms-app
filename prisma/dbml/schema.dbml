@@ -39,6 +39,9 @@ Table User {
   about String
   DateOfBirth DateTime
   subtitle String
+  linkedin String
+  twitter String
+  github String
   patiants String[] [not null]
   points Int [default: 0]
   courseReview CourseReview [not null]

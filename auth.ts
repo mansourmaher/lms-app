@@ -70,6 +70,9 @@ export const {
                 session.user.subtitle = token.subtitle;
                 session.user.password = token.password;
                 session.user.points = token.points;
+                session.user.linkedin = token.linkedin;
+                session.user.github = token.github;
+                session.user.twitter = token.twitter;
               
                 
 
@@ -97,6 +100,9 @@ export const {
         token.subtitle=existingUser.subtitle
         token.password=existingUser.password
         token.points=existingUser.points
+        token.linkedin=existingUser.linkedin
+        token.github=existingUser.github
+        token.twitter=existingUser.twitter
         
         
         

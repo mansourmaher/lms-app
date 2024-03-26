@@ -69,6 +69,32 @@ const Stepper = ({ steps, currentStep, isFinished }: StepperProps) => {
             3
           </span>
           Patients
+          <svg
+            className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 12 10"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m7 9 4-4-4-4M1 9l4-4-4-4"
+            />
+          </svg>
+        </li>
+        <li
+          className={cn(
+            "flex items-center",
+            currentStep > 3 && "text-blue-600 dark:text-blue-500"
+          )}
+        >
+          <span className="flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
+            4
+          </span>
+          Contact <span className="hidden sm:inline-flex sm:ms-2"></span>
         </li>
         <svg
           className="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180"
@@ -88,11 +114,11 @@ const Stepper = ({ steps, currentStep, isFinished }: StepperProps) => {
         <li
           className={cn(
             "flex items-center",
-            currentStep > 3 && "text-blue-600 dark:text-blue-500"
+            currentStep > 4 && "text-blue-600 dark:text-blue-500"
           )}
         >
           <span className="flex items-center justify-center w-5 h-5 me-2 text-xs border border-gray-500 rounded-full shrink-0 dark:border-gray-400">
-            4
+            5
           </span>
           Profil <span className="hidden sm:inline-flex sm:ms-2">Photo</span>
         </li>

@@ -25,7 +25,7 @@ export async function getAllCourseIncludeProgresse() {
 }
 
 
-export async function getCourseIncludeProgresse() {
+export async function getCourseIncludeProgresse(courseId:string) {
 
     const userss=await auth()
     const userId=userss?.user.id as string
@@ -35,6 +35,7 @@ export async function getCourseIncludeProgresse() {
             course:{
                 userId:userId,
                 isPublished:true,
+                id:courseId
       
             },
             

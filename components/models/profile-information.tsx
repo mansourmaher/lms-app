@@ -28,6 +28,7 @@ import { Badge } from "../ui/badge";
 import { Label } from "../ui/label";
 import ProfileHeader from "./_components/ProfileHeader";
 import Setting from "./_components/setting";
+import Contact from "./_components/contact";
 
 interface ProfileInformationForm {
   location: string;
@@ -78,6 +79,15 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
   const initialPatients = user?.data?.user?.patients
     ? user?.data?.user?.patients
     : [];
+  const initialLinkin = user?.data?.user?.linkedin
+    ? user?.data?.user?.linkedin
+    : "";
+  const initialgithub = user?.data?.user?.github
+    ? user?.data?.user?.github
+    : "";
+  const initialtwitter = user?.data?.user?.twitter
+    ? user?.data?.user?.twitter
+    : "";
 
   const [currentStep, setCurrentStep] = useState(1);
   const [date, setDate] = useState<Date>(initialDate);
@@ -90,6 +100,9 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
   const [patient, setPatient] = useState<string>("");
   const [patiants, setPatiants] = useState<string[]>(initialPatients);
   const [subtitle, setSubtitle] = useState<string>(initialSubtitle);
+  const [linkedin, setLinkedin] = useState<string>(initialLinkin);
+  const [github, setGithub] = useState<string>(initialgithub);
+  const [twitter, setTwitter] = useState<string>(initialtwitter);
 
   const steps = [
     {
@@ -156,6 +169,9 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
       about: about as string,
       subtitle: subtitle as string,
       patients: patiants as string[],
+      linkedin: linkedin as string,
+      github: github as string,
+      twitter: twitter as string,
     };
     await FillInformation(data)
       .then((res) => {
@@ -183,11 +199,11 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
 
             <div className="flex gap-x-1">
               <div className="flex gap-x-3 cursor-pointer">
-                {currentStep !== 5 ? (
+                {currentStep !== 6 ? (
                   <Badge
                     variant="outline"
                     className="p-1"
-                    onClick={() => setCurrentStep(5)}
+                    onClick={() => setCurrentStep(6)}
                   >
                     <div className="flex items-center gap-x-1 p-1">
                       {" "}
@@ -217,7 +233,7 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
             </div>
           </AlertDialogTitle>
           <AlertDialogDescription></AlertDialogDescription>
-          {currentStep === 5 ? (
+          {currentStep === 6 ? (
             <div>
               <Setting
                 user={user?.data?.user!}
@@ -321,7 +337,7 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
             </div>
           )}
 
-          {currentStep === 4 && (
+          {currentStep === 5 && (
             <div>
               <div>
                 {isloading ? (
@@ -456,6 +472,37 @@ export const ProfileInformation = ({ isTeacherhasRequest }: userDataProps) => {
                   </div>
                 )}
               </div>
+              <div className="flex flex-row justify-between gap-3 items-center">
+                <div className="flex-1">
+                  <button
+                    onClick={handelPrevious}
+                    className="mt-4 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 w-full rounded-md py-2"
+                  >
+                    Previews
+                  </button>
+                </div>
+                <div className="flex-1">
+                  <button
+                    onClick={handleNext}
+                    className="mt-4 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 w-full rounded-md py-2"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {currentStep === 4 && (
+            <div>
+              <Contact
+                linkendin={linkedin}
+                github={github}
+                tiwitter={twitter}
+                onlinkedinChange={(value) => setLinkedin(value)}
+                ongithubChange={(value) => setGithub(value)}
+                ontwitterChange={(value) => setTwitter(value)}
+              />
+
               <div className="flex flex-row justify-between gap-3 items-center">
                 <div className="flex-1">
                   <button

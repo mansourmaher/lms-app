@@ -2,10 +2,10 @@
 
 import {
   BarChart2,
+  BookAIcon,
   Compass,
   Layout,
   List,
-  ShoppingCart,
   User,
 } from "lucide-react";
 import { SidebarItem } from "./sidebarItem";
@@ -38,6 +38,11 @@ const teacherRoutes = [
     icon: BarChart2,
     label: "Analysis",
     href: "/teacher/analyticts",
+  },
+  {
+    icon: BookAIcon,
+    label: "Courses",
+    href: "/mycourses",
   },
 ];
 export const SideBarRoutes = () => {

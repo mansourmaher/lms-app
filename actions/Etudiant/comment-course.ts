@@ -1,3 +1,4 @@
+import { get } from 'http';
 "use server"
 
 import { auth } from "@/auth"
@@ -42,6 +43,17 @@ export const UpdateComment=async(commentId:string,stars:number,review:string,cou
     const user=await auth()
     const userId=user?.user.id as string
     console.log("comment"+review)
+
+    const getComment=await db.courseReview.findUnique({
+        where:{
+            courseId:courseId,
+            userId:userId,
+            id:commentId
+        }
+    })
+    const oldStars=getComment?.starts as number
+    
+
     const comment=await db.courseReview.updateMany({
         where:{
             courseId:courseId,
@@ -51,6 +63,16 @@ export const UpdateComment=async(commentId:string,stars:number,review:string,cou
         data:{
             starts:stars,
             comment:review
+        }
+    })
+    const updateCourseStars=await db.course.update({
+        where:{
+            id:courseId
+        },
+        data:{
+            totalStars:{
+                increment:stars-oldStars
+            }
         }
     })
     revalidatePath(`/course/${courseId}`)

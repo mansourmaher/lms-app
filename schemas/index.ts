@@ -49,6 +49,9 @@ export const ProfileSchema=z.object({
     }).optional(),
     subtitle:z.string().min(0,{message:"Please enter a valid subtitle"}).optional(),
     patients:z.array(z.string()).min(0,{message:"Please select a patient"}).optional(),
+    linkedin:z.string().min(0,{message:"Please enter a valid linkedin"}).optional(),
+    github:z.string().min(0,{message:"Please enter a valid github"}).optional(),
+    twitter:z.string().min(0,{message:"Please enter a valid twitter"}).optional()
     
 })
 

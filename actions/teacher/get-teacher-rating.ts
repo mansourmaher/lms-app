@@ -15,10 +15,9 @@ export async function getTeacherRating(teacherId: string) {
     let totalReview = 0;
     let totalStars = 0;
     courses.forEach((course) => {
-        totalReview += course.review.length;
-        course.review.forEach((review) => {
-        totalStars += review.starts!;
-        });
+        totalReview += course.totalReviews!;
+        totalStars+=course.totalStars!
+      
     });
     return totalStars / totalReview;
     }

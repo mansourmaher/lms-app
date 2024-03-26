@@ -22,6 +22,7 @@ import { useState } from "react";
 import { resetPassword } from "@/actions/reset";
 import PointsProgress from "./points-progress";
 import { FcChargeBattery } from "react-icons/fc";
+import { Separator } from "@/components/ui/separator";
 
 interface Props {
   user: Awaited<ReturnType<typeof getCurrentUser>>;
@@ -71,6 +72,7 @@ const Setting = ({ user, isTeacherhasRequest }: Props) => {
 
   return (
     <>
+      <Separator  className="mb-6"/>
       <div className=" mx-16 flex justify-center ">
         {user?.role === "TEACHER" &&
         user?.teacherAccess === false &&
@@ -230,8 +232,9 @@ const Setting = ({ user, isTeacherhasRequest }: Props) => {
               </div>
 
               <span className="text-center text-sm  ">
-                You have <span className="text-blue-400 underline">{user?.points}</span> points, keep going reach
-                100 points to get a free course
+                You have{" "}
+                <span className="text-blue-400 underline">{user?.points}</span>{" "}
+                points, keep going reach 100 points to get a free course
               </span>
             </div>
           </div>

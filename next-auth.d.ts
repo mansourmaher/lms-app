@@ -16,6 +16,9 @@ export type ExtendedUser = DefaultSession["user"] & {
   patients: string[];
   password: string;
   points: number;
+  linkedin: string;
+  github: string;
+  twitter: string;
 };
 
 declare module "next-auth" {
