@@ -21,7 +21,7 @@ const Page = async (params: {
           <CommunitySearchProblem />
           {posts.length === 0 && (
             <div className="text-center text-gray-500">
-              No posts yet in this community
+              No posts yet in this community 
             </div>
           )}
           <div className="bg-gray-100 h-[580px] overflow-y-auto p-4 rounded-lg">
