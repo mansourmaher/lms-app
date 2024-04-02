@@ -6,31 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 //import MuxPlayer from "@mux/mux-player-react";
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormMessage,
-  FormLabel,
-  FormField,
-  FormItem,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  ImageIcon,
   Pencil,
-  PlusCircle,
-  VideoIcon,
-  VideoOffIcon,
+  PlusCircle, VideoOffIcon
 } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
-import { Chapter, Course, MuxData } from "@prisma/client";
-import Image from "next/image";
+import { Chapter, MuxData } from "@prisma/client";
 import { FileUpload } from "@/components/file-upload";
 const formSchema = z.object({
   videoUrl: z.string().min(1, {
@@ -77,7 +61,7 @@ export const ChapterVedioForm = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 ">
       <div className="font-medium flex items-center justify-between">
-        Image form
+        Vedio form
         <Button variant="ghost" onClick={toggleEditing}>
           {isEditing && <>Cancel</>}
           {!isEditing && !initialeData.videoUrl && (
@@ -111,6 +95,7 @@ export const ChapterVedioForm = ({
             endpoint="chapterVideo"
             onChange={(url) => {
               if (url) {
+                console.log(url);
                 onSubmit({ videoUrl: url });
               }
             }}

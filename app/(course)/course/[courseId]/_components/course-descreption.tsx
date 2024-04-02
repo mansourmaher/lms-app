@@ -16,7 +16,6 @@ export default function CourseDescreption({
       <p className="text-sm text-muted-foreground mt-1.5  line-clamp-3 h-14 mb-6">
         {description}
       </p>
-     
     </div>
   );
 }

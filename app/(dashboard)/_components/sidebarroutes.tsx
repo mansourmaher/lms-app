@@ -3,7 +3,9 @@
 import {
   BarChart2,
   BookAIcon,
+  ChefHatIcon,
   Compass,
+  ContrastIcon,
   Layout,
   List,
   User,
@@ -27,6 +29,7 @@ const geustRoutes = [
     label: "Unstructor",
     href: "/unstructor",
   },
+ 
 ];
 const teacherRoutes = [
   {
@@ -42,7 +45,12 @@ const teacherRoutes = [
   {
     icon: BookAIcon,
     label: "Courses",
-    href: "/mycourses",
+    href: "/teacher/mycourses",
+  },
+  {
+    icon: ContrastIcon,
+    label: "WorkFlow",
+    href: "/teacher/check",
   },
 ];
 export const SideBarRoutes = () => {

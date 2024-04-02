@@ -6,6 +6,7 @@ import qs from "query-string";
 import { usePathname, useRouter } from "next/navigation";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Search } from "lucide-react";
 
 interface valueProps extends React.InputHTMLAttributes<HTMLInputElement> {
   teachers: Awaited<ReturnType<typeof getTeacherWithCoursesCount>>;
@@ -54,26 +55,54 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
       .slice(0, 5);
   }, [value]);
 
+  const issearchPage = pathname?.includes("/search");
+
   return (
-    <div className="relative w-[350px]">
-      <Input
-        placeholder="Search for a teacher..."
-        type="search"
-        value={value}
-        onChange={(e) => setvalue(e.target.value)}
-        onFocus={() => setHasFocus(true)}
-        onBlur={() => setHasFocus(false)}
-        {...props}
-        ref={ref}
-      />
+    <div className="w-[350px] relative">
+      {!issearchPage && (
+        <div className="flex relative w-[350px] pl-9 rounded-full bg-slate-100 focus-visible:ring-slate-200">
+          <Search className="absolute top-1/2 left-3 transform -translate-y-1/2 text-slate-500" />
+          <div className="flex w-full">
+            <Input
+              placeholder="Search for a teacher..."
+              type="search"
+              value={value}
+              onChange={(e) => setvalue(e.target.value)}
+              onFocus={() => setHasFocus(true)}
+              onBlur={() => setHasFocus(false)}
+              {...props}
+              ref={ref}
+            />
+          </div>
+        </div>
+      )}
+      {issearchPage && (
+        <div className="relative w-[350px]">
+          <div className="flex w-full">
+            <Input
+              placeholder="Search for a teacher..."
+              type="search"
+              value={value}
+              onChange={(e) => setvalue(e.target.value)}
+              onFocus={() => setHasFocus(true)}
+              onBlur={() => setHasFocus(false)}
+              {...props}
+              ref={ref}
+            />
+          </div>
+        </div>
+      )}
 
       {value.trim() && hasFocus && (
-        <div className="absolute z-20 w-full divide-y rounded-b-lg border-x border-b bg-background shadow-xl  overflow-y-auto max-h-[300px] top-12 left-0 mt-1.5 py-2 px-3">
+        <div className="absolute z-20 w-[350px] divide-y rounded-b-lg border-x border-b bg-background shadow-xl  overflow-y-auto max-h-[300px] top-12 left-0 mt-1.5 py-2 px-3">
           {!cities.length && <p className="p-3">No results found.</p>}
           {cities.map((teacher) => (
             <button
               key={teacher.user?.id}
               className="block w-full p-1 text-start"
+              onClick={() => {
+                router.push(`/teacher/${teacher.user?.id}`);
+              }}
               onMouseDown={(e) => {
                 e.preventDefault();
                 setvalue(teacher.user?.name!);

@@ -1,13 +1,11 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { logout } from "@/actions/logout";
 import { UserButton } from "./Auth/user-button";
 import { SearchInput } from "./search_input";
 
-import { Notifications } from "@prisma/client";
 import { getAllNotifications } from "@/actions/teacher/get-all-notifications";
 import TeacherNotification from "./Auth/teacher-notifications";
 import TeacherSearchInput from "./teacher-search-input";
@@ -28,26 +26,34 @@ export const NavbarRoutes = ({
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isPalayerPage = pathname?.includes("/chapter");
   const isSearchPage = pathname?.includes("/search");
+  const isChatPage = pathname?.includes("/chat");
 
   return (
     <>
-      <div className="hidden md:block">
-        <div className="flex items-center ">
-          {isSearchPage && <SearchInput />}
-          <TeacherSearchInput teachers={teachers} />
-        </div>
-      </div>
+      {!isChatPage && (
+        <>
+          <div className="hidden md:block">
+            <div className="flex items-center ">
+              {isSearchPage && <SearchInput />}
+              <TeacherSearchInput teachers={teachers} />
+            </div>
+          </div>
 
-      <div className="items-center gap-x-2 ml-auto flex ">
-        <UserButton />
-        <TeacherNotification notifications={notifications} userId={userId} />
+          <div className="items-center gap-x-2 ml-auto flex ">
+            <UserButton />
+            <TeacherNotification
+              notifications={notifications}
+              userId={userId}
+            />
 
-        <Link href="/teacher/courses">
-          <Button size="sm" variant="ghost">
-            Teacher mode
-          </Button>
-        </Link>
-      </div>
+            <Link href="/teacher/courses">
+              <Button size="sm" variant="ghost">
+                Teacher mode
+              </Button>
+            </Link>
+          </div>
+        </>
+      )}
     </>
   );
 };

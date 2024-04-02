@@ -19,7 +19,6 @@ export default function ChapterVedio({ videosrc }: Props) {
     <div className="ml-8 flex gap-x-2">
       <div className="relative w-full h-[500px] aspect-video rounded-xl mb-4">
         <Video
-        
           src={videosrc!}
           onEnded={() => alert("end")}
           controls

@@ -1,11 +1,9 @@
 import { ChapterSidebarItem } from "@/app/(course)/course/[courseId]/_components/chapter-sidebar";
 import { auth } from "@/auth";
-import { Chapter, Course, UserProgress } from "@prisma/client";
 import { getProgress } from "@/actions/course/get-progress";
 import CourseProgress from "./course-progress";
 import { db } from "@/lib/db";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { MobileSidebar } from "@/app/(dashboard)/_components/mobilesidebar";
 
 interface CourseSideBarProps {
   courseId: string;
@@ -113,7 +111,7 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
           style={{ width: "90%" }}
         />
       </div>
-      <div className="flex flex-col w-full ">
+      <div className="flex flex-col w-full h-[580px] overflow-y-auto ">
         {course?.chapters &&
           course.chapters.map((chpaters) => (
             <ChapterSidebarItem

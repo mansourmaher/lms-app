@@ -1,9 +1,8 @@
-import { Chapter } from '@prisma/client';
-import { db } from "@/lib/db"
-import { NextResponse } from "next/server"
+import { db } from "@/lib/db";
+import { NextResponse } from "next/server";
 import { log } from 'console';
-import { json } from 'stream/consumers';
 import Mux from '@mux/mux-node';
+
 
 
 const {Video} =new Mux(
@@ -24,6 +23,7 @@ export async function PATCH(req:Request,{params}:{params:{
         log(data)
         log(params)
         log("data"+data.videoUrl)
+       
 
 
         const  chapter=await db.chapter.update({

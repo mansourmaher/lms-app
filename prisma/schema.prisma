@@ -69,6 +69,9 @@ model User {
   report       Report[]
   teacher      Notifications[] @relation("teacher")
   student      Notifications[] @relation("student")
+
+  post         Post[]
+  postResponse PostResponse[]
 }
 
 model Origin {
@@ -123,8 +126,10 @@ model Course {
   isPublished  Boolean    @default(false)
   categoryId   String?
   category     Category?  @relation(fields: [categoryId], references: [id])
+  target       String[]
   totalStars   Int?       @default(0)
   totalReviews Int?       @default(0)
+  totalhours   Float?
   chapters     Chapter[]
   purchases    Purchase[]
 
@@ -135,6 +140,7 @@ model Course {
   review     CourseReview[]
   courseUser CourseUser[]
   report     Report[]
+  Community  Community?
 
   @@index([categoryId])
 }
@@ -313,4 +319,48 @@ model Notifications {
   chapterId    String?
   createdAt    DateTime @default(now())
   isRead       Boolean  @default(false)
+}
+
+model Community {
+  id       String @id @default(uuid())
+  title    String
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+
+  @@unique([courseId])
+}
+
+model Post {
+  id String @id @default(uuid())
+
+ 
+  content   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  isthecontentisimage Boolean @default(false)
+  imageurl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  communityId  String
+  community    Community      @relation(fields: [communityId], references: [id])
+  PostResponse PostResponse[]
+}
+
+model PostResponse {
+  id String @id @default(uuid())
+
+  content   String?
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
+  imageurl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  postId String?
+  post   Post?   @relation(fields: [postId], references: [id])
 }

@@ -24,6 +24,11 @@ export const ourFileRouter = {
         "pdf":{maxFileSize:"512GB",maxFileCount:1},
     }).middleware(()=>handelAuth())
     .onUploadComplete(()=>{}),
+    postImage:f({
+        image:{maxFileSize:"4MB",maxFileCount:1},
+        "pdf":{maxFileSize:"512GB",maxFileCount:1},
+    }).middleware(()=>handelAuth())
+    .onUploadComplete(()=>{}),
     chapterTodo:f({
         image:{maxFileSize:"4MB",maxFileCount:1},
         "pdf":{maxFileSize:"512GB",maxFileCount:1},

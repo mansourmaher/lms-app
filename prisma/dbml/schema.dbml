@@ -50,6 +50,8 @@ Table User {
   report Report [not null]
   teacher Notifications [not null]
   student Notifications [not null]
+  post Post [not null]
+  postResponse PostResponse [not null]
 }
 
 Table Origin {
@@ -107,8 +109,10 @@ Table Course {
   isPublished Boolean [not null, default: false]
   categoryId String
   category Category
+  target String[] [not null]
   totalStars Int [default: 0]
   totalReviews Int [default: 0]
+  totalhours Float
   chapters Chapter [not null]
   purchases Purchase [not null]
   attachment Attachment [not null]
@@ -118,6 +122,7 @@ Table Course {
   review CourseReview [not null]
   courseUser CourseUser [not null]
   report Report [not null]
+  Community Community
 }
 
 Table CourseUser {
@@ -276,6 +281,42 @@ Table Notifications {
   isRead Boolean [not null, default: false]
 }
 
+Table Community {
+  id String [pk]
+  title String [not null]
+  courseId String [unique, not null]
+  course Course [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  posts Post [not null]
+}
+
+Table Post {
+  id String [pk]
+  content String [not null]
+  userId String [not null]
+  user User [not null]
+  isthecontentisimage Boolean [not null, default: false]
+  imageurl String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  communityId String [not null]
+  community Community [not null]
+  PostResponse PostResponse [not null]
+}
+
+Table PostResponse {
+  id String [pk]
+  content String
+  userId String
+  user User
+  imageurl String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  postId String
+  post Post
+}
+
 Enum UserRole {
   STUDENT
   ADMIN
@@ -327,3 +368,13 @@ Ref: Options.quizId > Quiz.id
 Ref: Notifications.teacher > User.id
 
 Ref: Notifications.student > User.id
+
+Ref: Community.courseId - Course.id
+
+Ref: Post.userId > User.id
+
+Ref: Post.communityId > Community.id
+
+Ref: PostResponse.userId > User.id
+
+Ref: PostResponse.postId > Post.id

@@ -117,11 +117,16 @@ export default function CommentList({
                                         handelMasueComment(comment.id)
                                       }
                                     /> */}
-                                    rvrnov
+                                    <MessageCircleOff
+                                      className="h-4 w-4 cursor-pointer"
+                                      onClick={() =>
+                                        handelMasueComment(comment.id)
+                                      }
+                                    />
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    <p className="text-gray-900 dark:text-gray-300">
-                                      Hide comment
+                                    <p className="text-gray-600 dark:text-gray-300">
+                                      Click to hide this comment
                                     </p>
                                   </TooltipContent>
                                 </Tooltip>

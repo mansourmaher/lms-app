@@ -11,6 +11,7 @@ export async function PATCH(req:Request,{params}:{params:{courseId:string}})
         const userId=user?.user?.id as string;
         const {courseId}=params;
         const values=await req.json();
+        console.log("valeus",values);
         
         
         if(values.price)

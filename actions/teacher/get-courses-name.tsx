@@ -10,6 +10,7 @@ export async function getCoursesName() {
     const courses = await db.course.findMany({
       where: {
         userId: userId,
+        isPublished: true,
       },
       select: {
         title: true,

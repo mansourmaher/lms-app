@@ -1,9 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Eye, TimerReset } from "lucide-react";
+import { Check, CheckCircle, Eye, TimerReset } from "lucide-react";
 import { LockKeyhole } from "lucide-react";
-import { Html } from "next/document";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface ChapterSidebarProps {
@@ -32,34 +30,30 @@ export const ChapterSidebarItem = ({
         <Button
           onClick={() => router.push(`/course/${courseId}/chapter/${id}`)}
           size={"lg"}
-          className="  text-left bg-white text-gray-800  border-gray-200 hover:border-gray-300 hover:shadow-md hover:bg-slate-200/80 transition-all duration-200 ease-in-out gap-x-6 border-radius-2xl px-4 py-2 rounded-full border w-full "
+          className="   bg-white text-gray-800  border-gray-200 hover:border-gray-300 hover:shadow-md hover:bg-slate-200/80 transition-all duration-200 ease-in-out  border-radius-2xl   rounded-full border w-full "
           disabled={isLocked && !isPurchased}
-         
-         
         >
-          <div className="flex gap-x-1 items-center">
-            {isLocked && !isPurchased ? (
-              <LockKeyhole size={16} className="text-gray-500" />
-            ) : (
-              <Eye size={16} className="text-gray-500" />
-            )}
-            <div>
+          <div className="flex justify-between items-center w-full">
+            <div className="flex items-center">
+              {isLocked && !isPurchased && (
+                <LockKeyhole className="text-gray-500" size={24} />
+              )}
+              {isLocked && isPurchased && (
+                <Eye className="text-sky-500" size={24} />
+              )}
+              {!isLocked && (
+                <Eye className="text-sky-500" size={24} />
+              )}
+              
               <span className="ml-2">{label}</span>
             </div>
+
+            {isCompleted ? (
+              <CheckCircle className="text-green-500" size={20} />
+            ) : (
+              <TimerReset className="text-gray-500" size={20} />
+            )}
           </div>
-
-          {isCompleted ? (
-            <>
-              <CheckCircle size={16} className="text-green-500" />
-
-              <span className="text-green-500 ml-2">Completed</span>
-            </>
-          ) : (
-            <>
-              <TimerReset size={16} className="text-yellow-500" />
-              <span className="text-yellow-500 ml-2">In Progress</span>
-            </>
-          )}
         </Button>
       </div>
     </div>

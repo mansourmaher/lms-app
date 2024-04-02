@@ -13,6 +13,7 @@ import CommentList from "./course-comment";
 import CourseDescreption from "./course-descreption";
 import CourseStars from "./course-stars";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import CourseTarget from "./course-target";
 
 interface SingleCourseProps {
   course: Awaited<ReturnType<typeof getCourseById>>;
@@ -48,8 +49,11 @@ export default function SingleCourse({
       <div className="mx-16">
         <CourseDescreption description={course.description!} />
       </div>
-      <div className="mx-16">
+      <div className="flex justify-end items-end mx-16">
         <CourseStars course={course!} />
+      </div>
+      <div className="mx-16">
+        <CourseTarget targets={course.target!} />
       </div>
       <div className="mx-8">
         <CourseOption

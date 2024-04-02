@@ -34,29 +34,10 @@ export default function ChapterButtons({
           >
             Overview
           </Button>
-          <Button
-            variant={selected === 1 ? "primary" : "ghost"}
-            className="rounded-full  p-4"
-            size="sm"
-            onClick={() => {
-              selected === 1 ? setSelected(0) : setSelected(1);
-            }}
-          >
-            Download Resources
-          </Button>
-          <Button
-            variant={selected === 2 ? "primary" : "ghost"}
-            className="rounded-full  p-4"
-            size="sm"
-            onClick={() => {
-              selected === 2 ? setSelected(0) : setSelected(2);
-            }}
-          >
-            Download the work
-          </Button>
+
           <a href={chapter?.resources[0]?.url!} target="_blank" download>
             <Button
-              variant="primary"
+              variant={selected === 1 ? "primary" : "ghost"}
               className="rounded-full  p-4"
               size="sm"
               onClick={() => {

@@ -10,6 +10,7 @@ import ChapterDescreption from "./chapter-descreption";
 import { getChapterById } from "@/actions/chapter/get-chapter-by-id";
 import ChapterResources from "./chapter-resources";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import PdfModal from "@/app/(dashboard)/(routes)/teacher/check/_components/pdf-modal";
 
 interface ChapterPageProps {
   courseId: string;
@@ -32,15 +33,15 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
   const nextChapter = await db.chapter.findFirst({
     where: {
       courseId: courseId,
-        // position: currentPostion! + 1,
-        isPublished: true,
+      // position: currentPostion! + 1,
+      isPublished: true,
     },
   });
   const previewsChapter = await db.chapter.findFirst({
     where: {
       courseId: courseId,
       //  position: currentPostion! - 1,
-       isPublished: true,
+      isPublished: true,
     },
   });
   const existingReport = await hasReportChapter(chapterId);
@@ -64,7 +65,7 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
             existingReport={existingReport}
           />
 
-          <div className="h-[200px]">
+          <div className="h-[200px] ">
             <ScrollArea>
               <ChapterResources resources={chapter?.resources!} />
             </ScrollArea>
@@ -77,7 +78,7 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
         hasreport={!!existingReport}
         courseId={courseId}
       />
-      <hr className="m-8 mt-16" />
+      <hr className="m-8 mt-6" />
       <div className="grid grid-cols-1 sm:grid-cols-1 gap-x-6">
         <ChapterDescreption descreption={chapter?.descreption!} />
       </div>

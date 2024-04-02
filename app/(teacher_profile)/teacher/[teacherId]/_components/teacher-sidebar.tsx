@@ -9,9 +9,9 @@ import TeacherListSidebar from "./teacherList-sidebar";
 const TeachersSidebar = async () => {
   const teachers = await getAllUnstroctor(null);
   return (
-    <div>
+    <div className="bg-white">
       <div className="text-center">
-        <p className="text-2xl font-bold mb-8">
+        <p className="text-2xl font-bold mb-8 mt-8">
           Recommendation formateur for you
         </p>
         <div className="mb-6">

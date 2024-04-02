@@ -2,8 +2,9 @@
 import { totalPurchase } from "@/actions/course/total-purchase";
 import { teacherGetMyCourses } from "@/actions/teacher/teacher-getMy-courses";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { StarIcon } from "lucide-react";
+import { Edit, Eye, StarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -44,6 +45,7 @@ export default function CourseItem({ course }: CourseItemProps) {
                   <div> {course.totalReviews} Reviews</div>
                 </div>
               </div>
+             
             </div>
           </CardContent>
         </Card>

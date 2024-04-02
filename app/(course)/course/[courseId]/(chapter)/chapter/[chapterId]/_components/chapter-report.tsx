@@ -79,7 +79,7 @@ export default function ChapterReport({
         {existingReport && !existingReport.note && (
           <div className="px-5 py-4 border-t">
             <span className="text-sm font-semibo">
-              Wait for the teacher to correct your work
+              Waiting for the teacher to correct your work
             </span>
           </div>
         )}

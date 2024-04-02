@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  getCourseIncludeProgresse
-} from "@/actions/teacher/get-all-course-include-progresse";
+import { getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-include-progresse";
 import CourseButton from "./_components/course-button";
 
 import { teacherGetMyCourses } from "@/actions/teacher/teacher-getMy-courses";
@@ -10,14 +8,12 @@ import { DataTable } from "./_components/table-user/data-table";
 import { columns } from "./_components/table-user/columns";
 
 interface SingleCoursePageProps {
-  
   couresesIncludeProgress: Awaited<
     ReturnType<typeof getCourseIncludeProgresse>
   >;
 }
 
 export default function SingleCoursePage({
- 
   couresesIncludeProgress,
 }: SingleCoursePageProps) {
   return (
