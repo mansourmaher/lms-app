@@ -19,12 +19,13 @@ const Page = async (params: {
       <div className="flex h-full">
         <div className="flex flex-col w-full px-6  space-y-2 bg-white">
           <CommunitySearchProblem />
-          {posts.length === 0 && (
-            <div className="text-center text-gray-500">
-              No posts yet in this community 
-            </div>
-          )}
+
           <div className="bg-gray-100 h-[580px] overflow-y-auto p-4 rounded-lg">
+            {posts.length === 0 && (
+              <div className="text-gray-500 my-auto flex">
+                No posts yet in this community
+              </div>
+            )}
             <ComunityPostList posts={posts} postId={postId} />
           </div>
           {/* <CommunityMessageInput communityId={comunityId} /> */}

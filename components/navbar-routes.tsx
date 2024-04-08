@@ -10,16 +10,21 @@ import { getAllNotifications } from "@/actions/teacher/get-all-notifications";
 import TeacherNotification from "./Auth/teacher-notifications";
 import TeacherSearchInput from "./teacher-search-input";
 import { getTeacherWithCoursesCount } from "@/actions/Etudiant/get-teacher-name";
+import CoursesSearchInput from "./models/courses-search-input";
+import { getCoursesNameAndImage } from "@/actions/course/get-courses-image-name";
+import { Search } from "lucide-react";
 
 interface NavbarRoutesProps {
   notifications: Awaited<ReturnType<typeof getAllNotifications>>;
   userId: string | undefined;
   teachers: Awaited<ReturnType<typeof getTeacherWithCoursesCount>>;
+  courses: Awaited<ReturnType<typeof getCoursesNameAndImage>>;
 }
 export const NavbarRoutes = ({
   notifications,
   userId,
   teachers,
+  courses,
 }: NavbarRoutesProps) => {
   const pathname = usePathname();
 
@@ -33,9 +38,12 @@ export const NavbarRoutes = ({
       {!isChatPage && (
         <>
           <div className="hidden md:block">
-            <div className="flex items-center ">
-              {isSearchPage && <SearchInput />}
-              <TeacherSearchInput teachers={teachers} />
+            <div className="flex items-center rounded-full bg-slate-100 focus-visible:ring-slate-200 p-1  ">
+              {!isTeacherPage && <Search className="  text-slate-500 gap-x-2" />}
+              {/* {isSearchPage && <SearchInput />} */}
+              {!isTeacherPage && <TeacherSearchInput teachers={teachers} />}
+              {isSearchPage ||
+                (isTeacherPage && <CoursesSearchInput courses={courses} />)}
             </div>
           </div>
 

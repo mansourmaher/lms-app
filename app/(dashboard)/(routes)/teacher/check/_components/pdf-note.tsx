@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Expand, Loader2 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { number, string, z } from "zod";
+import { z } from "zod";
 
 import {
   Form,
@@ -21,7 +21,6 @@ import { Input } from "@/components/ui/input";
 import { Editor } from "@/components/editor";
 import axios from "axios";
 import { getReportById } from "@/actions/teacher/get-reportById";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   note: z.string().min(2, {
@@ -43,7 +42,9 @@ export default function PdfNote({ id }: FormProps) {
   const [note, setNote] = useState("");
   const [grade, setGrade] = useState(0);
   const [souldBerefresh, setSouldBerefresh] = useState(false);
-  const router = useRouter();
+  const [initilagrade, setInitilagrade] = useState(0);
+
+  
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,6 +54,7 @@ export default function PdfNote({ id }: FormProps) {
       const res = await getReportById(id);
       setNote(res?.note as string);
       setGrade(res?.grade as number);
+      setInitilagrade(res?.grade as number);
       form.setValue("note", res?.note as string);
       form.setValue("grade", res?.grade as number);
     };
@@ -60,11 +62,14 @@ export default function PdfNote({ id }: FormProps) {
   }, [id, souldBerefresh]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+   
     await axios
       .post("/api/teacher/keepNote", {
         reportId: id,
         grade: values.grade,
         note: values.note,
+        initilagrade: initilagrade,
+        
       })
       .then((res) => {
         setSuccessMessage(res.data.message);

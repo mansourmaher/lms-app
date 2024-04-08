@@ -9,7 +9,7 @@ interface SingleCheckPageProps {
 }
 
 export default function SingleCheckPage({ usersWork }: SingleCheckPageProps) {
-  console.log(usersWork);
+  
   return (
     <div className="px-6 py-6 mt-6">
       <DataTable data={usersWork} columns={columns} />

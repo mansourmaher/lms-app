@@ -94,7 +94,7 @@ export const UserButton = () => {
         <Input value={currentUser?.about || ""} readOnly className="mt-2" />
         
       </div>
-      <Map center={currentUser?.origin.lalng} />
+      <Map center={currentUser?.origin?.lalng} />
       <SheetFooter>
         <div>
           {currentUser?.role === "TEACHER" &&

@@ -41,12 +41,26 @@ export async function getCourseIncludeProgresse(courseId:string) {
             
         },
         include:{
-            course:true,
+            course:{
+                include:{
+                    chapters:{
+                        select:{
+                            id:true
+                        }
+
+                    }
+                }
+            },
+            
             
             user:true
 
             
+        },
+        orderBy:{
+            score:"desc"
         }
+
 
 
   

@@ -11,12 +11,14 @@ interface ChapterButtonsProps {
   chapter: Awaited<ReturnType<typeof getChapterById>>;
   courseId: string;
   hasreport: boolean;
+  isCompltedthechapter: boolean;
 }
 
 export default function ChapterButtons({
   chapter,
   courseId,
   hasreport,
+  isCompltedthechapter,
 }: ChapterButtonsProps) {
   const [selected, setSelected] = React.useState(0);
 
@@ -57,6 +59,7 @@ export default function ChapterButtons({
             chapterId={chapter?.id!}
             hasreport={hasreport}
             courseId={courseId}
+            isCompltedthechapter={isCompltedthechapter}
           />
         </div>
       </div>

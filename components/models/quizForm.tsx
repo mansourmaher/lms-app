@@ -41,12 +41,14 @@ interface ConfirmModelProps {
   chapterId: string;
   courseId: string;
   hasreport: boolean;
+  isCompltedthechapter: boolean;
 }
 
 export const QuizForm = ({
   chapterId,
   courseId,
   hasreport,
+  isCompltedthechapter,
 }: ConfirmModelProps) => {
   const {
     register,
@@ -96,9 +98,10 @@ export const QuizForm = ({
     if (cureentQuestion) {
       shuffleOptions();
     }
-    if (cureentQuestion && seccondAvailable === 0) {
+    if (cureentQuestion && seccondAvailable === 0 || isCompltedthechapter) {
       return () => clearInterval(interval);
     }
+    
 
     interval = setInterval(() => {
       setSeccondAvailable((prev) => prev - 1);
@@ -230,6 +233,7 @@ export const QuizForm = ({
 
           <AlertDialogDescription>
             <div className="mb-6 mt-6">
+              
               {/* <Stepper steps={quiz} currentStep={questionIndex + 1}  isFalse={isFalse} /> */}
             </div>
             {cureentQuestion ? (
@@ -262,8 +266,19 @@ export const QuizForm = ({
               </div>
             ) : null}
           </AlertDialogDescription>
+          {isCompltedthechapter ? (
+              <div>
+                <h1 className="bg-green-300 border p-2 text-center">
+                  🎉 Congratulation you have passed the quiz
+                </h1>
+              </div>
+            ) :null}
 
           <AlertDialogFooter>
+            {!isCompltedthechapter ? (
+              
+              <>
+
             <AlertDialogCancel>Close</AlertDialogCancel>
             <Button
               disabled={questionIndex === quiz.length}
@@ -314,6 +329,8 @@ export const QuizForm = ({
               courseId={courseId}
               mustUploadwork={!hasreport && correctAnswer > wrongAnswer}
             />
+            </>
+            ) : null}
           </AlertDialogFooter>
         </AlertDialogContent>
         <AlertDialogOverlay />

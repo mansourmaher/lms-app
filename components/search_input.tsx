@@ -8,7 +8,6 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import qs from "query-string";
 
-import TeacherSearchInput from "./teacher-search-input";
 
 export const SearchInput = () => {
   const [value, setValue] = useState("");
@@ -38,7 +37,7 @@ export const SearchInput = () => {
   }, [debouncedValue, currentCategory, pathname, router, teacher]);
 
   return (
-    <div className="flex relative max-w-[400px] md:w[400px] pl-9 rounded-full bg-slate-100 focus-visible:ring-slate-200">
+    <div className="flex relative max-w-[500px] md:w[500px] pl-9 rounded-full bg-slate-100 focus-visible:ring-slate-200">
       <Search className="absolute top-1/2 left-3 transform -translate-y-1/2 text-slate-500" />
       <div className="flex w-full">
         <Input

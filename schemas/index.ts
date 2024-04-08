@@ -20,10 +20,11 @@ export const RegisterSchema = z.object({
         message: "Name must be at least 3 characters long"
 
 }),
-    role: z.string().min(1, {
+    role: z.string().min(0, {
         message: "Please select a role"
+    })
 
-})
+
 })
 
 export const ResetSchema=z.object({

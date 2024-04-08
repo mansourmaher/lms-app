@@ -1,5 +1,3 @@
-"use client";
-
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +9,17 @@ import { Progress } from "@/components/ui/progress";
 
 const columnHelper =
   createColumnHelper<Awaited<ReturnType<typeof getCourseIncludeProgresse>>>();
+  const getnbrChaptersCompleted = (progress:any, chapterCount:any) => {
+    // Calculate the proportion of progress made (a value between 0 and 1)
+    const progressProportion = progress / 100;
+  
+    // Calculate the number of chapters completed
+    const completedChapters = Math.floor(progressProportion * chapterCount);
+  
+    return completedChapters;
+  };
+
+  
 
 export const columns = [
   //@ts-ignore
@@ -100,49 +109,113 @@ export const columns = [
     },
   }),
   //@ts-ignore
-  columnHelper.accessor((row) => row.status, {
-    id: "status",
-    header: "Status",
+  columnHelper.accessor((row) => row, {
+    id: "chpatercpmpleted",
+    header: "Completed",
     cell: (info) => {
       return (
-        <div className="flex space-x-2 items-center">
-          <span>
+        <div className="flex space-x-2 items-center ">
+          {/*@ts-ignore*/}
+          {getnbrChaptersCompleted( info.row.original.progress,info.row.original.course.chapters.length) === 0 && (
+            <Badge variant="slate">First chapter</Badge>
+          )}
+          {/*@ts-ignore*/}
+           {getnbrChaptersCompleted( info.row.original.progress,info.row.original.course.chapters.length) === info.row.original.course.chapters.length && (
+            <Badge variant="primary">Completed</Badge>
+          )}
+          {/*@ts-ignore*/}
+          {getnbrChaptersCompleted( info.row.original.progress,info.row.original.course.chapters.length) !== 0 && getnbrChaptersCompleted( info.row.original.progress,info.row.original.course.chapters.length) !== info.row.original.course.chapters.length && (
+            <>
             {/*@ts-ignore*/}
-            {info.row.original.status === "Completed" && (
-              <Badge variant="green">Completed</Badge>
-            )}
-            {/*@ts-ignore*/}
-            {info.row.original.status === "In progress" && (
-              <Badge variant="yellow">In progress</Badge>
-            )}
-            {/*@ts-ignore*/}
-            {info.row.original.status === "Not started" && (
-              <Badge variant="slate">Not started</Badge>
-            )}
-          </span>
+            {getnbrChaptersCompleted( info.row.original.progress,info.row.original.course.chapters.length)}/{info.row.original.course.chapters.length} 
+
+            
+            </>
+          )}
         </div>
       );
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
   }),
+
+  // columnHelper.accessor((row) => row.status, {
+  //   id: "Completed",
+  //   header: "Completed",
+  //   cell: (info) => {
+  //     return (
+  //       <div className="flex space-x-2 items-center">
+  //         <span>
+  //           {/*@ts-ignore*/}
+  //           {info.row.original.status === "Completed" && (
+  //             <Badge variant="green">Completed</Badge>
+  //           )}
+  //           {/*@ts-ignore*/}
+  //           {info.row.original.status === "In progress" && (
+  //             <Badge variant="yellow">In progress</Badge>
+  //           )}
+  //           {/*@ts-ignore*/}
+  //           {info.row.original.status === "Not started" && (
+  //             <Badge variant="slate">Not started</Badge>
+  //           )}
+  //         </span>
+  //       </div>
+  //     );
+  //   },
+  //   filterFn: (row, id, value) => {
+  //     return value.includes(row.getValue(id));
+  //   },
+  // }),
   //@ts-ignore
-  columnHelper.accessor((row) => row.classement, {
-    id: "classement",
-    header: "Classement",
+  // columnHelper.accessor((row) => row.classement, {
+  //   id: "classement",
+  //   header: "Classement",
+
+  //   cell: (info) => {
+  //     return (
+  //       <div className="">
+  //         <span className="text-xs w-3">
+  //           {/*@ts-ignore*/}
+  //           {info.row.original.classement === 0
+  //             ? "-"
+  //             : // @ts-ignore
+  //               info.row.original.classement}
+  //         </span>
+  //       </div>
+  //     );
+  //   },
+  // }),
+  //@ts-ignore
+  columnHelper.accessor((row) => row, {
+    id: "score",
+    header: "Points",
 
     cell: (info) => {
       return (
         <div className="">
           <span className="text-xs w-3">
             {/*@ts-ignore*/}
-            {info.row.original.classement === 0
+            {info.row.original.score === null
               ? "-"
               : // @ts-ignore
-                info.row.original.classement}
+                info.row.original.score}
+            {/*@ts-ignore*/}
+            /{info.row.original.course.chapters.length * 20}
           </span>
         </div>
+      );
+    },
+  }),
+  //@ts-ignore
+  columnHelper.accessor((row) => row, {
+    id: "classment",
+    header: "Classment",
+    cell: (info) => {
+      return (
+        <>
+          <div className="text-xs w-3">
+            {/*@ts-ignore*/}
+            {info.row.index + 1}
+          </div>
+        </>
       );
     },
   }),

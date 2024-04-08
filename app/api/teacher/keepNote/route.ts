@@ -1,4 +1,4 @@
-import { get } from 'http';
+
 "use server"
 
 import { auth } from "@/auth"
@@ -14,8 +14,8 @@ export async function POST(req:Request)
             
             const user=await auth()
             const userId=user?.user.id as string
-            const {reportId,grade,note}=await req.json()
-            console.log(reportId,grade,note)
+            const {reportId,grade,note,initilagrade}=await req.json()
+           
             const createCompteRendu=await db.report.update({
             where:{
                 id:reportId
@@ -27,6 +27,35 @@ export async function POST(req:Request)
             }
                 
              })
+             
+             const existingscore=await db.courseUser.findUnique({
+                where:{
+                    userId_courseId:{
+                        courseId:createCompteRendu.courseId,
+                        userId:createCompteRendu.userId
+                    }
+                    
+                },
+                select:{
+                    score:true
+                }
+            })
+            const scoretoadd=grade-initilagrade
+           
+             const updatescore=await db.courseUser.update({
+                where:{
+                    userId_courseId:{
+                        courseId:createCompteRendu.courseId,
+                        userId:createCompteRendu.userId
+                    }
+                },
+                data:{
+                    score:existingscore?.score!+scoretoadd
+                }
+            }
+            )
+            
+                
              const getStudent=await db.report.findFirst({
                     where:{
                         id:reportId
@@ -35,6 +64,7 @@ export async function POST(req:Request)
                         user:true
                     }
                 })
+            
              const notification=await db.notifications.create({
                 data:{
                     teacher:getStudent?.user?.id!,
@@ -44,6 +74,7 @@ export async function POST(req:Request)
                     chapterId:getStudent?.chapterId,
                 }
             })
+            
             await pusherServer.trigger('notification', 'new-notification', {
                 notification
             });

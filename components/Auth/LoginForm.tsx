@@ -1,7 +1,6 @@
 "use client";
-import { CardWrapper } from "./Card-wrapper";
 
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -22,6 +21,8 @@ import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { ChromeIcon, GithubIcon, Loader, WavesIcon } from "lucide-react";
+import { Social } from "./Social";
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -42,6 +43,7 @@ export const LoginForm = () => {
     },
   });
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    console.log(values);
     setError("");
     setSucces("");
     startTransition(() => {
@@ -56,71 +58,121 @@ export const LoginForm = () => {
   };
 
   return (
-    <CardWrapper
-      headerLabel="Wellcome Back"
-      backButtonLabel="Dont have an account? Sign Up"
-      backButtonHref="/sign-up"
-      showSocial={true}
-    >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(() => {})} className="space-y-6">
-          <div className="space-y-6">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="Email"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage>
-                    {form.formState.errors.email?.message}
-                  </FormMessage>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="password">password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="*******"
-                      type="password"
-                    />
-                  </FormControl>
-                  <Button variant="link" asChild className="px-0 font-normal">
-                    <Link href="/reset">Forgot Password?</Link>
-                  </Button>
-                  <FormMessage>
-                    {form.formState.errors.password?.message}
-                  </FormMessage>
-                </FormItem>
-              )}
-            />
+    <div className="flex min-h-screen bg-white">
+      <div className="flex w-1/2 items-center justify-center p-12 ">
+        <div className="w-full max-w-md border shadow-xl  rounded-lg p-6">
+          <div className="flex justify-center mb-6">
+            
           </div>
-          <FormError message={error || errorParam} />
-          <FormSucces message={succes} />
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isPending}
-            onClick={form.handleSubmit(onSubmit)}
-          >
-            Login
-          </Button>
-        </form>
-      </Form>
-    </CardWrapper>
+          <h2 className="text-3xl font-extrabold  text-center ">
+            Welcome back
+          </h2>
+
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(() => {})}
+              className="mt-8 space-y-6 "
+              aria-disabled={isPending}
+            >
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPending}
+                        placeholder="Email"
+                        type="email"
+                      />
+                    </FormControl>
+                    <FormMessage>
+                      {form.formState.errors.email?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPending}
+                        placeholder="*******"
+                        type="password"
+                      />
+                    </FormControl>
+
+                    <FormMessage>
+                      {form.formState.errors.password?.message}
+                    </FormMessage>
+                  </FormItem>
+                )}
+              />
+              <div className="mt-6">
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300" />
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <a href="/reset" className="px-2 bg-white text-gray-500">
+                      Forgot your password?
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <FormError message={error || errorParam} />
+              <FormSucces message={succes} />
+              <Button
+                type="submit"
+                disabled={isPending}
+                onClick={form.handleSubmit(onSubmit)}
+                className="w-full bg-indigo-600"
+                variant={"primary"}
+              >
+                {isPending ? <Loader className="animate-spin"/> : "Sign in"}
+              </Button>
+            </form>
+          </Form>
+          <p className="mt-2 text-sm text-gray-600">
+            Not a member?
+            <Link
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+              href="/sign-up"
+            >
+              Register and join us
+            </Link>
+          </p>
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  Or continue with
+                </span>
+              </div>
+            </div>
+            <div className="w-full">
+              <Social />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="hidden w-1/2 items-center justify-center bg-cover lg:flex"
+        style={{
+          backgroundImage: "url('/teaching2.png')",
+          textAlign: "center",
+        }}
+      />
+    </div>
   );
 };

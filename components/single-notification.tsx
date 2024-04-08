@@ -55,13 +55,13 @@ export default function SingleNotifications({
                 alt={notifcation?.studentNotif?.name!}
               />
               <AvatarFallback className="uppercase">
-                {notifcation?.studentNotif.name![0]}
+                {notifcation?.studentNotif?.name![0]}
               </AvatarFallback>
             </Avatar>
           </div>
           <div className="w-full ps-3">
             <div className="text-gray-500 text-sm mb-1.5 dark:text-gray-400">
-              {notifcation?.studentNotif.name}{" "}
+              {notifcation?.studentNotif?.name!}{" "}
               <span className="font-semibold text-gray-900 dark:text-white">
                 {notifcation?.message}
               </span>

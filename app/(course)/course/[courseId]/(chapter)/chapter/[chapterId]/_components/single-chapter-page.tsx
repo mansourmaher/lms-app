@@ -11,6 +11,7 @@ import { getChapterById } from "@/actions/chapter/get-chapter-by-id";
 import ChapterResources from "./chapter-resources";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import PdfModal from "@/app/(dashboard)/(routes)/teacher/check/_components/pdf-modal";
+import { auth } from "@/auth";
 
 interface ChapterPageProps {
   courseId: string;
@@ -45,6 +46,18 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
     },
   });
   const existingReport = await hasReportChapter(chapterId);
+  const user = await auth();
+  const userId = user?.user.id as string;
+
+  const isCompltedthechapter = await db.userProgress.findFirst({
+    where: {
+      chapterId: chapterId,
+      userId: userId,
+    },
+    select: {
+      isCompleted: true,
+    },
+  });
   return (
     <div>
       <ChapterHeader
@@ -65,7 +78,7 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
             existingReport={existingReport}
           />
 
-          <div className="h-[200px] ">
+          <div className="h-[200px]  mb-8 ">
             <ScrollArea>
               <ChapterResources resources={chapter?.resources!} />
             </ScrollArea>
@@ -77,8 +90,9 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
         chapter={chapter!}
         hasreport={!!existingReport}
         courseId={courseId}
+        isCompltedthechapter={isCompltedthechapter?.isCompleted!}
       />
-      <hr className="m-8 mt-6" />
+      <hr className="m-8 mt-12" />
       <div className="grid grid-cols-1 sm:grid-cols-1 gap-x-6">
         <ChapterDescreption descreption={chapter?.descreption!} />
       </div>
