@@ -15,7 +15,7 @@ const LayoutDashbord = async ({ children }: { children: React.ReactNode }) => {
         <Navbar community={community} />
       </div>
       <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
-        <Sidebar community={community} notifications={notifications} userId={userId} />
+        <Sidebar community={community} />
       </div>
 
       <main className="md:pl-56 pt-[80px] h-full">{children}</main>

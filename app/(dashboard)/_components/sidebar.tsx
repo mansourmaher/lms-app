@@ -17,15 +17,9 @@ import { Button } from "@/components/ui/button";
 
 interface SidebarProps {
   community: Awaited<ReturnType<typeof getAllCommunity>>;
-  notifications: Awaited<ReturnType<typeof getAllNotifications>>;
-  userId: string;
 }
 
-export default function Sidebar({
-  community,
-  notifications,
-  userId,
-}: SidebarProps) {
+export default function Sidebar({ community }: SidebarProps) {
   const pathname = usePathname();
   const [isShowCommunity, setIsShowCommunity] = useState(false);
   const [selectedCommunity, setSelectedCommunity] = useState<null | string>(
