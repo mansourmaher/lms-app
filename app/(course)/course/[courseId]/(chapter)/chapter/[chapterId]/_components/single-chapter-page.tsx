@@ -25,6 +25,7 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
     },
     select: {
       title: true,
+      imageUrl: true,
     },
   });
 
@@ -69,7 +70,7 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
       />
       {/* <ChapterTitle title={chapter?.title!} /> */}
       <div className="flex items-start  w-full ">
-        <ChapterVedio videosrc={chapter?.videoUrl} />
+        <ChapterVedio videosrc={chapter?.videoUrl} img={courseName?.imageUrl!} />
         <div className="border-l-2 border-slate-400 h-[500px] pr-2"></div>
         <div className="flex flex-col gap-y-4 w-full  pr-4  h-[500px] ">
           <ChapterReport

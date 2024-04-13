@@ -5,6 +5,7 @@ import { Send } from "lucide-react";
 import React, { useEffect } from "react";
 import { CommunityUploadImage } from "./comunity-upload-image";
 import { replyInPost } from "@/actions/community/reply-in-post";
+import { MdAttachFile } from "react-icons/md";
 
 interface CommunityMessageInputProps {
   communityId: string;
@@ -45,6 +46,8 @@ export default function CommunityMessageInput({
           communityId={communityId}
           onchange={(url) => setImageUrl(url)}
         />
+        
+        <MdAttachFile size={24} className="text-blue-500 cursor-pointer" />
         {/* <Input
           placeholder={posttoreply ? "Reply to this post" : "Write a post"}
           className="w-full p-4 rounded-lg bg-white"

@@ -1,3 +1,4 @@
+"use client"
 import { getCurrentUser } from "@/hooks/getCurrentUser";
 import {
   Sheet,

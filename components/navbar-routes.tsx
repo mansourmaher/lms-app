@@ -13,6 +13,7 @@ import { getTeacherWithCoursesCount } from "@/actions/Etudiant/get-teacher-name"
 import CoursesSearchInput from "./models/courses-search-input";
 import { getCoursesNameAndImage } from "@/actions/course/get-courses-image-name";
 import { Search } from "lucide-react";
+import SheetNotification from "./Auth/notification-sheet";
 
 interface NavbarRoutesProps {
   notifications: Awaited<ReturnType<typeof getAllNotifications>>;
@@ -31,37 +32,27 @@ export const NavbarRoutes = ({
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isPalayerPage = pathname?.includes("/chapter");
   const isSearchPage = pathname?.includes("/search");
-  const isChatPage = pathname?.includes("/chat");
+  const isChatPage = pathname?.includes("/community");
 
   return (
     <>
       {!isChatPage && (
         <>
           <div className="hidden md:block">
-            <div className="flex items-center rounded-full bg-slate-100 focus-visible:ring-slate-200 p-1  ">
-              {!isTeacherPage && <Search className="  text-slate-500 gap-x-2" />}
-              {/* {isSearchPage && <SearchInput />} */}
+            <div className="flex items-center rounded-full bg-slate-100 focus-visible:ring-slate-200  ">
+              {!isTeacherPage && <Search className="text-slate-500 ml-8" />}
+
               {!isTeacherPage && <TeacherSearchInput teachers={teachers} />}
-              {isSearchPage ||
-                (isTeacherPage && <CoursesSearchInput courses={courses} />)}
+              {isSearchPage && <div className="mr-8">||</div>}
+              {isSearchPage && <CoursesSearchInput courses={courses} />}
+              {isTeacherPage && <CoursesSearchInput courses={courses} />}
             </div>
-          </div>
-
-          <div className="items-center gap-x-2 ml-auto flex ">
-            <UserButton />
-            <TeacherNotification
-              notifications={notifications}
-              userId={userId}
-            />
-
-            <Link href="/teacher/courses">
-              <Button size="sm" variant="ghost">
-                Teacher mode
-              </Button>
-            </Link>
           </div>
         </>
       )}
+      <div className="items-center gap-x-2 ml-auto flex mx-4">
+        <SheetNotification notifications={notifications} userId={userId} />
+      </div>
     </>
   );
 };

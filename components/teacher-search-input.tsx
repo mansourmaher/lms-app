@@ -68,6 +68,7 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
             onChange={(e) => setvalue(e.target.value)}
             onFocus={() => setHasFocus(true)}
             onBlur={() => setHasFocus(false)}
+            className="border-none bg-transparent w-full pl-11 rounded-full focus-visible:ring-slate-200"
             {...props}
             ref={ref}
           />

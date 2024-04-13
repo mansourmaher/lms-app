@@ -1,14 +1,16 @@
-"use server"
+"use server";
 
 import { db } from "@/lib/db";
 
 export async function getCoursesNameAndImage() {
   const courses = await db.course.findMany({
+    where: {
+      isPublished: true,
+    },
     select: {
-        id: true,
+      id: true,
       title: true,
       imageUrl: true,
-      isPublished: true,
     },
   });
   return courses;

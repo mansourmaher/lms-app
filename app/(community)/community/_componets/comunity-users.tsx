@@ -13,12 +13,12 @@ export const ComunityUser = async ({ communityId }: ComunityUserProps) => {
   const users = await getAllusersInComunityById(communityId);
 
   return (
-    <div className="hidden lg:block w-96 p-6 ">
-      <div className="mb-4 text-sm font-semibold">Members - {users.length}</div>
-      <div className="h-[580px] overflow-y-auto ">
+    <div className="hidden lg:block  p-8  bg-gray-100 px-2 space-y-2 w-80 h-full">
+      <div className="mb-4 px-7 text-sm font-semibold">Members - {users.length}</div>
+      <div className="h-[580px] overflow-y-auto p-4 ">
         {users.map((user) => (
           <div key={user.id} className="flex  ">
-            <ComunityUserItem user={user.user} />
+            <ComunityUserItem user={user} />
           </div>
         ))}
       </div>

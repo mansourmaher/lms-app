@@ -17,12 +17,7 @@ export default function CourseItem({ course }: CourseItemProps) {
   return (
     <div>
       <div className=" space-x-4  p-4">
-        <Card
-          className="w-[250px] hover:bg-slate-100  cursor-pointer"
-          onClick={() => {
-            router.push(`mycourses/${course.id}`);
-          }}
-        >
+        <Card className="w-[250px] hover:bg-slate-100  cursor-pointer">
           <CardContent>
             <div className="flex flex-col items-center space-y-2">
               <Avatar className="w-40 h-40 p-2">

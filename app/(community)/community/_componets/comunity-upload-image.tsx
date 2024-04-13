@@ -1,4 +1,4 @@
-import { Cloud, File } from "lucide-react";
+import { Cloud, File, Image } from "lucide-react";
 import { useState } from "react";
 
 import Dropzone from "react-dropzone";
@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
 import { DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Popover } from "@/components/ui/popover";
 
 const UploadDropzone = ({
   communityId,
@@ -126,9 +127,12 @@ export const CommunityUploadImage = ({
       }}
     >
       <DialogTrigger onClick={() => setIsOpen(true)} asChild>
+        <Popover>
         <div className="flex gap-x-2 cursor-pointer">
-          <File className="h-6 w-6 text-blue-400" />
+          <Image className="h-6 w-6 text-blue-400" />
         </div>
+        </Popover>
+        
       </DialogTrigger>
       <DialogContent>
         <UploadDropzone communityId={communityId} onchange={onchange} />

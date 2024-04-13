@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation";
 const geustRoutes = [
   {
     icon: Layout,
-    label: "Dashboard",
+    label: "Home",
     href: "/",
   },
   {
@@ -26,7 +26,7 @@ const geustRoutes = [
   },
   {
     icon: User,
-    label: "Unstructor",
+    label: "Instructor",
     href: "/unstructor",
   },
  

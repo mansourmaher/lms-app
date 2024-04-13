@@ -35,7 +35,7 @@ export default function TeacherNotification({
     };
   }, [notifications]);
   return (
-    <Popover >
+    <Popover>
       <PopoverTrigger asChild>
         <button
           className={cn(
@@ -53,7 +53,11 @@ export default function TeacherNotification({
           </div>
         </button>
       </PopoverTrigger>
-      <PopoverContent asChild className="w-full mt-6 p-0 h-[20px]" align="center">
+      <PopoverContent
+        asChild
+        className="w-full mt-6 p-0 h-[20px]"
+        align="center"
+      >
         <div className="bg-white shadow-md ">
           <div
             id="dropdownNotification"

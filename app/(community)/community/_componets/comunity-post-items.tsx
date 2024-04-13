@@ -25,6 +25,7 @@ export default function ComunityPostItem({
             <AvatarImage
               alt={post.user.name!}
               src={post.user.image || "/placeholder.svg?height=32&width=32"}
+              loading="lazy"
             />
             <AvatarFallback>{post.user.name![0].toUpperCase()}</AvatarFallback>
           </Avatar>
@@ -41,6 +42,8 @@ export default function ComunityPostItem({
               height={500}
               alt="image"
               className="rounded-lg"
+              loading="lazy"
+            
             />
           ) : null}
 
@@ -96,6 +99,7 @@ export default function ComunityPostItem({
                         height={500}
                         alt="image"
                         className="rounded-lg"
+                        loading="lazy"
                       />
                     ) : null}
                   </div>

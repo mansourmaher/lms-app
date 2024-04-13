@@ -14,14 +14,14 @@ const Header = async () => {
   return (
     <div className="m-8">
       <div className="flex flex-col space-y-2">
-        <span className="text-2xl font-semibold">
+        {/* <span className="text-2xl font-semibold">
           Hey {teacherStats?.name}!
-        </span>
-        <span className="text-gray-500">Welcome back to your courses List</span>
+        </span> */}
+        {/* <span className="text-gray-500">Welcome back to your courses List</span> */}
         {percentage > 50 ? (
           <Badge variant={"green"} className="p-3 flex justify-center">
             <span className="text-white text-sm">
-              You are doing great! Keep up the good work{" "}
+              You are doing great! 👏 Keep up the good work{" "}
               {teacherStats?.totalTecaherPurchase} students have purchased your
               courses {Math.round(percentage)} % of your students Like you
               

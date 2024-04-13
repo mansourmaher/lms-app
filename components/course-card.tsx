@@ -43,6 +43,7 @@ export const CourseCard = async ({
           src={imageUrl}
           alt="Course Image"
           fill
+          loading="lazy"
         />
       </div>
       <hr className="border-t border-muted-foreground mb-2" />

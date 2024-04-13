@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import React from "react";
 import CourseStudentList from "./course-students-list";
+import Fedbacktoast from "@/components/feedback-toast";
 
 const SingleAcceuilPage = async () => {
   const user = await auth();
@@ -8,6 +9,7 @@ const SingleAcceuilPage = async () => {
   return (
     <div>
       <div className="bg-white">
+        <Fedbacktoast />
         <div className="text-sky-700 bg-sky-400/30 hover:bg-sky-200">
           <div className="max-w-5xl px-24 py-6  ">
             <h1 className="text-4xl font-bold">

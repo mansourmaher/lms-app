@@ -29,7 +29,7 @@ export async function getUsersInCommunity(communityId: string) {
 
 
    export async function getAllusersInComunityById(communityId: string) {
-    return await db.post.findMany({
+    const users= await db.post.findMany({
         distinct:["userId"],
         where:{
             communityId:communityId
@@ -38,5 +38,18 @@ export async function getUsersInCommunity(communityId: string) {
             user:true
         }
     });
+    const userIncludePostsCount=Promise.all(users.map(async user=>{
+        const postsCount=await db.post.count({
+            where:{
+                userId:user.userId
+            }
+        })
+        return {...user,postsCount}
+    }))
+    
+   
+    return userIncludePostsCount
+
+    
     
     }

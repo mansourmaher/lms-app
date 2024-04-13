@@ -27,13 +27,14 @@ const CourseIdPage = async ({
     courseId: string;
   };
 }) => {
-  const userId = auth();
+  const userId = await auth();
   if (!userId) {
     return redirect("/login");
   }
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
+      userId: userId.user.id,
     },
     include: {
       chapters: {
@@ -49,8 +50,19 @@ const CourseIdPage = async ({
     },
   });
   if (!course) {
-    return redirect("/teacher/courses");
+    return (
+      <div className="flex justify-center items-center mt-52">
+        <div className="text-center">
+          <h1 className="text-2xl font-medium">Course not found</h1>
+          <p className="text-gray-500">
+            You are trying to access a course that does not exist <br />or you are not
+            the owner of this course
+          </p>
+        </div>
+      </div>
+    );
   }
+
   const categories = await db.category.findMany({
     orderBy: {
       name: "asc",

@@ -23,6 +23,7 @@ export default function UnstroctorCard({ teachers }: UnstroctorCardProps) {
                 <AvatarImage
                   alt="Profile picture"
                   src={teachers.user?.image || "/images/avatar-placeholder.png"}
+                  loading="lazy"
                 />
               </Avatar>
               <div className="text-center">

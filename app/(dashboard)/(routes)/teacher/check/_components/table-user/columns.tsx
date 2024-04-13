@@ -16,7 +16,7 @@ const columnHelper =
 
 export const columns = [
   //@ts-ignore
-  columnHelper.accessor((row) => row.user.name, {
+  columnHelper.accessor((row) => row.user.email, {
     id: "student",
     header: "Student",
 

@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 interface ComunityUserItemProps {
-  user: Awaited<ReturnType<typeof getAllusersInComunityById>>[0]["user"];
+  user: Awaited<ReturnType<typeof getAllusersInComunityById>>[0];
 }
 
 export default function ComunityUserItem({ user }: ComunityUserItemProps) {
@@ -19,6 +19,7 @@ export default function ComunityUserItem({ user }: ComunityUserItemProps) {
   const handelOnclick = () => {
     router.push(`/teacher/${user.id}`);
   };
+  
   return (
     <div
       className="
@@ -27,23 +28,30 @@ export default function ComunityUserItem({ user }: ComunityUserItemProps) {
     "
       onClick={() => handelOnclick()}
     >
-      <div className="flex items-center  space-x-2">
-        <Avatar>
-          <AvatarImage
-            alt="Abdoulaye"
-            src={user.image || "/placeholder.svg?height=32&width=32"}
-          />
-          <AvatarFallback>{user.name![0].toUpperCase()}</AvatarFallback>
-        </Avatar>
+      <div className="flex items-center justify-between space-x-2">
+        <div className="flex gap-x-2 items-center">
+          <Avatar>
+            <AvatarImage
+              alt="Abdoulaye"
+              src={user.user.image || "/placeholder.svg?height=32&width=32"}
+            />
+            <AvatarFallback>{user.user.name![0].toUpperCase()}</AvatarFallback>
+          </Avatar>
+          <div className="text-sm font-semibold">{(user.user.name)?.split(" ")[0]}</div>
 
-        <div className="text-sm font-semibold">{user.name}</div>
-
-        <div className="text-xs text-gray-500 dark:text-gray-400 flex gap-x-1">
-          {user.role}{" "}
-          {user.role === "TEACHER" && (
-            <Verified size={16} className="text-blue-500" />
-          )}
+          <div className="text-xs text-gray-500 dark:text-gray-400 flex gap-x-1">
+            {user.user.role}{" "}
+            {user.user.role === "TEACHER" && (
+              <Verified size={16} className="text-blue-500" />
+            )}
+          </div>
         </div>
+        <div>
+        <span className="text-xs text-gray-400">{user.postsCount} Posts</span>
+
+        </div>
+
+        
       </div>
     </div>
   );

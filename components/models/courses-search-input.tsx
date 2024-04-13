@@ -48,9 +48,7 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
 
       .filter(
         (course) =>
-          course.title
-            ?.toLowerCase()
-            .includes(searchWords[0].toLowerCase()) &&
+          course.title?.toLowerCase().includes(searchWords[0].toLowerCase()) &&
           searchWords.every((word) =>
             course.title.toLowerCase().includes(word.toLowerCase())
           )
@@ -67,12 +65,13 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
           <Search className="absolute top-1/2 left-3 transform -translate-y-1/2 text-slate-500" />
           <div className="flex w-full">
             <Input
-              placeholder="Browse Courses..."
+              placeholder="Browse Your Courses..."
               type="search"
               value={value}
               onChange={(e) => setvalue(e.target.value)}
               onFocus={() => setHasFocus(true)}
               onBlur={() => setHasFocus(false)}
+              className="border-none bg-transparent w-full pl-11 rounded-full focus-visible:ring-slate-200 "
               {...props}
               ref={ref}
             />
@@ -89,6 +88,7 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
               onChange={(e) => setvalue(e.target.value)}
               onFocus={() => setHasFocus(true)}
               onBlur={() => setHasFocus(false)}
+              className="border-none bg-transparent w-full pl-11 rounded-full focus-visible:ring-slate-200 border-r-2"
               {...props}
               ref={ref}
             />

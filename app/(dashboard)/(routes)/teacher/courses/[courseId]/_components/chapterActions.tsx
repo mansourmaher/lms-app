@@ -67,4 +67,4 @@ const CharpterAction = ({
   );
 };
 
-export default CharpterAction;
+export default CharpterAction
