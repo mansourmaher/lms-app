@@ -6,17 +6,9 @@ import "react-pdf/dist/esm/Page/TextLayer.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useResizeDetector } from "react-resize-detector";
@@ -36,8 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
-import { getReportById } from "@/actions/teacher/get-reportById";
-import PdfFullscreen from "@/app/(dashboard)/(routes)/teacher/check/_components/pdfModal-full-screen";
+import PdfFullscreen from "@/app/(teacher)/teacher/check/_components/pdfModal-full-screen";
 
 interface PdfModalProps {
   info: any;

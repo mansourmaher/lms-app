@@ -7,10 +7,8 @@ import { getAllCommunity } from "@/actions/community/get-all-community";
 import { getCourses } from "@/actions/course/get-courses";
 import { getCoursesNameAndImage } from "@/actions/course/get-courses-image-name";
 
-interface NavbarProps {
-  community:Awaited<ReturnType<typeof getAllCommunity>>
-}
-const Navbar = async ({community}:NavbarProps) => {
+
+const Navbar = async () => {
 
   const teachers=await getTeacherWithCoursesCount()
 
@@ -20,7 +18,7 @@ const Navbar = async ({community}:NavbarProps) => {
   const courses=await getCoursesNameAndImage()
   return (
     <div className="p-4 border-b h-full flex items-center bg-white shadow-sm">
-      <MobileSidebar community={community} />
+      <MobileSidebar  />
       <NavbarRoutes notifications={notifications} userId={userId} teachers={teachers} courses={courses} />
     </div>
   );

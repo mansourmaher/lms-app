@@ -60,41 +60,21 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
 
   return (
     <div className="w-[350px] relative">
-      {!issearchPage && (
-        <div className="flex relative w-[350px] pl-9 rounded-full bg-slate-100 focus-visible:ring-slate-200">
-          <Search className="absolute top-1/2 left-3 transform -translate-y-1/2 text-slate-500" />
-          <div className="flex w-full">
-            <Input
-              placeholder="Browse Your Courses..."
-              type="search"
-              value={value}
-              onChange={(e) => setvalue(e.target.value)}
-              onFocus={() => setHasFocus(true)}
-              onBlur={() => setHasFocus(false)}
-              className="border-none bg-transparent w-full pl-11 rounded-full focus-visible:ring-slate-200 "
-              {...props}
-              ref={ref}
-            />
-          </div>
+      <div className="relative w-[350px]">
+        <div className="flex w-full">
+          <Input
+            placeholder="Search for a Course..."
+            type="search"
+            value={value}
+            onChange={(e) => setvalue(e.target.value)}
+            onFocus={() => setHasFocus(true)}
+            onBlur={() => setHasFocus(false)}
+            className="border-none bg-transparent w-full pl-11 rounded-full focus-visible:ring-slate-200 border-r-2"
+            {...props}
+            ref={ref}
+          />
         </div>
-      )}
-      {issearchPage && (
-        <div className="relative w-[350px]">
-          <div className="flex w-full">
-            <Input
-              placeholder="Search for a Course..."
-              type="search"
-              value={value}
-              onChange={(e) => setvalue(e.target.value)}
-              onFocus={() => setHasFocus(true)}
-              onBlur={() => setHasFocus(false)}
-              className="border-none bg-transparent w-full pl-11 rounded-full focus-visible:ring-slate-200 border-r-2"
-              {...props}
-              ref={ref}
-            />
-          </div>
-        </div>
-      )}
+      </div>
 
       {value.trim() && hasFocus && (
         <div className="absolute z-20 w-[350px] divide-y rounded-b-lg border-x border-b bg-background shadow-xl  overflow-y-auto max-h-[300px] top-12 left-0 mt-1.5 py-2 px-3">

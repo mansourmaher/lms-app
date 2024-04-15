@@ -40,12 +40,11 @@ export const NavbarRoutes = ({
         <>
           <div className="hidden md:block">
             <div className="flex items-center rounded-full bg-slate-100 focus-visible:ring-slate-200  ">
-              {!isTeacherPage && <Search className="text-slate-500 ml-8" />}
+              <Search className="text-slate-500 ml-8" />
 
-              {!isTeacherPage && <TeacherSearchInput teachers={teachers} />}
-              {isSearchPage && <div className="mr-8">||</div>}
-              {isSearchPage && <CoursesSearchInput courses={courses} />}
-              {isTeacherPage && <CoursesSearchInput courses={courses} />}
+              <TeacherSearchInput teachers={teachers} />
+              <div className="mr-8">||</div>
+              <CoursesSearchInput courses={courses} />
             </div>
           </div>
         </>

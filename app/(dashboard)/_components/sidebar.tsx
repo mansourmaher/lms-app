@@ -9,17 +9,18 @@ import { BiDownArrow, BiLeftArrow } from "react-icons/bi";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { UserButton } from "@/components/Auth/user-button";
-import TeacherNotification from "@/components/Auth/teacher-notifications";
-import { getAllNotifications } from "@/actions/teacher/get-all-notifications";
-import SheetNotification from "@/components/Auth/notification-sheet";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface SidebarProps {
   community: Awaited<ReturnType<typeof getAllCommunity>>;
+  isverifiedteacher: boolean;
 }
 
-export default function Sidebar({ community }: SidebarProps) {
+export default function Sidebar({
+  community,
+  isverifiedteacher,
+}: SidebarProps) {
   const pathname = usePathname();
   const [isShowCommunity, setIsShowCommunity] = useState(false);
   const [selectedCommunity, setSelectedCommunity] = useState<null | string>(
@@ -87,9 +88,11 @@ export default function Sidebar({ community }: SidebarProps) {
       <div className="p-6 border-t mx-2 flex flex-col space-y-2">
         <div className="flex items-center justify-between">
           <UserButton />
-          <Link href="/teacher/mycourses">
-            <Button variant={"primary"}>Teacher 👨‍🏫</Button>
-          </Link>
+          {isverifiedteacher && (
+            <Link href="/teacher/mycourses">
+              <Button variant={"primary"}>Teacher 👨‍🏫</Button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

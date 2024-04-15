@@ -17,8 +17,7 @@ export default function ChapterResources({ resources }: ChapterResourcesProps) {
             <PdfResource
               key={index}
               info={resource.url}
-              work={"Resource "+ (index+1)}
-
+              work={"Resource " + (index + 1)}
             />
           </div>
         ))}

@@ -22,7 +22,7 @@ export const AcceptRequest=async(id:string)=>{
                     userId:id
                 },
                 data:{
-                    status:"accepted"
+                    status:"Validated"
                 }
             })
             await db.user.update({
@@ -40,3 +40,39 @@ export const AcceptRequest=async(id:string)=>{
     return {error:"Error Occured while granting access to teacher"}
 
 }
+
+export const RemoveRequest=async(id:string)=>{
+    if(id)
+        {
+            
+            const existingTeacher=await db.user.findFirst({
+                where:{
+                    id
+                }
+            })
+            
+            if(existingTeacher)
+            {
+                await db.teacherRequest.updateMany({
+                    where:{
+                        userId:id
+                    },
+                    data:{
+                        status:"rejected"
+                    }
+                })
+                await db.user.update({
+                    where:{
+                        id
+                    },
+                    data:{
+                        teacherAccess:false
+                    }
+                })
+                return {success:"Teacher Access Removed"}
+            }
+            
+        }
+        return {error:"Error Occured while granting access to teacher"}
+}
+    

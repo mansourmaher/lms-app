@@ -1,6 +1,6 @@
 import { getCourseIncludeProgresse } from "@/actions/teacher/get-all-course-include-progresse";
 import React from "react";
-import SingleCoursePage from "../../teacher/courses/single-course-page";
+// import SingleCoursePage from "../../teacher/courses/single-course-page";
 
 const Page = async ({
   params,
@@ -15,7 +15,8 @@ const Page = async ({
 
   return (
     <div>
-      <SingleCoursePage couresesIncludeProgress={courseUserIncludeProgress} />
+      {/* <SingleCoursePage couresesIncludeProgress={courseUserIncludeProgress} /> */}
+
     </div>
   );
 };

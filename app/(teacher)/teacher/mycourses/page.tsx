@@ -1,6 +1,7 @@
 import { teacherGetMyCourses } from "@/actions/teacher/teacher-getMy-courses";
 import React from "react";
 import SingleMycoursesPage from "./_components/single-my-courses-page";
+import { auth } from "@/auth";
 
 interface getCoursesParams {
   title?: string;
@@ -19,6 +20,12 @@ const Page = async ({ searchParams }: SearchPageProps) => {
     teacher: searchParams.teacher!,
     level: searchParams.level!,
   });
+  const user=await auth();
+  const isaverifiredteacher=user?.user.role=="TEACHER" && user?.user.teacherAccess==true;
+  if (!isaverifiredteacher) {
+    return <div>Not authorized</div>;
+  }
+
   return (
     <div>
       <SingleMycoursesPage courses={mycourses} />

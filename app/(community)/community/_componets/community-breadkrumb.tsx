@@ -16,7 +16,7 @@ interface CourseHedaerProps {
 
 export default function CommunityHeader({ commName }: CourseHedaerProps) {
   return (
-    <div className="m-8 ">
+    <div className="m-8 mb-7 ">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

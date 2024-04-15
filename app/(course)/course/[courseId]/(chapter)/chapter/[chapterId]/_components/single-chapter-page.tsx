@@ -10,7 +10,6 @@ import ChapterDescreption from "./chapter-descreption";
 import { getChapterById } from "@/actions/chapter/get-chapter-by-id";
 import ChapterResources from "./chapter-resources";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import PdfModal from "@/app/(dashboard)/(routes)/teacher/check/_components/pdf-modal";
 import { auth } from "@/auth";
 
 interface ChapterPageProps {
