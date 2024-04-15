@@ -1,5 +1,3 @@
-import { create } from 'zustand';
-import { statuses } from './../../app/(dashboard)/(routes)/teacher/courses/_components/table-user/data/data';
 "use server"
 
 import { auth } from "@/auth"
