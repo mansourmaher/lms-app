@@ -1,7 +1,6 @@
 "use client";
 
 import { getChapterById } from "@/actions/chapter/get-chapter-by-id";
-import PdfModal from "@/app/(dashboard)/(routes)/teacher/check/_components/pdf-modal";
 import QuizForm from "@/components/models/quizForm";
 import { Button } from "@/components/ui/button";
 import { Chapter } from "@prisma/client";
