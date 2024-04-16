@@ -43,12 +43,12 @@ export const statuses = [
 ];
 export const statuses2 = [
   {
-    value: false, // "Completed
+    value: "false", // "Completed
     label: "Pending",
     icon: QuestionMarkCircledIcon,
   },
   {
-    value: true, // "Not started"
+    value: "true", // "Not started"
     label: "Validated",
     icon: CircleIcon,
   },
