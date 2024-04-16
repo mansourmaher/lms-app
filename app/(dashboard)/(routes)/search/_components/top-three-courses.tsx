@@ -27,8 +27,8 @@ const TopThreeCourses = async () => {
           </span>
         </div>
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 m-4">
-        {topThreeCourses.slice(0, 2).map((course) => (
+      <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3  gap-6">
+        {topThreeCourses.slice(0, 5).map((course) => (
           <CourseCard
             key={course.id}
             id={course.id}
@@ -43,7 +43,7 @@ const TopThreeCourses = async () => {
           />
         ))}
 
-        <Carousel>
+        {/* <Carousel>
           <CarouselContent>
             {topThreeCourses.slice(2, 5).map((course) => (
               <CarouselItem key={course.id}>
@@ -64,7 +64,7 @@ const TopThreeCourses = async () => {
           </CarouselContent>
           <CarouselPrevious className="mr-8" />
           <CarouselNext className="right-0" />
-        </Carousel>
+        </Carousel> */}
       </div>
     </div>
   );

@@ -124,6 +124,7 @@ model Course {
   imageUrl     String?
   price        Float?
   isPublished  Boolean    @default(false)
+  status       String     @default("pending")
   categoryId   String?
   category     Category?  @relation(fields: [categoryId], references: [id])
   target       String[]

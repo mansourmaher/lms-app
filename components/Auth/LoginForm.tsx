@@ -58,8 +58,8 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-white">
-      <div className="flex w-1/2 items-center justify-center p-12 ">
+    <div className=" flex min-h-screen bg-white ">
+      <div className="flex w-full md:w-1/2 items-center justify-center p-12  ">
         <div className="w-full max-w-md border shadow-xl  rounded-lg p-6">
           <div className="flex justify-center mb-6">
             

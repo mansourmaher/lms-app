@@ -107,6 +107,7 @@ Table Course {
   imageUrl String
   price Float
   isPublished Boolean [not null, default: false]
+  status String [not null, default: 'pending']
   categoryId String
   category Category
   target String[] [not null]

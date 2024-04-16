@@ -60,7 +60,7 @@ export const CourseCard = async ({
           isForCard={true}
         />
       </div>
-      <div className="flex flex-row justify-between items-center md:flex-cols-3  ">
+      <div className="flex flex-row justify-between items-center md:flex-cols-3 sm:flex-cols-3 ">
         <div className="flex ">
           <Badge variant="yellow" className="m-2">
             {category}
