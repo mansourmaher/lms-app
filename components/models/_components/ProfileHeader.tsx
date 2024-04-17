@@ -17,9 +17,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
           src={user?.image || ""}
           alt={user?.name!}
         />
-        <AvatarFallback className="uppercase">
-          {user?.name![0]}
-        </AvatarFallback>
+        <AvatarFallback className="uppercase">{user?.name![0]}</AvatarFallback>
       </Avatar>
       <div className="flex flex-col space-y-1">
         <div className="text-sm font-semibold">{user?.name}</div>

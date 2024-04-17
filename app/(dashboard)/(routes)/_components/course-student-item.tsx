@@ -32,12 +32,8 @@ export default function CourseStudentItem({ course }: CourseStudentItemProps) {
             <p className="mt-2 text-gray-500  line-clamp-3">
               {course.course.description}
             </p>
-            {course.progress}
+
             <div className="mt-4 flex items-center space-x-4">
-              <div className="flex items-center text-gray-600">
-                <ClockIcon className="h-5 w-5" />
-                <span className="ml-1">14 Heures de contenus</span>
-              </div>
               <div className="flex items-center text-gray-600">
                 <ListIcon className="h-5 w-5" />
                 <span className="ml-1">

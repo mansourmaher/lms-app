@@ -31,17 +31,19 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
   const chapter = await getChapterById(chapterId);
 
   const currentPostion = chapter?.position;
+  const nextChapterPosition = currentPostion! + 1;
+  const previewsChapterPosition = currentPostion! - 1;
   const nextChapter = await db.chapter.findFirst({
     where: {
       courseId: courseId,
-      // position: currentPostion! + 1,
+      position: nextChapterPosition,
       isPublished: true,
     },
   });
   const previewsChapter = await db.chapter.findFirst({
     where: {
       courseId: courseId,
-      //  position: currentPostion! - 1,
+      position: previewsChapterPosition,
       isPublished: true,
     },
   });
@@ -69,7 +71,10 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
       />
       {/* <ChapterTitle title={chapter?.title!} /> */}
       <div className="flex items-start  w-full ">
-        <ChapterVedio videosrc={chapter?.videoUrl} img={courseName?.imageUrl!} />
+        <ChapterVedio
+          videosrc={chapter?.videoUrl}
+          img={courseName?.imageUrl!}
+        />
         <div className="border-l-2 border-slate-400 h-[500px] pr-2"></div>
         <div className="flex flex-col gap-y-4 w-full  pr-4  h-[500px] ">
           <ChapterReport

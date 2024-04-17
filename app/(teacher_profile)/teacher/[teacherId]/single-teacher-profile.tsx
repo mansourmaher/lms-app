@@ -4,6 +4,7 @@ import { getTeacherById } from "@/actions/teacher/get-teacher-byId";
 import { get } from "http";
 import { getCoursesBytecaher } from "@/actions/course/get-teacher-courses";
 import TeacherProfileHeader from "./_components/teacher-profile-header";
+import { getThePostionOftheteacherById } from "@/actions/teacher/get-the-postion-of-the-teacher";
 
 interface SingleTeacherProfileProps {
   teacher: Awaited<ReturnType<typeof getTeacherById>>;
@@ -15,11 +16,14 @@ const SingleTeacherProfile = async ({
   teacherId,
 }: SingleTeacherProfileProps) => {
   const courses = await getCoursesBytecaher(teacherId);
+  const postion = await getThePostionOftheteacherById(
+    teacherId
+  );
   return (
     <div>
       <div>
         <TeacherProfileHeader teacherName={teacher.name!} />
-        <TeacherProfile teacher={teacher} />
+        <TeacherProfile teacher={teacher}  postion={postion}/>
         <div className="space-y-2 px-8">
           <h2 className="text-1xl font-bold">Discover my courses</h2>
           <span>

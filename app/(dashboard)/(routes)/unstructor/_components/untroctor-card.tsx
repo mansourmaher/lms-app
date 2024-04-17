@@ -7,8 +7,12 @@ import { useRouter } from "next/navigation";
 
 interface UnstroctorCardProps {
   teachers: Awaited<ReturnType<typeof getAllUnstroctor>>[0];
+  index: number;
 }
-export default function UnstroctorCard({ teachers }: UnstroctorCardProps) {
+export default function UnstroctorCard({
+  teachers,
+  index,
+}: UnstroctorCardProps) {
   const router = useRouter();
   return (
     <div>
@@ -18,6 +22,48 @@ export default function UnstroctorCard({ teachers }: UnstroctorCardProps) {
           onClick={() => router.push(`/teacher/${teachers.user?.id}`)}
         >
           <CardContent>
+            <div className="flex   justify-end">
+              {index === 0 && (
+                <img
+                  // the path=C:\Users\HP\Desktop\PFE\lms-app-2\public\firstmeaille.jpg
+                  src="/firstmeaille.jpg"
+                  width={50}
+                  height={50}
+                  alt="first"
+                  loading="lazy"
+                />
+              )}
+              {index === 1 && (
+                <img
+                  // the path=C:\Users\HP\Desktop\PFE\lms-app-2\public\firstmeaille.jpg
+                  src="/secondmeaille.jpg"
+                  width={50}
+                  height={50}
+                  alt="first"
+                  loading="lazy"
+                />
+              )}
+              {index === 2 && (
+                <img
+                  // the path=C:\Users\HP\Desktop\PFE\lms-app-2\public\firstmeaille.jpg
+                  src="/thirdmeaille.jpg"
+                  width={50}
+                  height={50}
+                  alt="first"
+                  loading="lazy"
+                />
+              )}
+              {index > 2 && (
+                <img
+                  // the path=C:\Users\HP\Desktop\PFE\lms-app-2\public\firstmeaille.jpg
+                  src="/stars.jpg"
+                  width={50}
+                  height={50}
+                  alt="first"
+                  loading="lazy"
+                />
+              )}
+            </div>
             <div className="flex flex-col items-center space-y-2">
               <Avatar className="w-40 h-40 p-2">
                 <AvatarImage

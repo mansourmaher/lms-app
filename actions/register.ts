@@ -11,6 +11,7 @@ import bcrypt from "bcryptjs"
 
 export const register=async(values:z.infer<typeof RegisterSchema>)=>
 {
+    
     const validateFiels=RegisterSchema.safeParse(values)
     if(!validateFiels.success)
     {
@@ -26,8 +27,10 @@ export const register=async(values:z.infer<typeof RegisterSchema>)=>
     
     await db.user.create({data:{email,password:hassedPassword,name,role:role as UserRole}})
     const verificationToken=await generateVerificationToken(email)
+    console.log("sendingmail")
 
     await sendVerificationEmail(verificationToken.email,verificationToken.token)
+    console.log("sentmail")
 
 
     return {succes:"Confirmation Email sent"}

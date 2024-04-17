@@ -91,8 +91,8 @@ export default function TeacherCardCourse({ course }: TeacherCardCourseProps) {
                 );
               })}
               <span>
-                {(Math.round(teacherRating * 100) / 100).toFixed(2)} (
-                {totalReview})
+                ({(Math.round(teacherRating * 100) / 100).toFixed(2)}) (
+                {totalReview} Review)
               </span>
             </div>
           </div>

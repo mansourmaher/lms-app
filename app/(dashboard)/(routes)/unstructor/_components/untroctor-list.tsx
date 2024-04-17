@@ -10,9 +10,9 @@ interface UntroctorListProps {
 export default function UntroctorList({ teachers }: UntroctorListProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
-      {teachers.map((teacher) => (
+      {teachers.map((teacher,index) => (
         <div key="14">
-          <UnstroctorCard teachers={teacher} />
+          <UnstroctorCard teachers={teacher} index={index} />
         </div>
       ))}
     </div>

@@ -61,9 +61,7 @@ export const LoginForm = () => {
     <div className=" flex min-h-screen bg-white ">
       <div className="flex w-full md:w-1/2 items-center justify-center p-12  ">
         <div className="w-full max-w-md border shadow-xl  rounded-lg p-6">
-          <div className="flex justify-center mb-6">
-            
-          </div>
+          <div className="flex justify-center mb-6"></div>
           <h2 className="text-3xl font-extrabold  text-center ">
             Welcome back
           </h2>
@@ -136,7 +134,7 @@ export const LoginForm = () => {
                 className="w-full bg-indigo-600"
                 variant={"primary"}
               >
-                {isPending ? <Loader className="animate-spin"/> : "Sign in"}
+                {isPending ? <Loader className="animate-spin" /> : "Sign in"}
               </Button>
             </form>
           </Form>

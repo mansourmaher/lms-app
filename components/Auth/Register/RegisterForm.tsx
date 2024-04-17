@@ -57,15 +57,17 @@ export const RegisterForm = () => {
   return (
     <div className="flex min-h-screen bg-white max-h-full">
       <div
-        className="hidden  w-full md:w-1/2  items-center justify-center bg-cover lg:flex"
+        className="hidden w-1/2 items-center justify-center bg-cover lg:flex"
         style={{
           backgroundImage: "url('/teaching2.png')",
           textAlign: "center",
         }}
       />
-      <div className="flex w-1/2 items-center justify-center p-12">
+      <div className="flex  sm:w-full md:w-1/2  items-center justify-center p-12">
         <div className="w-full max-w-md shadow-xl  rounded-lg p-6">
-          <div className="flex justify-center mb-6"></div>
+          <div className="flex justify-center mb-6">
+            
+          </div>
           <h2 className="text-3xl font-extrabold text-gray-900 text-center">
             Welcome to the community
           </h2>

@@ -27,8 +27,8 @@ export default function ReviewProgress({
               isForCard ? "justify-between" : "justify-start"
             )}
           >
-            <div className="flex mt-4 sm:flex-col ">
-              <div className="flex   mb-4 ">
+            <div className="flex mt-4 ">
+              <div className="flex   mb-4">
                 {[...Array(5)].map((_, index) => {
                   const currentRating = index + 1;
                   return (

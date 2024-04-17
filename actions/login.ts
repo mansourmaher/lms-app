@@ -25,7 +25,9 @@ export const login=async(values:z.infer<typeof LoginSchema>)=>
      {
          const verificationToken=await generateVerificationToken(existingUser.email)
          await sendVerificationEmail(existingUser.email,verificationToken.token)
-         return {succes:"Confirmation Email sent"}
+         console.log("sentmailof verifictaion")
+         return {error:"Please verify your email before logging in. A new verification email has been sent to your email address."}
+
 
      }
     existingUser.emailVerified=new Date()

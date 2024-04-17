@@ -108,6 +108,7 @@ Table Course {
   price Float
   isPublished Boolean [not null, default: false]
   status String [not null, default: 'pending']
+  whyitsrejcted String
   categoryId String
   category Category
   target String[] [not null]

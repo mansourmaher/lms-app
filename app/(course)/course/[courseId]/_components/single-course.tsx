@@ -14,7 +14,7 @@ import CourseDescreption from "./course-descreption";
 import CourseStars from "./course-stars";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import CourseTarget from "./course-target";
-import { CourseMobilesidebar } from "./course-mobile-sidebar";
+import CourseMobilesidebar from "./course-mobile-sidebar";
 
 interface SingleCourseProps {
   course: Awaited<ReturnType<typeof getCourseById>>;
@@ -37,8 +37,7 @@ export default function SingleCourse({
   };
   return (
     <div>
-      <div className="mx-8 border-b-2 flex justify-normal">
-        <CourseMobilesidebar courseId={course.id!} />{" "}
+      <div className="mx-6 hidden border-b-2 md:flex justify-normal">
         <CourseHedaer courseName={course?.title!} />
       </div>
       <div className="m-8">

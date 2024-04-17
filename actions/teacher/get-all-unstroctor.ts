@@ -12,6 +12,9 @@ export async function getAllUnstroctor(name:string | null){
 
     const teachers=await db.course.findMany({
           distinct:["userId"],
+        //   where:{
+        //     isPublished:true
+        //   },
         
         include:{
             user:{
