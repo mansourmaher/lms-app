@@ -4,6 +4,7 @@ import { getProgress } from "@/actions/course/get-progress";
 import CourseProgress from "./course-progress";
 import { db } from "@/lib/db";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import CertifModal from "./models/_certif-modal/certif-modal";
 
 interface CourseSideBarProps {
   courseId: string;
@@ -81,6 +82,7 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
               userProgress={userProgress}
             />
           </div>
+          <CertifModal />
         </div>
         <div className="mt-4 w-full text-gray-500 text-sm text-center">
           <p>

@@ -42,7 +42,7 @@ export async function rejectCourseByid(id: string, reason: string) {
   });
   const notification = await db.notifications.create({
     data: {
-      message: `Your course has been rejected because ${reason}`,
+      message: `Your course has been rejected Check your email for more information`,
       student: course.userId,
       courseId: course.id,
 
