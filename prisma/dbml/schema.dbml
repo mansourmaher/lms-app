@@ -52,6 +52,7 @@ Table User {
   student Notifications [not null]
   post Post [not null]
   postResponse PostResponse [not null]
+  Message Message [not null]
 }
 
 Table Origin {
@@ -329,6 +330,24 @@ Table PostResponse {
   post Post
 }
 
+Table Conversation {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  title String
+  paticipantsId String[] [not null]
+  messages Message [not null]
+}
+
+Table Message {
+  id String [pk]
+  body String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  conversationId String [not null]
+  conversation Conversation [not null]
+  senderId String [not null]
+  sender User [not null]
+}
+
 Enum UserRole {
   STUDENT
   ADMIN
@@ -390,3 +409,7 @@ Ref: Post.communityId > Community.id
 Ref: PostResponse.userId > User.id
 
 Ref: PostResponse.postId > Post.id
+
+Ref: Message.conversationId > Conversation.id [delete: Cascade]
+
+Ref: Message.senderId > User.id [delete: Cascade]

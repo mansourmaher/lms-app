@@ -76,6 +76,13 @@ export const RejectCourseSchema=z.object({
     
 
 })
+export const createMessageSchema = z.object({
+    message: z.string().min(1, {
+      message: "The message field is required.",
+    }),
+  });
+  export type CreateMessageSchemaType = z.infer<typeof createMessageSchema>;
+
 
 
 

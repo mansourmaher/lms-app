@@ -72,6 +72,8 @@ model User {
 
   post         Post[]
   postResponse PostResponse[]
+
+  Message Message[]
 }
 
 model Origin {
@@ -375,4 +377,26 @@ model PostResponse {
 
   postId String?
   post   Post?   @relation(fields: [postId], references: [id])
+}
+
+model Conversation {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  title     String?
+
+  paticipantsId String[]
+
+  messages Message[]
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  body      String
+  createdAt DateTime @default(now())
+
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  senderId String
+  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
 }

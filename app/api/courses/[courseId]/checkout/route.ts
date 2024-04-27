@@ -4,19 +4,14 @@ import { stripe } from "@/lib/stripe"
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
 
-export async function POST(req:Request,{params}:{params:{courseId:string}}){
+export async function POST(req:Request,{params}:{params:{courseId:string}}):  Promise<void | Response> {{
     
     
     try{
         const courseId=params.courseId
         const user=await auth()
         if(!user){
-            return {
-                status:401,
-                body:{
-                    message:"Unauthorized"
-                }
-            }
+            throw new Error("You must be signed in to access this route")
         }
         const course=await db.course.findUnique({
             where:{
@@ -35,20 +30,12 @@ export async function POST(req:Request,{params}:{params:{courseId:string}}){
             
         });
         if(courseUser){
-            return {
-                status:400,
-                body:{
-                    message:"You already purchased this course"
-                }
-            }
+                         throw new Error("You must be signed in to access this route")
+
+            
         }
         if(!course){
-            return {
-                status:404,
-                body:{
-                    message:"Course not found"
-                }
-            }
+            throw new Error("Course not found")
         }
         const line_items:Stripe.Checkout.SessionCreateParams.LineItem[]= [{
             quantity: 1,
@@ -108,11 +95,7 @@ export async function POST(req:Request,{params}:{params:{courseId:string}}){
 
 
     }catch(e){
-        return {
-            status:500,
-            body:{
-                message:e
-            }
-        }
+        return new NextResponse("An error occurred while creating the checkout session")
     }
+}
 }
