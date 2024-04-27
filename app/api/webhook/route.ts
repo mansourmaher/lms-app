@@ -6,7 +6,7 @@ import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
 
 
-export async function POST(req:Request){
+export async function POST(req:Request):  Promise<void | Response> {{
     const body=await req.text()
     const signature=headers().get("Stripe-Signature") as string
 
@@ -14,20 +14,20 @@ export async function POST(req:Request){
     try{
         event=stripe.webhooks.constructEvent(body,signature,process.env.STRIPE_WEBHOOK_SECRET!)
     }catch(e){
-        return {
-            status:400,
-            body:"Invalid signature"
-        }
+        
+            return new NextResponse(null,{status:400})
+
+
+
+
     }
     const session=event.data.object as Stripe.Checkout.Session
     const userId=session?.metadata?.userId
     const courseId=session?.metadata?.courseId
     if(event.type==="checkout.session.completed"){
         if(!userId || !courseId){
-            return {
-                status:400,
-                body:"Invalid metadata"
-            }
+            return new NextResponse(null,{status:400})
+
         }
         console.log("checkout completed")
         await db.courseUser.create({
@@ -38,11 +38,9 @@ export async function POST(req:Request){
         })
 
     }else{
-        return {
-            status:400,
-            body:"Invalid event type"
-        }
+        return new NextResponse(null,{status:400})
+
     }
     return new NextResponse(null,{status:200})
 
-}
+}}
