@@ -46,16 +46,18 @@ const EditChapter = async ({
     include: {
       muxData: true,
       resources: true,
+      quiz: true,
     },
   });
+
   if (!chpater) {
     return (
       <div className="flex justify-center items-center mt-52">
         <div className="text-center">
           <h1 className="text-2xl font-medium">Chapter not found</h1>
           <p className="text-gray-500">
-            You are trying to access a chapter that does not exist <br />or you
-            are not the owner of the  course
+            You are trying to access a chapter that does not exist <br />
+            or you are not the owner of the course
           </p>
         </div>
       </div>
@@ -65,7 +67,8 @@ const EditChapter = async ({
   const requiredFiels = [
     chpater.title,
     chpater.descreption,
-    //chpater.videoUrl,
+    chpater.videoUrl,
+    chpater.quiz[0].question,
   ];
   const totalFields = requiredFiels.length;
   let filledFields = 0;

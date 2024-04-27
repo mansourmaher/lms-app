@@ -9,7 +9,16 @@ export const CommentCourse=async(stars:number,review:string,courseId:string)=>{
 
     const user=await auth()
     const userId=user?.user.id as string
-    console.log("comment"+review)
+    const existingcomment=await db.courseReview.findFirst({
+        where:{
+            courseId:courseId,
+            userId:userId
+        }
+    })
+    if(existingcomment){
+        return "You already commented this course"
+    }
+    
 
 
     const comment=await db.courseReview.create({

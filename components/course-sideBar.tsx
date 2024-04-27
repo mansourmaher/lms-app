@@ -5,6 +5,7 @@ import CourseProgress from "./course-progress";
 import { db } from "@/lib/db";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import CertifModal from "./models/_certif-modal/certif-modal";
+import { getCourseUser } from "@/actions/system/get-courseUser";
 
 interface CourseSideBarProps {
   courseId: string;
@@ -45,14 +46,9 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
       },
     },
   });
-  const courseUser = await db.courseUser.findUnique({
-    where: {
-      userId_courseId: {
-        userId: userId,
-        courseId: courseId,
-      },
-    },
-  });
+  if (!course) return null;
+
+  const courseUser = await getCourseUser(userId, course.id);
 
   const userProgress = await getProgress(userId, course?.id);
 
@@ -82,7 +78,6 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
               userProgress={userProgress}
             />
           </div>
-          <CertifModal />
         </div>
         <div className="mt-4 w-full text-gray-500 text-sm text-center">
           <p>
@@ -107,6 +102,11 @@ export const CourseSideBar = async ({ courseId }: CourseSideBarProps) => {
               <span className="text-red-500"> 🚀</span>
             )}
           </p>
+          {courseUser && userProgress === 100 && (
+            <div className="mt-2">
+              <CertifModal courseUser={courseUser} />
+            </div>
+          )}
         </div>
         <hr
           className="border-t border-gray-200 mt-6 mb-6"

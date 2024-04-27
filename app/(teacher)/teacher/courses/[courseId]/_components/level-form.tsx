@@ -25,22 +25,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { Course } from "@prisma/client";
 import { ComboxBox } from "@/components/ui/combo-box";
 const formSchema = z.object({
-  categoryId: z.string().min(1, {
-    message: "Please select a category",
+  level: z.string().min(1, {
+    message: "Please select the level",
   }),
 });
 
 interface CategoryFormProps {
   initialeData: Course;
   courseId: any;
-  options: { label: string; value: string }[];
 }
-export const CategoryForm = ({
-  initialeData,
-  courseId,
-  options,
-}: CategoryFormProps) => {
+export const LevelForm = ({ initialeData, courseId }: CategoryFormProps) => {
   const router = useRouter();
+  const levelOptions = [
+    { label: "Beginner", value: "Beginner" },
+    { label: "Intermediate", value: "Intermediate" },
+    { label: "Advanced", value: "Advanced" },
+  ];
+
   const [isEditing, setIsEditing] = useState(false);
   const toggleEditing = () => {
     setIsEditing(!isEditing);
@@ -48,34 +49,34 @@ export const CategoryForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      categoryId: initialeData?.categoryId || "",
+      level: initialeData?.level || "",
     },
   });
   const { isSubmitting, isValid } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Category updated successfully");
+      toast.success("Level updated successfully");
       toggleEditing();
       router.refresh();
     } catch (error) {
       toast.error("Something went wrong");
     }
   };
-  const selectedOption = options.find(
-    (option) => option.value === initialeData.categoryId
+  const selectedOption = levelOptions.find(
+    (option) => option.value === initialeData.level
   );
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 ">
       <div className="font-medium flex items-center justify-between">
-        category form
+        Level form
         <Button variant="ghost" onClick={toggleEditing}>
           {isEditing && <>Cancel</>}
           {!isEditing && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit categoryId
+              Edit Level
             </>
           )}
         </Button>
@@ -87,7 +88,7 @@ export const CategoryForm = ({
             !initialeData.categoryId && "text-gray-500"
           )}
         >
-          {selectedOption?.label || "No Category"}
+          {selectedOption?.label || "No Level"}
         </p>
       )}
       {isEditing && (
@@ -98,14 +99,14 @@ export const CategoryForm = ({
           >
             <FormField
               control={form.control}
-              name="categoryId"
+              name="level"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <ComboxBox options={options} {...field} />
+                    <ComboxBox options={levelOptions} {...field} />
                   </FormControl>
                   <FormMessage>
-                    {form.formState.errors.categoryId?.message}
+                    {form.formState.errors.level?.message}
                   </FormMessage>
                 </FormItem>
               )}

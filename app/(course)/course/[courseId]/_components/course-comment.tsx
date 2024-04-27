@@ -20,6 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { deletecomment } from "@/actions/Etudiant/delete-comment";
 
 interface CommentListProps {
   comments: Awaited<ReturnType<typeof getCourseComments>> | null;
@@ -72,6 +73,11 @@ export default function CommentList({
   const toggleEditing = (id: string | undefined) => {
     setIsEditing(!isEdititng);
     setIdCommentToEdit(id!);
+  };
+  const handelDeleteComment = async (id: string) => {
+    
+    await deletecomment(id);
+    router.refresh();
   };
   return (
     <>
@@ -190,7 +196,13 @@ export default function CommentList({
                                   </div>
                                 )}
                               </Button>
-                              <Button variant="outline" size="sm">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  handelDeleteComment(comment.id);
+                                }}
+                              >
                                 <div className="flex gap-x-2 p-2">
                                   <Trash className="h-4 w-4 text-red-400" />
                                 </div>
@@ -377,7 +389,13 @@ export default function CommentList({
                                   </div>
                                 )}
                               </Button>
-                              <Button variant="outline" size="sm">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  handelDeleteComment(comment.id);
+                                }}
+                              >
                                 <div className="flex gap-x-2 p-2">
                                   <Trash className="h-4 w-4 text-red-400" />
                                 </div>

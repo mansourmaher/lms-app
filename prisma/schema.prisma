@@ -119,21 +119,22 @@ model Course {
   userId String
   user   User?  @relation(fields: [userId], references: [id])
 
-  title        String
-  description  String?
-  imageUrl     String?
-  price        Float?
-  isPublished  Boolean    @default(false)
-  status       String     @default("pending")
+  title         String
+  description   String?
+  imageUrl      String?
+  price         Float?
+  isPublished   Boolean    @default(false)
+  status        String     @default("pending")
   whyitsrejcted String?
-  categoryId   String?
-  category     Category?  @relation(fields: [categoryId], references: [id])
-  target       String[]
-  totalStars   Int?       @default(0)
-  totalReviews Int?       @default(0)
-  totalhours   Float?
-  chapters     Chapter[]
-  purchases    Purchase[]
+  categoryId    String?
+  category      Category?  @relation(fields: [categoryId], references: [id])
+  target        String[]
+  level         String?
+  totalStars    Int?       @default(0)
+  totalReviews  Int?       @default(0)
+  totalhours    Float?
+  chapters      Chapter[]
+  purchases     Purchase[]
 
   attachment Attachment[]
   createdAt  DateTime       @default(now())
@@ -148,17 +149,17 @@ model Course {
 }
 
 model CourseUser {
-  id         String   @id @default(uuid())
-  userId     String
-  user       User?    @relation(fields: [userId], references: [id])
-  courseId   String
-  course     Course   @relation(fields: [courseId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  status     String   @default("Not started")
-  score      Float?
-  
-  classement Int?     @default(0)
+  id        String   @id @default(uuid())
+  userId    String
+  user      User?    @relation(fields: [userId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status    String   @default("Not started")
+  score     Float?
+
+  classement Int? @default(0)
 
   @@unique([userId, courseId])
 }
@@ -273,6 +274,14 @@ model UserProgress {
   @@index([chapterId])
 }
 
+model StripeCustomer {
+  id               String   @id @default(uuid())
+  userId           String
+  stripeCustomerId String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
 model Purchase {
   id       String @id @default(uuid())
   userId   String
@@ -341,14 +350,13 @@ model Community {
 model Post {
   id String @id @default(uuid())
 
- 
-  content   String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  isthecontentisimage Boolean @default(false)
-  imageurl String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  content             String
+  userId              String
+  user                User     @relation(fields: [userId], references: [id])
+  isthecontentisimage Boolean  @default(false)
+  imageurl            String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   communityId  String
   community    Community      @relation(fields: [communityId], references: [id])
@@ -360,8 +368,8 @@ model PostResponse {
 
   content   String?
   userId    String?
-  user      User?   @relation(fields: [userId], references: [id])
-  imageurl String?
+  user      User?    @relation(fields: [userId], references: [id])
+  imageurl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

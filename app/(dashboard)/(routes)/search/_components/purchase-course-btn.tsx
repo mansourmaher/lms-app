@@ -14,21 +14,32 @@ import toast, { Toaster } from "react-hot-toast";
 export default function PurchaseButton({ courseId, userId }: PurchaseBtnProps) {
   const [isloading, setIsloading] = React.useState(false);
   const onclick= async (courseId:string) => {
-    setIsloading(true);
+   
+    try{
+      setIsloading(true);
+      const respone=await axios.post(`/api/courses/${courseId}/checkout`)
+      window.location.assign(respone.data.url)
 
-    axios
-      .post("/api/purchase", {courseId,userId})
-      .then((res) => {
+
+    }catch(e){
+      toast.error("something went wrong")
+    }finally{
+      setIsloading(false);
+    }
+
+    // axios
+    //   .post("/api/purchase", {courseId,userId})
+    //   .then((res) => {
         
-        toast.success(res.data.message);
+    //     toast.success(res.data.message);
         
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      })
-      .finally(() => {
-        setIsloading(false);
-      });
+    //   })
+    //   .catch((error) => {
+    //     toast.error(error.response.data.message);
+    //   })
+    //   .finally(() => {
+    //     setIsloading(false);
+    //   });
   };
   return (
     <Button

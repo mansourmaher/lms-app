@@ -28,7 +28,7 @@ export default function CourseOption({
           </div>
           <div>
             <p>
-              <span className="">beginner</span>
+              <span className="">{course?.level || "Not Provided"}</span>
             </p>
           </div>
         </div>

@@ -22,6 +22,7 @@ export default function Message({ communityId }: MessageProps) {
   const [message, setMessage] = React.useState("");
   const handelAddPost = async (message: string, communityId: string) => {
     await addPostInCommunity(communityId, message, true, image!);
+    setMessage("");
   };
   console.log(image);
   return (

@@ -57,7 +57,7 @@ export default function ComunityPostItem({
             <div>
               <div className="flex items-center space-x-2">
                 <div className="text-xs text-gray-500">
-                  <span>0</span> Likes
+                 
                 </div>
                 <div className="text-xs text-gray-500">
                   <span>{post.PostResponse.length || 0}</span> Replies

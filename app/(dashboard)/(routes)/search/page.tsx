@@ -24,7 +24,10 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
     category: searchParams.category!,
     teacher: searchParams.teacher!,
     level: searchParams.level!,
-  });
+  })
+
+  
+  
 
   return (
     <>

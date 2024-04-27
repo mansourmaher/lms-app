@@ -11,6 +11,7 @@ import { Loader2 } from "lucide-react";
 import React from "react";
 import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
+import { useToast } from "@/components/ui/use-toast";
 
 interface RatingProps {
   courseId?: string;
@@ -48,6 +49,7 @@ export default function CourseRating({
   const [comment, setComment] = React.useState(initailCommente);
   const [isDisabled, setIsDisabled] = React.useState(false);
   const [isVisible, setIsVisible] = React.useState(true);
+  const toast2 = useToast();
 
   const handleRatingChange = (event: any) => {
     setRating(parseFloat(event.target.value));
@@ -61,8 +63,12 @@ export default function CourseRating({
       setIsVisible(false);
       toast.success("Comment updated");
     } else {
-      await CommentCourse(rating!, comment!, courseId!);
-      toast.success("Comment added");
+      const result = await CommentCourse(rating!, comment!, courseId!);
+      if (result) {
+        toast.error(result);
+      }
+      setIsVisible(false);
+      if (!result) toast.success("Comment added");
     }
 
     setIsDisabled(false);

@@ -45,7 +45,7 @@ export default function ChapterButtons({
                 selected === 3 ? setSelected(0) : setSelected(3);
               }}
             >
-              Download the work
+              {chapter?.toDo ? "To Do" : "Nothing to do"}
             </Button>
           </a>
 
@@ -56,7 +56,7 @@ export default function ChapterButtons({
 
           <QuizForm
             chapterId={chapter?.id!}
-            hasreport={hasreport}
+            hasreport={hasreport || !chapter?.toDo!}
             courseId={courseId}
             isCompltedthechapter={isCompltedthechapter}
           />

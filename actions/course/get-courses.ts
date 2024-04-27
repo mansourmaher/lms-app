@@ -37,6 +37,7 @@ export const getCourses=async({
         const courses=await db.course.findMany({
             where:{
                 isPublished:true,
+                status:"verified",
                 title:{
                     contains:title
                     

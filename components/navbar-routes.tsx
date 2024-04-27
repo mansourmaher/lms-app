@@ -39,7 +39,7 @@ export const NavbarRoutes = ({
       {!isChatPage && (
         <>
           <div className="hidden md:block">
-            <div className="flex items-center rounded-full bg-slate-100 focus-visible:ring-slate-200  ">
+            <div className="flex items-center rounded-full bg-slate-100 focus-visible:ring-slate-200 border-2 border-slate-300 ">
               <Search className="text-slate-500 ml-8" />
 
               <TeacherSearchInput teachers={teachers} />

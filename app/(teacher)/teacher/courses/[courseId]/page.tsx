@@ -19,6 +19,7 @@ import CourseAction from "./_components/courseAction";
 import { boolean } from "zod";
 import { auth } from "@/auth";
 import { TargetForm } from "./_components/target-form";
+import { LevelForm } from "./_components/level-form";
 
 const CourseIdPage = async ({
   params,
@@ -55,8 +56,8 @@ const CourseIdPage = async ({
         <div className="text-center">
           <h1 className="text-2xl font-medium">Course not found</h1>
           <p className="text-gray-500">
-            You are trying to access a course that does not exist <br />or you are not
-            the owner of this course
+            You are trying to access a course that does not exist <br />
+            or you are not the owner of this course
           </p>
         </div>
       </div>
@@ -82,6 +83,10 @@ const CourseIdPage = async ({
     course.price,
     course.categoryId,
     course.imageUrl,
+    course.level,
+    course.target,
+    course.chapters.length > 0,
+    
     course.attachment.length > 0,
   ];
   const totalFields = requiredFields.length;
@@ -145,9 +150,10 @@ const CourseIdPage = async ({
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={File} />
-                <h2 className="text-xl">Course Attachement</h2>
+                <h2 className="text-xl">Course Level</h2>
               </div>
-              <AttachementForm initialeData={course} courseId={course.id} />
+              <LevelForm initialeData={course} courseId={course.id} />
+              {/* <AttachementForm initialeData={course} courseId={course.id} /> */}
             </div>
             <div>
               <div className="flex items-center gap-x-2">
