@@ -39,7 +39,7 @@ const TeacherNavbar = async () => {
           <span className="sr-only">Acme Inc</span>
         </Link>
         <Link
-          href="#"
+          href="/teacher_dashbord"
           className="text-foreground transition-colors hover:text-foreground"
         >
           Dashboard
@@ -62,9 +62,16 @@ const TeacherNavbar = async () => {
         >
           <Link href="/teacher/check">WorkFlow</Link>
         </Button>
+        <Button
+          variant={"link"}
+          size={"sm"}
+          className="text-muted-foreground transition-colors hover:text-foreground"
+          asChild
+        >
+          <Link href="/conversations">My Conversations</Link>
+        </Button>
 
         <DialogDemo />
-        <ListCoversation />
       </nav>
       <Sheet>
         <SheetTrigger asChild>

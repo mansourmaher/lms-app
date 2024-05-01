@@ -46,8 +46,16 @@ export function ConversationForm({ conversationId }: ConversationFormProps) {
             )}
           />
 
-          <Button size={"icon"} type="submit">
-            <SendIcon className="h-4 w-4 text-sky-500" />
+          <Button
+            size={"icon"}
+            type="submit"
+            className="text-white bg-sky-400 hover:bg-sky-500 "
+            disabled={
+              createMessageForm.formState.isSubmitting ||
+              !createMessageForm.formState.isValid
+            }
+          >
+            <SendIcon className="h-4 w-4 " />
           </Button>
         </form>
       </Form>

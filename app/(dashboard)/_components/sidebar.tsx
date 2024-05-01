@@ -158,7 +158,7 @@ export default function Sidebar({
         <div className="flex items-center justify-between">
           <UserButton />
           {isverifiedteacher && (
-            <Link href="/teacher_dashboard">
+            <Link href="/teacher_dashbord">
               <Button variant={"primary"}>Teacher 👨‍🏫</Button>
             </Link>
           )}

@@ -1,9 +1,5 @@
-import { getAllCommunity } from "@/actions/community/get-all-community";
-import { getAllNotifications } from "@/actions/teacher/get-all-notifications";
-import Sidebar from "@/app/(dashboard)/_components/sidebar";
-import { auth } from "@/auth";
-import { ConversationsList } from "../_components/conversation_list";
 import { getMyconversation } from "@/actions/conversation/getmyconversation";
+import { ConversationsList } from "./_components/conversation_list";
 
 const LayoutPage = async ({ children }: { children: React.ReactNode }) => {
   // const community = await getAllCommunity();
@@ -18,7 +14,7 @@ const LayoutPage = async ({ children }: { children: React.ReactNode }) => {
       </div> */}
       <ConversationsList conversations={conversation} />
 
-      <div className="md:pl-80 h-full  mx-auto ">{children}</div>
+      <div className=" h-full  ">{children}</div>
     </div>
   );
 };

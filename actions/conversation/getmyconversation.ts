@@ -23,7 +23,9 @@ export async function getMyconversation()
                 in:mypurchase.map(p=>p.courseId)
             }
             
+            
         }
+        
     })
     if(!myconversation)
     {
