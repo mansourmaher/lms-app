@@ -7,7 +7,7 @@ export  const  logout=async()=>
     console.log("logout")
      await signOut()
      //try to redirect to login page
-    //  return {redirect: { destination: '/login', permanent: false }}
+      return {redirect: { destination: '/sign-in', permanent: false }}
 
     
 }

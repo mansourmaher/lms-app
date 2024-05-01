@@ -49,19 +49,10 @@ export const UserButton = () => {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <button className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
-          <Avatar className="h-10 w-10 ">
-            <AvatarImage
-              className="rounded-full"
-              src={currentUser?.image || ""}
-              alt={currentUser?.name!}
-            />
-            <AvatarFallback className="uppercase">
-              {currentUser?.name![0]}
-            </AvatarFallback>
-          </Avatar>
-        </button>
+      <SheetTrigger>
+        <span className="relative flex hover:cursor-pointer  select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+          Profile
+        </span>
       </SheetTrigger>
       <SheetContent side={"right"} className="overflow-y-auto">
         <SheetHeader>

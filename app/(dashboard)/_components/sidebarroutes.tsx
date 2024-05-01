@@ -9,9 +9,11 @@ import {
   Layout,
   List,
   User,
+  VideoIcon,
 } from "lucide-react";
 import { SidebarItem } from "./sidebarItem";
 import { usePathname } from "next/navigation";
+import { DialogDemo } from "@/app/room/[roomId]/_components/createroommodal";
 
 const geustRoutes = [
   {
@@ -29,7 +31,6 @@ const geustRoutes = [
     label: "Instructor",
     href: "/unstructor",
   },
- 
 ];
 const teacherRoutes = [
   {
@@ -39,8 +40,8 @@ const teacherRoutes = [
   },
   {
     icon: BarChart2,
-    label: "Analysis",
-    href: "/teacher/analyticts",
+    label: "Dashboard",
+    href: "/teacher_dashbord",
   },
   {
     icon: BookAIcon,
@@ -68,6 +69,7 @@ export const SideBarRoutes = () => {
           href={route.href}
         />
       ))}
+      {isTeacherPage && <DialogDemo />}
     </div>
   );
 };

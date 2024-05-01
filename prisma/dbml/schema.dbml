@@ -125,6 +125,7 @@ Table Course {
   quiz Quiz [not null]
   review CourseReview [not null]
   courseUser CourseUser [not null]
+  totalPurchases Int [default: 0]
   report Report [not null]
   Community Community
 }
@@ -334,6 +335,7 @@ Table Conversation {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   title String
+  courseId String
   paticipantsId String[] [not null]
   messages Message [not null]
 }

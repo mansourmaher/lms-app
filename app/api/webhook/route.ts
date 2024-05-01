@@ -36,6 +36,18 @@ export async function POST(req:Request):  Promise<void | Response> {{
                 courseId
             }
         })
+        await db.course.update({
+            where:{
+                id:courseId
+            },
+            data:{
+                totalPurchases:{
+                    increment:1
+                
+            }
+
+            }
+        })
 
     }else{
         return new NextResponse(null,{status:401})

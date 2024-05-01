@@ -46,7 +46,8 @@ const CourseAction = ({
       }
 
       toast.success("Course is published successfully");
-      confetti.onOpen();
+      // confetti.onOpen();
+      router.refresh(); 
     } catch (error) {
       console.log(error);
     }

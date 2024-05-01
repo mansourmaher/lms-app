@@ -68,7 +68,7 @@ const EditChapter = async ({
     chpater.title,
     chpater.descreption,
     chpater.videoUrl,
-    chpater.quiz[0].question,
+    chpater.quiz[0]?.question,
   ];
   const totalFields = requiredFiels.length;
   let filledFields = 0;

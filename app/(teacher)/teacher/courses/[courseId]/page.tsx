@@ -72,10 +72,10 @@ const CourseIdPage = async ({
   const chapterOfcourse = await db.chapter.findMany({
     where: {
       courseId: course.id,
-      isPublished: false,
+      isPublished: true,
     },
   });
-  const isAllchpaterOfcourseIsPublished = chapterOfcourse.length === 0;
+  const isAllchpaterOfcourseIsPublished = chapterOfcourse.length >= 1;
 
   const requiredFields = [
     course.title,

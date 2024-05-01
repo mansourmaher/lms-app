@@ -3,9 +3,18 @@ import { useParams } from "next/navigation";
 
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { v4 } from "uuid";
+import { Button } from "@/components/ui/button";
+import { sendMessageofthestream } from "@/actions/conversation/sendmessageofstream";
 
 const RoomPage = () => {
   const { roomId } = useParams();
+  const id = roomId;
+  const link = window.location.href;
+
+  const sendmessage = async () => {
+    await sendMessageofthestream(id as string, link);
+  };
+
   function randomID(len: any) {
     let result = "";
     if (result) return result;
@@ -79,11 +88,19 @@ const RoomPage = () => {
   }
 
   return (
-    <div>
-      cnoq
+    <div className="flex justify-start items-center">
       <div className="w-full h-screen" ref={init}>
-        <div className="w-full h-full">asaz</div>
-
+        <div className="w-full h-full"></div>
+      </div>
+      <div className="flex items-center justify-center gap-x-4 pr-4">
+        <Button
+          variant={"primary"}
+          onClick={() => {
+            sendmessage();
+          }}
+        >
+          Send the link to the audience
+        </Button>
       </div>
     </div>
   );

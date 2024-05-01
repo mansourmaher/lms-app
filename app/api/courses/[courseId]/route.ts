@@ -11,7 +11,26 @@ export async function PATCH(req:Request,{params}:{params:{courseId:string}})
         const userId=user?.user?.id as string;
         const {courseId}=params;
         const values=await req.json();
+        const existingcourse=await db.course.findFirst({
+            where:{
+                id:courseId
+            },
+            select:{
+                id:true,
+                title:true,
+            }
+        })
         console.log("valeus",values);
+        if(values.isPublished)
+        {
+            await db.conversation.create({
+                data:{
+                    title:`${existingcourse?.title} conversation`,
+                    courseId:courseId
+                    
+                }
+            })
+        }
         
         
         if(values.price)

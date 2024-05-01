@@ -25,7 +25,7 @@ export async function teacherGetMyCourses({
   const userId=user?.user?.id
   const courses=await db.course.findMany({
     where:{
-      isPublished:true,
+      
       userId:userId,
       title:{
         contains:title

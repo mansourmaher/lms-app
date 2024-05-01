@@ -37,7 +37,6 @@ export default function SheetNotification({
       pusherClient.unsubscribe("notification");
     };
   }, [notifications]);
-  
 
   return (
     <Sheet>
@@ -45,7 +44,7 @@ export default function SheetNotification({
         <button
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "w-10 h-10 p-0 rounded-full relative"
+            "h-5 w-5 p-0 rounded-full relative"
           )}
         >
           {notifcationNumber > 0 && (

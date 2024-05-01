@@ -97,8 +97,7 @@ export default function TeacherProfile({
                   {teacher?.origin?.region},{teacher?.origin?.label}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Joined in {" "}
-                  {format(new Date(teacher?.createdAt!), "yyyy")}
+                  Joined in {format(new Date(teacher?.createdAt!), "yyyy")}
                   {postion} postion
                 </p>
                 <p className="text-sm text-gray-500">

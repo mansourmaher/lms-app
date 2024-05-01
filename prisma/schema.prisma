@@ -138,14 +138,15 @@ model Course {
   chapters      Chapter[]
   purchases     Purchase[]
 
-  attachment Attachment[]
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
-  quiz       Quiz[]
-  review     CourseReview[]
-  courseUser CourseUser[]
-  report     Report[]
-  Community  Community?
+  attachment     Attachment[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  quiz           Quiz[]
+  review         CourseReview[]
+  courseUser     CourseUser[]
+  totalPurchases Int?           @default(0)
+  report         Report[]
+  Community      Community?
 
   @@index([categoryId])
 }
@@ -383,6 +384,7 @@ model Conversation {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   title     String?
+  courseId  String?
 
   paticipantsId String[]
 

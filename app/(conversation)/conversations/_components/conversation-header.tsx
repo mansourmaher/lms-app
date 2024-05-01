@@ -4,10 +4,15 @@ import Link from "next/link";
 
 import { ChevronLeft, MoreHorizontalIcon, Trash2Icon } from "lucide-react";
 
-
 import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/actions/conversation/getcurrentuser";
 import { getConversation } from "@/actions/conversation/getconversation";
@@ -22,7 +27,7 @@ export async function ConversationHeader({
   currentUser,
 }: ConversationHeaderProps) {
   const conversation = await getConversation(conversationId);
-  console.log("conve"+conversation)
+
   // const currentUser = await getCurrentUser();
   // const user = conversation!.paticipantsId.find(
   //   (participant:any) => participant.id !== currentUser!.user.id,
@@ -36,7 +41,7 @@ export async function ConversationHeader({
         >
           <ChevronLeft size={25} />
         </Link>
-         {/* <Avatar>
+        {/* <Avatar>
           <AvatarImage src={user?.image!} alt={user?.name!} />
           <AvatarFallback>
             <span>{user?.name![0]}</span>
@@ -51,7 +56,10 @@ export async function ConversationHeader({
           <div className="text-xs text-muted-foreground">
             <span>
               Created on{" "}
-               {format(new Date(conversation?.createdAt!), "MMMM dd, yyyy").toString()} 
+              {format(
+                new Date(conversation?.createdAt!),
+                "MMMM dd, yyyy"
+              ).toString()}
             </span>
           </div>
         </div>

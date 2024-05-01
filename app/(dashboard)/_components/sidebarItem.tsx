@@ -19,6 +19,10 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
     (pathname.startsWith(href) && href != "/");
 
   const onClick = () => {
+    if(href==="/room"){
+      const random = Math.floor(Math.random() * 1000000);
+      href = `/room/${random}`;
+    }
     router.push(href);
   };
 

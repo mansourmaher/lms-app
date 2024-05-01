@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 
 export async function createMessage(conversationId: string, message: string) {
     try {
@@ -39,8 +40,10 @@ export async function createMessage(conversationId: string, message: string) {
           sender:true
         }
       });
-    //   ServerPusher.trigger(`conversation-${conversationId}`, "new-messagesssss", {
-    //     message: newMessage,
+       await pusherServer.trigger(`conversation.${conversationId}`, "new-messagesssss", {
+         newMessage,
+       });
+       
       
   
     //   revalidatePath(`/conversations/${conversationId}`);

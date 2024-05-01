@@ -1,20 +1,20 @@
-import { Message, User } from "@prisma/client";
-import React from "react";
-import Image from "next/image";
+import { Message } from "@prisma/client";
 
-import { cn } from "@/lib/utils";
-
-import { format } from "date-fns";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getCurrentUser } from "@/actions/conversation/getcurrentuser";
 import { getMessages } from "@/actions/conversation/getmessages";
+import { getTheTeacherFromConversationId } from "@/actions/conversation/gettheteacherfromconversationid";
+import { Verified } from "lucide-react";
+import Link from "next/link";
 
 interface MessageBoxProps {
   message: Awaited<ReturnType<typeof getMessages>>[0];
   currentUser: Awaited<ReturnType<typeof getCurrentUser>>;
+  teacher: Awaited<ReturnType<typeof getTheTeacherFromConversationId>>;
 }
 
-export function MessageBox({ message, currentUser }: MessageBoxProps) {
+export function MessageBox({ message, currentUser, teacher }: MessageBoxProps) {
+  const thesenderistheteacher = message.senderId === teacher?.id;
   const isSender = (message: Message) => {
     return message.senderId === currentUser!.user.id;
   };
@@ -24,8 +24,11 @@ export function MessageBox({ message, currentUser }: MessageBoxProps) {
         <Avatar>
           <AvatarImage
             src={message.sender?.image!}
-            alt={message.sender.name!}
+            alt={message.sender?.name!}
           />
+          <AvatarFallback className="uppercase">
+            {message?.sender!.name![0]}
+          </AvatarFallback>
         </Avatar>
       </div>
       <div>
@@ -36,7 +39,10 @@ export function MessageBox({ message, currentUser }: MessageBoxProps) {
               : " text-red-400 text-left"
           }`}
         >
-          {message.sender.name!}
+          <span className="flex gap-x-1">
+            <span>{message.sender?.name!}</span>
+            {thesenderistheteacher && <>teacher</>}
+          </span>{" "}
         </p>
 
         <div className="flex items-end">
@@ -45,7 +51,13 @@ export function MessageBox({ message, currentUser }: MessageBoxProps) {
               isSender(message) ? "bg-blue-400 ml-auto order-2" : "bg-red-400"
             }`}
           >
-            <p>{message.body!}</p>
+            <p>
+              {message.body!.includes("http://") ? (
+                <Link href={message.body!}>{message.body}</Link>
+              ) : (
+                message.body
+              )}
+            </p>
           </div>
           <p className="text-[0.65rem] italic px-2 text-gray-300">
             {new Date(message.createdAt).toLocaleString("en-US", {

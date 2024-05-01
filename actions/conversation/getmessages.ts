@@ -25,6 +25,9 @@ export async function getMessages(conversationId: string) {
         include: {
           sender: true,
         },
+        orderBy: {
+          createdAt: "asc",
+        },
       });
   
       return messages;
