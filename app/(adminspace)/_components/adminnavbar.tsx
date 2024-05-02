@@ -20,12 +20,14 @@ import { auth } from "@/auth";
 import SheetNotification from "@/components/Auth/notification-sheet";
 import { getTheFirstConversation } from "@/actions/conversation/getthefirstconversation";
 import { getteacherfirstconversation } from "@/actions/conversation/getteacherfirstconversation";
+import { getFirstCommunity } from "@/actions/community/getfirstcommunity";
 
-const TeacherNavbar = async () => {
+const AdminNavbar = async () => {
   const notifs = await getAllNotifications();
   const user = await auth();
   const userId = user?.user.id;
-  const firstconversationId = await getteacherfirstconversation();
+  const firstconversationId = await getTheFirstConversation();
+  const firstComunity = await getFirstCommunity();
   return (
     <header className=" top-0 flex h-20 items-center gap-4 border-b bg-background px-4 md:px-6">
       <nav className="hidden  gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6  lg:w-[1750px]">
@@ -40,10 +42,10 @@ const TeacherNavbar = async () => {
           <span className="sr-only">Acme Inc</span>
         </Link>
         <Link
-          href="/teacher_dashbord"
+          href="/"
           className="text-foreground transition-colors hover:text-foreground"
         >
-          Dashboard
+          Home
         </Link>
 
         <Button
@@ -52,7 +54,7 @@ const TeacherNavbar = async () => {
           className="text-muted-foreground transition-colors hover:text-foreground"
           asChild
         >
-          <Link href="/teacher/mycourses">My Courses</Link>
+          <Link href="/unstructor">Top Instructor</Link>
         </Button>
 
         <Button
@@ -61,7 +63,9 @@ const TeacherNavbar = async () => {
           className="text-muted-foreground transition-colors hover:text-foreground"
           asChild
         >
-          <Link href="/teacher/check">WorkFlow</Link>
+          {firstComunity && (
+            <Link href={`/community/${firstComunity.id}`}>Community</Link>
+          )}
         </Button>
         <Button
           variant={"link"}
@@ -70,15 +74,11 @@ const TeacherNavbar = async () => {
           asChild
         >
           {firstconversationId && (
-            <Link
-              href={`/teacher_conversations/conversations/${firstconversationId.id}`}
-            >
-              Conversations
+            <Link href={`/conversations/${firstconversationId.id}`}>
+              My Conversations
             </Link>
           )}
         </Button>
-
-        <DialogDemo />
       </nav>
       <Sheet>
         <SheetTrigger asChild>
@@ -164,4 +164,4 @@ const TeacherNavbar = async () => {
   );
 };
 
-export default TeacherNavbar;
+export default AdminNavbar;

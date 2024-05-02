@@ -21,7 +21,7 @@ interface Props {
   users: Awaited<ReturnType<typeof getTheoriginofsubscriptionuser>>;
 }
 
-function DonutsChart({ level, users }: Props) {
+function AdminDonutscharts({ level, users }: Props) {
   const [userData, setUserData] = useState(false);
   const data = {
     labels: userData ? users?.map((u) => u.region) : level?.map((l) => l.level),
@@ -44,7 +44,7 @@ function DonutsChart({ level, users }: Props) {
   };
 
   return (
-    <Card >
+    <Card>
       <CardHeader>
         <CardTitle>{userData ? "User Data" : "Course Skill Level"}</CardTitle>
         <CardDescription>
@@ -85,4 +85,4 @@ function DonutsChart({ level, users }: Props) {
   );
 }
 
-export default DonutsChart;
+export default AdminDonutscharts;

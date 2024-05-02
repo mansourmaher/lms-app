@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 "use server"
 
 import { auth } from "@/auth"
@@ -133,13 +134,15 @@ import { db } from "@/lib/db"
 
 
 export async function totalacceptedcourssincludemonthlyincrease() {
+    const user=await auth()
+    const userId=user?.user.id
   const totlacourseinthismonth = await db.course.count(
     {
       where: {
+        userId: userId,
+        status: "verified",
        
-          createdAt: {
-            gte: new Date(new Date().setMonth(new Date().getMonth() - 1)),
-          },
+         
         },
       
     },
@@ -148,11 +151,10 @@ export async function totalacceptedcourssincludemonthlyincrease() {
   const tottalcourseinlastmonth = await db.course.count(
     {
       where: {
+        userId: userId,
+        status: "verified",
        
-          createdAt: {
-            gte: new Date(new Date().setMonth(new Date().getMonth() - 2)),
-            lt: new Date(new Date().setMonth(new Date().getMonth() - 1)),
-          },
+         
         
       },
     },

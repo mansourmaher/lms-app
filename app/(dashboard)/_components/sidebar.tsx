@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { getMyconversation } from "@/actions/conversation/getmyconversation";
 import { getConversation } from "@/actions/conversation/getconversation";
+import { getTheFirstConversation } from "@/actions/conversation/getthefirstconversation";
 
 interface SidebarProps {
   community: Awaited<ReturnType<typeof getAllCommunity>>;
@@ -36,11 +37,14 @@ export default function Sidebar({
 
   const [conversations, setConversations] =
     React.useState<Awaited<ReturnType<typeof getMyconversation>>>();
+  const [firstconversationId, setFirstconversationId] = useState<string>("");
 
   const router = useRouter();
   useEffect(() => {
     const fetchConversation = async () => {
       const conversations = await getMyconversation();
+      const firstconversation = await getTheFirstConversation();
+      setFirstconversationId(firstconversation.id);
       setConversations(conversations);
     };
     fetchConversation();
@@ -94,7 +98,7 @@ export default function Sidebar({
                         )}
                         key={com.id}
                         onClick={() => {
-                          router.push(`/conversations/${com.id}`);
+                          router.push(`/conversations/${firstconversationId}`);
                           setSelectedConversation(com.id);
                         }}
                       >

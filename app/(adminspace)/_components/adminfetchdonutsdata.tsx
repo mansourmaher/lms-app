@@ -1,16 +1,16 @@
-import React from "react";
-import DonutsChart from "./donuts_chart";
 import {
   getLevelDistinctCount,
   getTheoriginofsubscriptionuser,
-} from "@/actions/admin/dashboard/getleveldistinctcount";
+} from "@/actions/dashboard/fetch_donuts_chart";
+import React from "react";
+import AdminDonutscharts from "./admindonutschart";
 
 const FetchDonutsData = async () => {
   const levelcount = await getLevelDistinctCount();
   const users = await getTheoriginofsubscriptionuser();
   return (
     <>
-      <DonutsChart level={levelcount} users={users} />
+      <AdminDonutscharts level={levelcount} users={users} />
     </>
   );
 };

@@ -1,7 +1,10 @@
+import AdminNavbar from "../../_components/adminnavbar";
+
 const LayoutPage = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-full">
-      <div className="md:pl-80 h-full  ">{children}</div>
+      <AdminNavbar />
+      <div className="h-full ">{children}</div>
     </div>
   );
 };

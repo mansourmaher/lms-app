@@ -6,6 +6,13 @@ export async function getAllCommunity() {
     orderBy: {
       createdAt: "desc",
     },
+    include:{
+      posts:{
+        select:{
+          id:true
+        }
+    }
+  }
   });
  
   

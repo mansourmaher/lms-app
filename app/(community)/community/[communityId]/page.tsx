@@ -7,6 +7,7 @@ import CommunityHeader from "../_componets/community-breadkrumb";
 import { getCommNameByid } from "@/actions/community/getCommunityName";
 import { MobileSidebar } from "@/app/(dashboard)/_components/mobilesidebar";
 import { UsersSidebar } from "../_componets/users-sidebar";
+import { ComunityList } from "../_componets/list-comunity";
 const Page = async (params: {
   params: {
     communityId: string;
@@ -23,13 +24,16 @@ const Page = async (params: {
         <div className="w-full ">
           <div className="flex flex-row items-center  ml-4 justify-between">
             <MobileSidebar />
-            <CommunityHeader commName={communityName!} />
+            {/* <CommunityHeader commName={communityName!} /> */}
             <UsersSidebar communityId={comunityId!} />
           </div>
 
           <div className="border-b-2 mr-7 ml-6"></div>
           <div className="flex flex-col bg-gray-100 ">
             <div className="flex h-full">
+              <div>
+                <ComunityList />
+              </div>
               <div className="flex flex-col w-full px-6  space-y-2 bg-white">
                 <CommunitySearchProblem />
 

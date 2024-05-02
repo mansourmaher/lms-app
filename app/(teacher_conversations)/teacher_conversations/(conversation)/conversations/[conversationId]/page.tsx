@@ -8,7 +8,7 @@ import { getMessages } from "@/actions/conversation/getmessages";
 import { getTheTeacherFromConversationId } from "@/actions/conversation/gettheteacherfromconversationid";
 import { ConversationsList } from "../_components/conversation_list";
 import { getMyconversation } from "@/actions/conversation/getmyconversation";
-import { BreadcrumbDemoConversation } from "@/app/(teacher_conversations)/teacher_conversations/(conversation)/conversations/_components/conversation_breadcrumb";
+import { BreadcrumbDemoConversation } from "../_components/conversation_breadcrumb";
 
 interface PageProps {
   params: {
@@ -28,7 +28,8 @@ const Page = async ({ params }: PageProps) => {
     <div className="h-screen bg-secondary">
       {/* <ConversationsList conversations={conversation} /> */}
       <div className="flex h-full flex-col">
-        <BreadcrumbDemoConversation isteacher={false} />
+
+        <BreadcrumbDemoConversation isteacher={true} />
         <ConversationHeader conversationId={params.conversationId} />
         <ConversationBody
           conversationId={params.conversationId}

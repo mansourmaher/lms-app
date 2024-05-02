@@ -14,13 +14,17 @@ import {
   getUnPublisedcourse,
   totalacceptedcourssincludemonthlyincrease,
 } from "@/actions/dashboard/getteacherrevenue";
+import { getPlatformerevenue } from "@/actions/admin/dashboard/getplatformerevenue";
+import { getPlatformeSubscibtion } from "@/actions/admin/dashboard/getplatformesubscribtion";
+import { platformetotalpublishedcourseincludeincrease } from "@/actions/admin/dashboard/getplatformepublishedcourseincludeincrease";
+import { getPlatformeUnPublisedcourse } from "@/actions/admin/dashboard/platformeunpublishcourse";
 
-const DashboardCard = async () => {
-  const revenue = await getTeacherrevenue(); //mrigla
-  const subscribtion = await getToatalSubscribtion();
+const AdminDashbordCard = async () => {
+  const revenue = await getPlatformerevenue(); //mrigla
+  const subscribtion = await getPlatformeSubscibtion();
   const publisedcourse = await getPublisedcourse();
-  const unpublishedcourse = await getUnPublisedcourse();
-  const courses=await totalacceptedcourssincludemonthlyincrease()
+  const unpublishedcourse = await getPlatformeUnPublisedcourse();
+  const courses = await platformetotalpublishedcourseincludeincrease();
 
   return (
     <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
@@ -73,11 +77,11 @@ const DashboardCard = async () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{unpublishedcourse}</div>
-          <p className="text-xs text-muted-foreground">+201 since last hour</p>
+          {/* <p className="text-xs text-muted-foreground">+201 since last hour</p> */}
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default DashboardCard;
+export default AdminDashbordCard;
