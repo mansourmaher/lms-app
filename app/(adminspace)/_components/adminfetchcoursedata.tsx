@@ -13,7 +13,7 @@ import {
   
     return (
       <>
-        <CourseBarchat courses={coursedata} student={studentincludeage} />
+        {/* <CourseBarchat courses={coursedata} student={studentincludeage} /> */}
       </>
     );
   };
