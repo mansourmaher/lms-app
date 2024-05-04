@@ -84,7 +84,7 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
               key={teacher.id}
               className="block w-full p-1 text-start"
               onClick={() => {
-                setvalue(teacher.title!);
+                // setvalue(teacher.title!);
                 setIsValueSelected(true);
                 router.push(`/course/${teacher.id}`);
               }}

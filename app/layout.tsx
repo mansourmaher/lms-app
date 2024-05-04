@@ -10,6 +10,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { Confetti } from "@/components/providers/confetti-provider";
 import { ToastProvider } from "@/components/providers/toaster-provider";
+import Modal from "@/components/searchmodal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default async function RootLayout({
           <ToastProvider />
 
           {children}
+          <Modal/>
         </body>
       </html>
     </SessionProvider>

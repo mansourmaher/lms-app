@@ -30,10 +30,13 @@ export default function ComunityListItem({ comm }: ComunityUserItemProps) {
       <div className="flex items-center justify-between space-x-2">
         <div className="flex gap-x-3">
           <UsersIcon size={24} className="text-sky-500" />
-          <span>{comm.title}</span>
+          <div className="text-sm font-semibold">{comm.title}</div>
         </div>
         <div>
-          {comm.posts.length} {comm.posts.length > 1 ? "Posts" : "Post"}
+          <span className="text-xs text-gray-400">
+            {" "}
+            {comm.posts.length} {comm.posts.length > 1 ? "Posts" : "Post"}
+          </span>
         </div>
       </div>
     </div>

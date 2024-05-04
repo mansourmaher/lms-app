@@ -5,6 +5,10 @@ import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { v4 } from "uuid";
 import { Button } from "@/components/ui/button";
 import { sendMessageofthestream } from "@/actions/conversation/sendmessageofstream";
+import React, { useEffect } from "react";
+import { istheuseristheownerofthemeeting } from "@/actions/system/istheuseristheownerofthemeeting";
+import { theteacheristheownerofthemeet } from "@/actions/system/theteacheristheownerofthemeet";
+import { closeMeeting } from "@/actions/system/closemeeting";
 
 const RoomPage = () => {
   const { roomId } = useParams();
@@ -14,6 +18,22 @@ const RoomPage = () => {
   const sendmessage = async () => {
     await sendMessageofthestream(id as string, link);
   };
+  const handelclosetheMeeting = async () => {
+    await closeMeeting(id as string);
+    window.location.href = "/";
+  };
+  const [isowner, setisowner] = React.useState(false);
+  const [isthetheteacherforprivatemeet, setisthetheteacherforprivatemeet] =
+    React.useState(false);
+  useEffect(() => {
+    const fetchdata = async () => {
+      const res = await istheuseristheownerofthemeeting(id as string);
+      const res2 = await theteacheristheownerofthemeet(id as string);
+      setisthetheteacherforprivatemeet(res2);
+      setisowner(res);
+    };
+    fetchdata();
+  }, [id]);
 
   function randomID(len: any) {
     let result = "";
@@ -92,16 +112,29 @@ const RoomPage = () => {
       <div className="w-full h-screen" ref={init}>
         <div className="w-full h-full"></div>
       </div>
-      <div className="flex items-center justify-center gap-x-4 pr-4">
+      {isthetheteacherforprivatemeet && (
         <Button
           variant={"primary"}
           onClick={() => {
             sendmessage();
           }}
         >
-          Send the link to the audience
+          Share the meeting
         </Button>
-      </div>
+      )}
+
+      {isowner && (
+        <div className="flex flex-col items-center space-y-2">
+          <Button
+            variant={"green"}
+            onClick={() => {
+              handelclosetheMeeting();
+            }}
+          >
+            Finish the meeting
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

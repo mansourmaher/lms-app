@@ -132,6 +132,11 @@ const AdminNavbar = async () => {
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <form className="ml-auto flex-1 sm:flex-initial">
           <div className="relative">
+            {/* <Link href="?modal=true">
+              <button type="button" className="bg-blue-500 text-white p-2">
+                Open Modal
+              </button>
+            </Link> */}
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
