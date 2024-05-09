@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/hooks/getCurrentUser";
 import Link from "next/link";
-import { AccesTeacher } from "../acces-teacher";
 import { Badge } from "@/components/ui/badge";
 import { Verified } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -20,8 +19,6 @@ import { Input } from "@/components/ui/input";
 import { updatePassword } from "@/actions/Etudiant/update-password";
 import { useState } from "react";
 import { resetPassword } from "@/actions/reset";
-import PointsProgress from "./points-progress";
-import { FcChargeBattery } from "react-icons/fc";
 import { Separator } from "@/components/ui/separator";
 
 interface Props {
@@ -72,7 +69,7 @@ const Setting = ({ user, isTeacherhasRequest }: Props) => {
 
   return (
     <>
-      <Separator  className="mb-6"/>
+      <Separator className="mb-6" />
       <div className=" mx-16 flex justify-center ">
         {user?.role === "TEACHER" &&
         user?.teacherAccess === false &&
@@ -216,26 +213,6 @@ const Setting = ({ user, isTeacherhasRequest }: Props) => {
                   </div>
                 </form>
               </Form>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col  max-w-[400px] w-full  ">
-          {user?.role === "TEACHER" &&
-          user?.teacherAccess === false &&
-          !isTeacherhasRequest ? (
-            <AccesTeacher />
-          ) : null}
-          <div className="mx-auto my-auto  ">
-            <div className="flex flex-col gap-12 ">
-              <div className="flex items-center justify-center gap-x-1">
-                <PointsProgress userProgress={user?.points!} />
-              </div>
-
-              <span className="text-center text-sm  ">
-                You have{" "}
-                <span className="text-blue-400 underline">{user?.points}</span>{" "}
-                points, keep going reach 100 points to get a free course
-              </span>
             </div>
           </div>
         </div>
