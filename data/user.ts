@@ -3,7 +3,24 @@ import { db } from "@/lib/db"
 export const getUserByEmail=async(email:string)=>
 {
     try{
-        const user=await db.user.findFirst({where:{email}})
+        const user=await db.user.findFirst({
+            where:{email},
+            include:{
+                teacherRequest:{
+                    select:{
+                        status:true,
+                        id:true
+                    }
+                }
+
+            }
+        },
+
+        
+        
+
+    )
+    
         return user
 
 

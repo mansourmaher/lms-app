@@ -58,9 +58,12 @@ export const AttachementFormChapter = ({
 
       // Clear any previous error messages
       toast.dismiss();
-      console.log("values "+JSON.stringify(values))
+      console.log("values " + JSON.stringify(values));
 
-      await axios.post(`/api/courses/${courseId}/chapters/${chapterId}/attachement`,values);
+      await axios.post(
+        `/api/courses/${courseId}/chapters/${chapterId}/attachement`,
+        values
+      );
 
       toast.success("Attachment added");
       toggleEditing();
@@ -75,7 +78,9 @@ export const AttachementFormChapter = ({
   const ondelete = async (attachemntId: string) => {
     try {
       setDeletingId(attachemntId);
-      await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}/attachement/${attachemntId}`);
+      await axios.delete(
+        `/api/courses/${courseId}/chapters/${chapterId}/attachement/${attachemntId}`
+      );
       toast.success("Attachment deleted");
       router.refresh();
     } catch (error) {
@@ -88,7 +93,7 @@ export const AttachementFormChapter = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 ">
       <div className="font-medium flex items-center justify-between">
-        Add related to you chapter
+        Add resources to your chapter
         <Button variant="ghost" onClick={toggleEditing}>
           {isEditing && <>Cancel</>}
           {!isEditing && (
@@ -101,41 +106,45 @@ export const AttachementFormChapter = ({
       </div>
       {!isEditing && (
         <>
-         <>
-          {initialeData.resources?.length === 0 && (
-            <p className="text-sm mt-2 text-slate-500 italic">No attachment</p>
-          )}
-          {initialeData?.resources?.length > 0 && (
-            <ul className="mt-2">
-              {initialeData.resources.map((attachment) => (
-                <li key={attachment.id} className="flex items-center space-x-2">
-                  <File className="h-4 w-4" />
-                  <a
-                    href={attachment.url}
-                    target="_blank"
-                    className="text-sm text-slate-500 line-clamp-1"
+          <>
+            {initialeData.resources?.length === 0 && (
+              <p className="text-sm mt-2 text-slate-500 italic">
+                No attachment
+              </p>
+            )}
+            {initialeData?.resources?.length > 0 && (
+              <ul className="mt-2">
+                {initialeData.resources.map((attachment) => (
+                  <li
+                    key={attachment.id}
+                    className="flex items-center space-x-2"
                   >
-                    {attachment.url}
-                  </a>
-                  {deletingId == attachment.id && (
-                    <div>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    </div>
-                  )}
-                  {deletingId !== attachment.id && (
-                    <button
-                      onClick={() => ondelete(attachment.id)}
-                      className="ml-auto hover:opacity-75 transition"
+                    <File className="h-4 w-4" />
+                    <a
+                      href={attachment.url}
+                      target="_blank"
+                      className="text-sm text-slate-500 line-clamp-1"
                     >
-                      <X className="h-4 w-4"></X>
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-         
+                      {attachment.url}
+                    </a>
+                    {deletingId == attachment.id && (
+                      <div>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      </div>
+                    )}
+                    {deletingId !== attachment.id && (
+                      <button
+                        onClick={() => ondelete(attachment.id)}
+                        className="ml-auto hover:opacity-75 transition"
+                      >
+                        <X className="h-4 w-4"></X>
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
         </>
       )}
       {isEditing && (

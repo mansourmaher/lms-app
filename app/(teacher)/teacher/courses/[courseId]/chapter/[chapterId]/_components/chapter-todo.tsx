@@ -206,13 +206,13 @@ export const ChapterToDo = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 ">
       <div className="font-medium flex items-center justify-between">
-        Add the todo for your chapter
+        Add assignment for this chapter
         <Button variant="ghost" onClick={toggleEditing}>
           {isEditing && <>Cancel</>}
           {!isEditing && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add Todo
+              Add assignment
             </>
           )}
         </Button>
@@ -244,7 +244,7 @@ export const ChapterToDo = ({
               )}
             </div>
           ) : (
-            <p className="text-sm mt-2 text-slate-500 italic">No attachment</p>
+            <p className="text-sm mt-2 text-slate-500 italic">No assignment</p>
           )}
         </>
       )}

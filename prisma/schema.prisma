@@ -299,9 +299,8 @@ model Purchase {
 }
 
 model Quiz {
-  id       String @id @default(uuid())
-  question String
-
+  id        String    @id @default(uuid())
+  question  String
   answer    String
   courseId  String
   course    Course    @relation(fields: [courseId], references: [id])

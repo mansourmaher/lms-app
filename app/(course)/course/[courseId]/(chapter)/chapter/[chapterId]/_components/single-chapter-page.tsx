@@ -30,23 +30,6 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
 
   const chapter = await getChapterById(chapterId);
 
-  const currentPostion = chapter?.position;
-  const nextChapterPosition = currentPostion! + 1;
-  const previewsChapterPosition = currentPostion! - 1;
-  const nextChapter = await db.chapter.findFirst({
-    where: {
-      courseId: courseId,
-      position: nextChapterPosition,
-      isPublished: true,
-    },
-  });
-  const previewsChapter = await db.chapter.findFirst({
-    where: {
-      courseId: courseId,
-      position: previewsChapterPosition,
-      isPublished: true,
-    },
-  });
   const existingReport = await hasReportChapter(chapterId);
   const user = await auth();
   const userId = user?.user.id as string;
@@ -66,8 +49,6 @@ const SingleChapterPage = async ({ courseId, chapterId }: ChapterPageProps) => {
         courseId={courseId}
         chapter={chapter}
         courseName={courseName?.title!}
-        nextChapter={nextChapter}
-        previewsChapter={previewsChapter}
       />
       {/* <ChapterTitle title={chapter?.title!} /> */}
       <div className="flex items-start  w-full ">

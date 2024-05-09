@@ -10,7 +10,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import SingleNotifications from "../single-notification";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
-import { BellDot } from "lucide-react";
+import { BellDot, BellDotIcon, CircleUser } from "lucide-react";
 
 interface UserButtonProps {
   notifications: Awaited<ReturnType<typeof getAllNotifications>>;
@@ -52,8 +52,8 @@ export default function SheetNotification({
               {notifcationNumber}
             </span>
           )}
-          <div className="bg-muted rounded-full  border p-1">
-            <BellDot className="w-[25px] h-[25px]  text-blue-500  bg-transparent" />
+          <div className="bg-muted rounded-full  border p-2">
+          <BellDotIcon className="h-5 w-5" />
           </div>
         </button>
       </SheetTrigger>

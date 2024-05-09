@@ -1,3 +1,4 @@
+import { use } from 'react';
 "use server"
 
 import { auth } from "@/auth"
@@ -24,13 +25,36 @@ export async function getMyconversation()
             }
             
             
-        }
+        },
+        include:{
+            messages:{
+                select:{
+                    body:true,
+                    createdAt:true,
+                    sender:{
+                        select:{
+                            name:true
+                    }
+                },
+                
+                    
+                
+                },
+                orderBy:{
+                    createdAt:"desc"
+                },
+                take:1
+            },
+            }
+        
+        
         
     })
     if(!myconversation)
     {
         return []
     }
+    
 
     return myconversation
 }

@@ -42,10 +42,10 @@ const AdminNavbar = async () => {
           <span className="sr-only">Acme Inc</span>
         </Link>
         <Link
-          href="/"
+          href="/admin/admin_dashboard"
           className="text-foreground transition-colors hover:text-foreground"
         >
-          Home
+          Dashboard
         </Link>
 
         <Button
@@ -54,18 +54,7 @@ const AdminNavbar = async () => {
           className="text-muted-foreground transition-colors hover:text-foreground"
           asChild
         >
-          <Link href="/unstructor">Top Instructor</Link>
-        </Button>
-
-        <Button
-          variant={"link"}
-          size={"sm"}
-          className="text-muted-foreground transition-colors hover:text-foreground"
-          asChild
-        >
-          {firstComunity && (
-            <Link href={`/community/${firstComunity.id}`}>Community</Link>
-          )}
+          <Link href="/admin/courserequest">Course Request</Link>
         </Button>
         <Button
           variant={"link"}
@@ -73,11 +62,15 @@ const AdminNavbar = async () => {
           className="text-muted-foreground transition-colors hover:text-foreground"
           asChild
         >
-          {firstconversationId && (
-            <Link href={`/conversations/${firstconversationId.id}`}>
-              My Conversations
-            </Link>
-          )}
+          <Link href="/admin/course">Courses </Link>
+        </Button>
+        <Button
+          variant={"link"}
+          size={"sm"}
+          className="text-muted-foreground transition-colors hover:text-foreground"
+          asChild
+        >
+          <Link href="/admin/courserequest">Unstroctor</Link>
         </Button>
       </nav>
       <Sheet>
@@ -100,7 +93,7 @@ const AdminNavbar = async () => {
               href="#"
               className="text-foreground transition-colors hover:text-foreground"
             >
-              Dashboard
+              Users
             </Link>
             <Button
               variant={"link"}
@@ -108,7 +101,7 @@ const AdminNavbar = async () => {
               className="text-muted-foreground transition-colors hover:text-foreground"
               asChild
             >
-              <Link href="/teacher/mycourses">My Courses</Link>
+              <Link href="/admin/courserequest">Course Request</Link>
             </Button>
 
             <Button

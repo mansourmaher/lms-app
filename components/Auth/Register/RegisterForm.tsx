@@ -22,11 +22,15 @@ import { register } from "@/actions/register";
 import { Loader, Slice, WavesIcon } from "lucide-react";
 import Link from "next/link";
 import { Social } from "../Social";
+import { AccesTeacher } from "@/components/models/acces-teacher";
 
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [succes, setSucces] = useState<string | undefined>("");
+  const [isreadytoupload, setIsreadytoupload] = useState<boolean>(false);
+  const [step, setStep] = useState<number>(0);
+  const [file, setFile] = useState<File | null>(null);
 
   const [selected, setSelected] = useState<string>("STUDENT");
   const onChange = () => {
@@ -40,10 +44,20 @@ export const RegisterForm = () => {
       password: "",
       name: "",
       role: "STUDENT",
+      url: "",
+      filename: "",
     },
   });
+  const handelNext = () => {
+    if (step === 0 && form.getValues("role") === "TEACHER") setStep(step + 1);
+  };
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     values.role = selected;
+    values.filename = file?.name;
+
+    //@ts-ignore
+    values.url = file?.url;
+    console.log("file" + file);
     setError("");
     setSucces("");
     startTransition(() => {
@@ -64,10 +78,8 @@ export const RegisterForm = () => {
         }}
       />
       <div className="flex  sm:w-full md:w-1/2  items-center justify-center p-12">
-        <div className="w-full max-w-md shadow-xl  rounded-lg p-6">
-          <div className="flex justify-center mb-6">
-            
-          </div>
+        <div className="w-full max-w-md border-2 p-6">
+          <div className="flex justify-center mb-6"></div>
           <h2 className="text-3xl font-extrabold text-gray-900 text-center">
             Welcome to the community
           </h2>
@@ -134,6 +146,7 @@ export const RegisterForm = () => {
                     </FormControl>
                     <FormMessage>
                       {form.formState.errors.password?.message}
+                      {form.formState.errors.url?.message}
                     </FormMessage>
                   </FormItem>
                 )}
@@ -147,6 +160,30 @@ export const RegisterForm = () => {
                   {selected} {selected === "STUDENT" ? "🎓" : "👨‍🏫"}
                 </span>
               </div>
+              <div>
+                {selected === "TEACHER" && form.getValues("email") && !file && (
+                  <div className="bg-slate-100 justify-center p-4 rounded-lg">
+                    <span className="text-sm  mb-4">
+                      Upload you document to verify your teacher account
+                    </span>
+
+                    <div className="flex justify-center mx-auto">
+                      <AccesTeacher
+                        file={file}
+                        onchange={(file) => setFile(file)}
+                      />
+                    </div>
+                  </div>
+                )}
+                {file && (
+                  <div className="bg-slate-100 justify-center p-4 rounded-lg">
+                    <span className="text-sm ">
+                      {/*@ts-ignore*/}
+                      {file?.name} is ready to upload
+                    </span>
+                  </div>
+                )}
+              </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -155,6 +192,7 @@ export const RegisterForm = () => {
               </div>
               <FormError message={error} />
               <FormSucces message={succes} />
+
               <Button
                 type="submit"
                 disabled={isPending}

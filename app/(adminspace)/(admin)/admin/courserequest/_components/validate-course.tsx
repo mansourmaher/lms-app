@@ -11,16 +11,14 @@ interface ValidateCourseProps {
 
 export default function ValidateCourse({ id }: ValidateCourseProps) {
   const [isloading, setIsloading] = React.useState(false);
-  const router=useRouter()
-  
-
+  const router = useRouter();
 
   const verifiecourse = async () => {
-   
-    setIsloading(true);
-    await verifieCourse(id);
-    setIsloading(false);
-    router.refresh()
+    router.push(`/admin/courses/${id} `);
+    // setIsloading(true);
+    // await verifieCourse(id);
+    // setIsloading(false);
+    // router.refresh();
   };
   return (
     <Button

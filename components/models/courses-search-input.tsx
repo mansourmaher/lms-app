@@ -59,7 +59,7 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
   const issearchPage = pathname?.includes("/search");
 
   return (
-    <div className="w-[350px] relative">
+    <div className="w-[300px] relative">
       <div className="relative w-[350px]">
         <div className="flex w-full">
           <Input
@@ -84,13 +84,13 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
               key={teacher.id}
               className="block w-full p-1 text-start"
               onClick={() => {
-                // setvalue(teacher.title!);
+                setvalue(teacher.title!);
                 setIsValueSelected(true);
                 router.push(`/course/${teacher.id}`);
               }}
               onMouseDown={(e) => {
                 e.preventDefault();
-                setvalue(teacher.title!);
+                // setvalue(teacher.title!);
                 setIsValueSelected(true);
               }}
             >

@@ -10,6 +10,7 @@ export async function getTop3Courses() {
     const courses = await db.course.findMany({
         where: {
             isPublished: true,
+            status:"verified",
             review: {
                 some: {
                     starts: {

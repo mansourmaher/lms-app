@@ -23,7 +23,8 @@ export const getCoursesBytecaher=async(tecaherId:string):Promise<CourseWidhProgr
         const courses=await db.course.findMany({
             where:{
                 isPublished:true,
-                userId:tecaherId
+                userId:tecaherId,
+                status:"verified"
             },
             include:{
                

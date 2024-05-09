@@ -19,7 +19,7 @@ export default function UnstroctorCard({
       <div className=" space-x-4  p-4">
         <Card
           className="w-[250px] hover:bg-slate-100 cursor-pointer "
-          onClick={() => router.push(`/teacher/${teachers.user?.id}`)}
+          onClick={() => router.push(`/teachers/${teachers.user?.id}`)}
         >
           <CardContent>
             <div className="flex   justify-end">

@@ -41,21 +41,21 @@ export default function RejectCourse({ id }: ValidateCourseProps) {
     setIsloading(true);
     await rejectCourseByid(id, form.getValues().reason);
     setIsloading(false);
-    router.refresh();
+    router.push(`/admin/courserequest`)
   };
   return (
     <AlertDialog>
       <AlertDialogTrigger className="text-sm font-medium p-1" asChild>
         <Button variant={"destructive"} size={"sm"}>
-          Reject <X className="text-white-500" size={16} />
+          Reject
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            This action cannot be undone. This will permanently reject the
+            course and the teacher will be notified.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="max-w-2xl w-full">

@@ -23,18 +23,42 @@ export const login=async(values:z.infer<typeof LoginSchema>)=>
     }
      if(!existingUser.emailVerified)
      {
+       
          const verificationToken=await generateVerificationToken(existingUser.email)
          await sendVerificationEmail(existingUser.email,verificationToken.token)
-         console.log("sentmailof verifictaion")
+         
          return {error:"Please verify your email before logging in. A new verification email has been sent to your email address."}
+          
 
 
      }
-    existingUser.emailVerified=new Date()
+     if(existingUser.role ==="TEACHER" && existingUser.teacherRequest[0].status === "pending")
+        {
+            return {error:"Wait for the admin to accept your request"}
+        }
+        if(existingUser.role ==="TEACHER" && existingUser.teacherRequest[0].status === "rejected")
+            {
+                return {error:"Sorry your request has been rejected "}
+            }
+
+    // existingUser.emailVerified=new Date()
     try{
-        await signIn('credentials',{email,password,redirectTo:"/"})
+        if(existingUser.role ==="TEACHER")
+        {
+            await signIn('credentials',{email,password,redirectTo:"/teacher_dashbord"})
+            return {success:"Logged in"}
+        }
+        else if(existingUser.role ==="STUDENT")
+            { await signIn('credentials',{email,password,redirectTo:"/"})
         
-        return {success:"Logged in"}
+        return {success:"Logged in"}}
+        else if(existingUser.role==="ADMIN")
+            {
+                await signIn('credentials',{email,password,redirectTo:"/admin/admin_dashboard"})
+
+
+            }
+       
     }catch(error:any){
         if(error instanceof AuthError)
         {

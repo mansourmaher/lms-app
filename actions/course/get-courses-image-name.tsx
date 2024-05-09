@@ -6,6 +6,7 @@ export async function getCoursesNameAndImage() {
   const courses = await db.course.findMany({
     where: {
       isPublished: true,
+      status: "verified",
     },
     select: {
       id: true,

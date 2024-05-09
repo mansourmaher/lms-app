@@ -58,8 +58,8 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
   const issearchPage = pathname?.includes("/search");
 
   return (
-    <div className="w-[350px] relative">
-      <div className="relative w-[350px]">
+    <div className="w-full max-w-2xl px-4 relative">
+      <div className="relative w-[300px]">
         <div className="flex w-full">
           <Input
             placeholder="Search for a teacher..."
@@ -83,7 +83,7 @@ export default forwardRef<HTMLInputElement, valueProps>(function value(
               key={teacher.user?.id}
               className="block w-full p-1 text-start"
               onClick={() => {
-                router.push(`/teacher/${teacher.user?.id}`);
+                router.push(`/teachers/${teacher.user?.id}`);
               }}
               onMouseDown={(e) => {
                 e.preventDefault();

@@ -43,38 +43,27 @@ export async function getLevelDistinctCount() {
 }
 
 export async function getTheoriginofsubscriptionuser() {
-  
-  const subscriptionuser = await db.courseUser.findMany({
+  const subscriptionuser = await db.user.findMany({
     //distinct user how purchased the course
-    distinct: ["userId"],
 
-    where: {
-      course: {
-        
-      },
-    },
     include: {
-      user: {
-        include: {
-          origin: true,
-        },
-      },
+      origin: true,
     },
   });
   const userfromafricacount = subscriptionuser.filter(
-    (u) => u.user?.origin?.region === "Africa"
+    (u) => u?.origin?.region === "Africa"
   ).length;
   const userfromasiacount = subscriptionuser.filter(
-    (u) => u.user?.origin?.region === "Asia"
+    (u) => u?.origin?.region === "Asia"
   ).length;
   const userfromeuropecount = subscriptionuser.filter(
-    (u) => u.user?.origin?.region === "Europe"
+    (u) => u?.origin?.region === "Europe"
   ).length;
   const userfromamericacount = subscriptionuser.filter(
-    (u) => u.user?.origin?.region === "America"
+    (u) => u?.origin?.region === "America"
   ).length;
   const userfromothercount = subscriptionuser.filter(
-    (u) => u.user!.origin?.region === "Other"
+    (u) => u!.origin?.region === "Other"
   ).length;
   const subscriptionusers = [
     {

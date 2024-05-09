@@ -2,6 +2,7 @@
 import { ConfirmModel } from "@/components/models/confirm-model";
 import { QuizModel } from "@/components/models/quiz-model";
 import { QuizForm } from "@/components/models/quizForm";
+import QuizFormForteacher from "@/components/models/quizformforteacher";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Trash, Trash2Icon, TrashIcon } from "lucide-react";
@@ -40,7 +41,10 @@ const CharpterAction = ({
       await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, {
         isPublished: !isPublished,
       });
-      toast.success("Chapter published successfully");
+      isPublished
+        ? toast.success("Chapter unpublished successfully")
+        : toast.success("Chapter published successfully");
+
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -51,20 +55,23 @@ const CharpterAction = ({
       {isCompleted && (
         <>
           <Button
-            variant="outline"
-            onClick={PublishChapter}
+            className="rounded-full p-4"
+            size="sm"
+            variant="ghost"
             disabled={!isCompleted}
+            onClick={PublishChapter}
           >
-            {isPublished ? "unpublish" : "publish"}
+            {isPublished ? "Unpublish" : "Publish"}
           </Button>
         </>
       )}
 
       <ConfirmModel chpaterId={chapterId} onDelete={onDelete} />
       <QuizModel chpaterId={chapterId} courseId={courseId} />
+      <QuizFormForteacher chapterId={chapterId} courseId={courseId} />
       {/* <QuizForm chapterId={chapterId} courseId={courseId} hasreport={false} isCompltedthechapter={false} /> */}
     </div>
   );
 };
 
-export default CharpterAction
+export default CharpterAction;

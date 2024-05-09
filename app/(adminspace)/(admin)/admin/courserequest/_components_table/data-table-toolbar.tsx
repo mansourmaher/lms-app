@@ -13,6 +13,7 @@ import { any } from "zod";
 import { getCoursesName } from "@/actions/teacher/get-courses-name";
 import { DataCoursesFilter } from "./data-table-course-filter";
 import { DataFilterByWeek } from "./data-table-filter-by-date";
+import { getCategoryName } from "@/actions/admin/getcategoryName";
 
 interface DataTableToolbarProps<TData> {
   table: Table<Awaited<ReturnType<typeof getCourseIncludeProgresse>>>;
@@ -22,34 +23,47 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const [categories, setCategories] = React.useState([] as any);
+  useEffect(() => {
+    const fetchData = async () => {
+      const courses = await getCategoryName();
+      setCategories(courses);
+    };
+    fetchData();
+  }, [table]);
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Search using the email"
-          value={(table.getColumn("teacher")?.getFilterValue() as string) ?? ""}
+          placeholder="Search a specific course"
+          value={
+            (table.getColumn("Course Title")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("teacher")?.setFilterValue(event.target.value)
+            table.getColumn("Course Title")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("status") && (
+        {table.getColumn("Category") && (
           <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options2={statuses2}
+            column={table.getColumn("Category")}
+            title="Category"
+            options2={categories.map((category: any) => ({
+              label: category.name,
+              value: category.name,
+            }))}
           />
         )}
 
-        {/* {table.getColumn("course_title") && (
-          <DataCourseFilter
+        {/* {table.getColumn("Category") && (
+          <DataCoursesFilter
             column={table.getColumn("course_title")}
             title="Courses"
             options2={labels}
           />
         )}  */}
-        <DataFilterByWeek column={table.getColumn("created_at")} />
+        {/* <DataFilterByWeek column={table.getColumn("created_at")} /> */}
 
         {isFiltered && (
           <Button

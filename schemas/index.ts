@@ -22,7 +22,9 @@ export const RegisterSchema = z.object({
 }),
     role: z.string().min(0, {
         message: "Please select a role"
-    })
+    }),
+    url:z.string().min(0,{message:"Please enter a valid url"}).optional(),
+    filename:z.string().min(0,{message:"Please enter a valid filename"}).optional()
 
 
 })

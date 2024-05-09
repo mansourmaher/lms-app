@@ -5,7 +5,7 @@ import { columns } from "../_components_table/columns";
 
 const SingleRequestPage = async () => {
   const request = await getAllTeacherRequest();
-  
+
   return (
     <div>
       <DataTable data={request} columns={columns} />

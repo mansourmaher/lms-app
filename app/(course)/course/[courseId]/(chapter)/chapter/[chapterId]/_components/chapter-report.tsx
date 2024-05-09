@@ -40,7 +40,7 @@ export default function ChapterReport({
         <div className="flex justify-between px-5 py-4 border-b">
           <h3 className="text-lg font-semibold">Votre devoir</h3>
           <span className="text-sm font-semibold text-blue-600">
-            {existingReport ? "Remis" : null}
+            {existingReport ? "Submitted" : null}
           </span>
         </div>
         <div className="p-5">

@@ -103,11 +103,11 @@ export const UserButton = () => {
                   You Request is Pending
                 </button>
               )}
-            {currentUser?.role === "TEACHER" &&
+            {/* {currentUser?.role === "TEACHER" &&
             currentUser?.teacherAccess === false &&
             !isTeacherRequestPending ? (
-              <AccesTeacher />
-            ) : null}
+              // <AccesTeacher />
+            ) : null} */}
           </div>
           <div className="flex flex-row justify-between mt-4 w-full gap-3">
             <div className="flex-1">

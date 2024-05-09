@@ -24,11 +24,16 @@ import { getFirstCommunity } from "@/actions/community/getfirstcommunity";
 import CoursesSearchInput from "@/components/models/courses-search-input";
 import { getCoursesNameAndImage } from "@/actions/course/get-courses-image-name";
 import LogoutBtn from "./logoutbtn";
+import TeacherBtn from "./teacherbtn";
+import SearchModal from "./searchModal";
+import SearchModalTrigger from "./searchModlatrigger";
 
 const StudentNavbar = async () => {
   const notifs = await getAllNotifications();
   const user = await auth();
   const userId = user?.user.id;
+  const isverifiedteacher =
+    user?.user.role == "TEACHER" && user?.user.teacherAccess;
   const firstconversationId = await getTheFirstConversation();
   const firstComunity = await getFirstCommunity();
   const courses = await getCoursesNameAndImage();
@@ -153,14 +158,15 @@ const StudentNavbar = async () => {
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <form className="ml-auto flex-1 sm:flex-initial">
           <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <CoursesSearchInput courses={courses} />
+            {/* <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <CoursesSearchInput courses={courses} /> */}
             {/* <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
               placeholder="Search products..."
               className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
             /> */}
+            <SearchModalTrigger />
           </div>
         </form>
         <DropdownMenu>
@@ -175,7 +181,7 @@ const StudentNavbar = async () => {
             <DropdownMenuSeparator />
             <UserButton />
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            {isverifiedteacher && <TeacherBtn />}
             <DropdownMenuSeparator />
             <LogoutBtn />
           </DropdownMenuContent>

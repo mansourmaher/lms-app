@@ -24,6 +24,24 @@ export async function getTeacherConversations()
                 }
                 
                 
+            },
+            include:{
+                messages:{
+                    select:{
+                        body:true,
+                        createdAt:true,
+                        sender:{
+                            select:{
+                                name:true
+                        }
+                    },
+                    
+                    },
+                    orderBy:{
+                        createdAt:"desc"
+                    },
+                    take:1
+                },
             }
             
         })

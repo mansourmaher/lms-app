@@ -10,7 +10,7 @@ import {
   AlertDialogFooter,
 } from "@/components/ui/alert-dialog";
 import axios from "axios";
-import { Crown, Plus, X } from "lucide-react";
+import { Crown, Loader, Plus, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -43,6 +43,7 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [showOptions34, setShowOptions34] = useState(true); // State to track checkbox status
+  const [isloading, setIsLoading] = useState(false);
 
   const MultipleQuizSchema = z.object({
     question: z.string().min(1, { message: "Please enter a question" }),
@@ -62,6 +63,7 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
   });
 
   const saveQuiz = async (data: any) => {
+    setIsLoading(true);
     const options = staticOptions;
     options.unshift(data.option2);
 
@@ -93,6 +95,7 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
         form.setValue("option2", "");
         setStaticOptions([null]);
       });
+    setIsLoading(false);
   };
 
   const [staticOptions, setStaticOptions] = useState([null]);
@@ -112,9 +115,10 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
     <>
       <Toaster />
       <AlertDialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
-        <AlertDialogTrigger className="flex items-center gap-x-2">
-          <Plus size={25} />
-          <span>Add Quiz</span>
+        <AlertDialogTrigger className="flex items-center gap-x-2" asChild>
+          <Button className="rounded-full p-4" size="sm" variant="ghost">
+            Add Quiz
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent className="max-w-[50%]">
           <AlertDialogTitle>Add Quiz to your chapter</AlertDialogTitle>
@@ -128,6 +132,7 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
             >
               <div className="flex flex-row justify-between items-center">
                 <FormLabel>
+                  This question consist to be{" "}
                   {showOptions34 ? "Multiple Choice" : "Yes/No"}
                 </FormLabel>
                 <div className="flex flex-row gap-3 items-center justify-center">
@@ -225,40 +230,46 @@ export const QuizModel = ({ chpaterId, courseId }: ConfirmModelProps) => {
                       <div key={index} className="flex ">
                         <Badge variant="slate" className="mt-2">
                           {option}
-                          <X 
-                          onClick={() => {
-                            setStaticOptions((prev) => {
-                              const updatedOptions = prev.filter(
-                                (opt) => opt !== option
-                              );
+                          <X
+                            onClick={() => {
+                              setStaticOptions((prev) => {
+                                const updatedOptions = prev.filter(
+                                  (opt) => opt !== option
+                                );
 
-                              return updatedOptions;
-                            });
-                          }}
-                          className="ml-2 cursor-pointer"></X>
+                                return updatedOptions;
+                              });
+                            }}
+                            className="ml-2 cursor-pointer"
+                          ></X>
                         </Badge>
-                       
                       </div>
                     );
                   })}
                 </div>
               )}
 
-              <div className="">
-                <Button variant="primary" type="submit">
-                  Save
-                </Button>
+              <div className="flex space-x-4 px-6">
                 <Button
-                  className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                  className="flex-1 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                   type="button"
-                  onClick={() => {setIsOpen(false)
-                  form.reset()
-                  form.setValue("option1", "")
-                  form.setValue("option2", "")
-                  setStaticOptions([null])}
-                  }
+                  onClick={() => {
+                    setIsOpen(false);
+                    form.reset();
+                    form.setValue("option1", "");
+                    form.setValue("option2", "");
+                    setStaticOptions([null]);
+                  }}
                 >
                   Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="flex-1"
+                  disabled={!form.formState.isValid || isloading}
+                >
+                  {isloading ? <Loader className="animate-spin" /> : "Add Quiz"}
                 </Button>
               </div>
             </form>

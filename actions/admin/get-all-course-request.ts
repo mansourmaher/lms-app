@@ -19,6 +19,11 @@ export async function getAllCourseRequest()
                     id:true,
                     title:true,
                 }
+            },
+            category:{
+                select:{
+                    name:true
+                }
             }
         }
     })

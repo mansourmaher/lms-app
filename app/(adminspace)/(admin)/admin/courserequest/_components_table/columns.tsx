@@ -12,6 +12,7 @@ import { CheckCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RejectCourse from "../_components/reject-course";
 import ValidateCourse from "../_components/validate-course";
+import ViewCourseDetail from "./viewcoursedetails";
 
 const columnHelper =
   createColumnHelper<Awaited<ReturnType<typeof getAllCourseRequest>>>();
@@ -74,6 +75,27 @@ export const columns = [
   }),
   //@ts-ignore
   columnHelper.accessor((row) => row, {
+    id: "Category",
+    header: "Category",
+    cell: (info) => {
+      return (
+        <div className="flex items-center gap-x-2.5">
+          <div className="flex flex-col space-y-1">
+            <div className="text-sm font-medium">
+              {/*@ts-ignore*/}
+              {info.row.original.category.name}
+            </div>
+          </div>
+          <div className="text-xs text-gray-500"></div>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  }),
+  //@ts-ignore
+  columnHelper.accessor((row) => row, {
     id: "Chapter Count",
     header: "Chapter Count",
     cell: (info) => {
@@ -93,7 +115,7 @@ export const columns = [
   //@ts-ignore
   columnHelper.accessor((row) => row, {
     id: "Created At",
-    header: "Created At",
+    header: "Published At",
     cell: (info) => {
       return (
         <div className="flex items-center gap-x-2.5">
@@ -108,9 +130,6 @@ export const columns = [
           </div>
         </div>
       );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
     },
   }),
 
@@ -157,10 +176,8 @@ export const columns = [
       return (
         <div className="flex items-center gap-x-2.5 cursor-pointer">
           {/*@ts-ignore*/}
+          <ViewCourseDetail id={info.row.original.id} />
 
-          <ValidateCourse id={info.row.original.id} />
-          {/*@ts-ignore*/}
-          <RejectCourse id={info.row.original.id} />
           {/* You can add more actions as needed */}
         </div>
       );
