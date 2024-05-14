@@ -23,6 +23,12 @@ export async function PATCH(req:Request,{params}:{params:{courseId:string}})
         console.log("valeus",values);
         if(values.isPublished)
         {
+            const existingconversation=await db.conversation.findFirst({
+                where:{
+                    courseId:courseId
+                }
+            })
+            if(!existingconversation)
             await db.conversation.create({
                 data:{
                     title:`${existingcourse?.title} conversation`,
@@ -30,6 +36,7 @@ export async function PATCH(req:Request,{params}:{params:{courseId:string}})
                     
                 }
             })
+            
         }
         
         

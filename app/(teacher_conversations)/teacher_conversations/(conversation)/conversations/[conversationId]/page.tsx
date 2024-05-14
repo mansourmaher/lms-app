@@ -23,7 +23,7 @@ const Page = async ({ params }: PageProps) => {
   );
   const messages = await getMessages(params.conversationId);
   const teacher = await getTheTeacherFromConversationId(params.conversationId);
-  const conversation = await getMyconversation();
+  
   return (
     <div className="h-screen bg-secondary">
       {/* <ConversationsList conversations={conversation} /> */}

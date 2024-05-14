@@ -151,7 +151,7 @@ export default function PdfModal({
                       aria-label="fullscreen"
                       onClick={handelAcceptRequest}
                     >
-                      Validate
+                      Activate
                       <Check className="h-4 w-4 text-green-500" />
                     </Button>
                   ) : (
@@ -161,7 +161,7 @@ export default function PdfModal({
                       aria-label="fullscreen"
                       onClick={handelremoveaccese}
                     >
-                      Remove
+                      Deactivate
                       <X className="h-4 w-4 text-red-600" />
                     </Button>
                   )}

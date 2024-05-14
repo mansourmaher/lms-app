@@ -88,7 +88,7 @@ export const ChaperDescreptionFormForm = ({
             !initialeData.descreption && "text-gray-500"
           )}
         >
-          {initialeData.descreption && "No descreption"}
+          {!initialeData.descreption && "No descreption"}
           {initialeData.descreption && (
             <Previews value={initialeData.descreption} />
           )}

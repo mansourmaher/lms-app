@@ -21,6 +21,7 @@ import SheetNotification from "@/components/Auth/notification-sheet";
 import { getTheFirstConversation } from "@/actions/conversation/getthefirstconversation";
 import { getteacherfirstconversation } from "@/actions/conversation/getteacherfirstconversation";
 import { getFirstCommunity } from "@/actions/community/getfirstcommunity";
+import LogoutBtn from "@/app/(dashboard)/_components/logoutbtn";
 
 const AdminNavbar = async () => {
   const notifs = await getAllNotifications();
@@ -30,7 +31,7 @@ const AdminNavbar = async () => {
   const firstComunity = await getFirstCommunity();
   return (
     <header className=" top-0 flex h-20 items-center gap-4 border-b bg-background px-4 md:px-6">
-      <nav className="hidden  gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6  lg:w-[1750px]">
+      <nav className="hidden  gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6  lg:w-[1150px]">
         <Logo />
         <div className="border-r-2 border-muted h-16"></div>
 
@@ -70,7 +71,7 @@ const AdminNavbar = async () => {
           className="text-muted-foreground transition-colors hover:text-foreground"
           asChild
         >
-          <Link href="/admin/courserequest">Unstroctor</Link>
+          <Link href="/admin/request">Teacher</Link>
         </Button>
       </nav>
       <Sheet>
@@ -130,12 +131,12 @@ const AdminNavbar = async () => {
                 Open Modal
               </button>
             </Link> */}
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            {/* <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
               placeholder="Search products..."
               className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-            />
+            /> */}
           </div>
         </form>
         <DropdownMenu>
@@ -153,7 +154,7 @@ const AdminNavbar = async () => {
             <DropdownMenuSeparator />
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <LogoutBtn />
           </DropdownMenuContent>
         </DropdownMenu>
         <SheetNotification notifications={notifs} userId={userId} />

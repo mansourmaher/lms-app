@@ -1,13 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import * as React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DayPicker, useDayPicker, useNavigation } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { format, setMonth } from "date-fns";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "./select";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 function Calendar({
   className,
@@ -56,11 +58,78 @@ function Calendar({
       components={{
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        Dropdown: (props) => {
+          const { fromDate, fromMonth, fromYear, toMonth, toYear } =
+            useDayPicker();
+          const { goToMonth, currentMonth } = useNavigation();
+
+          if (props.name === "months") {
+            const selectitems = Array.from({ length: 12 }, (_, i) => ({
+              value: i.toString(),
+              label: format(setMonth(new Date(), i), "MMMM"),
+            }));
+            return (
+              <Select
+                onValueChange={(newValue) => {
+                  const newDate = new Date(currentMonth);
+                  newDate.setMonth(parseInt(newValue));
+                  goToMonth(newDate);
+                }}
+                value={props.value?.toString()}
+              >
+                {" "}
+                <SelectTrigger>{format(currentMonth, "MMMM")}</SelectTrigger>
+                <SelectContent>
+                  {selectitems.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            );
+          } else if (props.name === "years") {
+            const earliestyear =
+              fromYear || fromMonth?.getFullYear() || fromDate?.getFullYear();
+            const lastyear =
+              toYear || toMonth?.getFullYear() || fromDate?.getFullYear();
+            let selectItems: { label: string; value: string }[] = [];
+            if (earliestyear && lastyear) {
+              const yearslenght = lastyear - earliestyear + 1;
+              selectItems = Array.from({ length: yearslenght }, (_, i) => ({
+                value: (earliestyear + i).toString(),
+                label: (earliestyear + i).toString(),
+              }));
+            }
+
+            return (
+              <Select
+                onValueChange={(newValue) => {
+                  const newDate = new Date(currentMonth);
+                  newDate.setFullYear(parseInt(newValue));
+                  goToMonth(newDate);
+                }}
+                value={props.value?.toString()}
+              >
+                <SelectTrigger>{currentMonth.getFullYear()}</SelectTrigger>
+                <SelectContent>
+                  {selectItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            );
+          }
+
+          return null;
+        },
       }}
       {...props}
     />
-  )
+  );
 }
-Calendar.displayName = "Calendar"
+Calendar.displayName = "Calendar";
 
-export { Calendar }
+export { Calendar };

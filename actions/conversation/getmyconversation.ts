@@ -12,7 +12,11 @@ export async function getMyconversation()
     const userId=user?.user.id
     const mypurchase=await db.courseUser.findMany({
         where:{
-            userId:userId
+            userId:userId,
+            course:{
+                isPublished:true,
+                status:"verified"
+            }
         },
         select:{
             courseId:true
@@ -26,7 +30,16 @@ export async function getMyconversation()
             
             
         },
+      
         include:{
+            course:{
+                select:{
+                    title:true,
+                   
+                    imageUrl:true
+                }
+            },
+            
             messages:{
                 select:{
                     body:true,
@@ -45,6 +58,7 @@ export async function getMyconversation()
                 },
                 take:1
             },
+            
             }
         
         

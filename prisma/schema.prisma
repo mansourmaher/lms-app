@@ -148,6 +148,7 @@ model Course {
   totalPurchases Int?           @default(0)
   report         Report[]
   Community      Community?
+  Conversation   Conversation[]
 
   @@index([categoryId])
 }
@@ -385,6 +386,7 @@ model Conversation {
   createdAt DateTime @default(now())
   title     String?
   courseId  String?
+  course    Course?  @relation(fields: [courseId], references: [id])
 
   paticipantsId String[]
 
@@ -395,6 +397,8 @@ model Message {
   id        String   @id @default(uuid())
   body      String
   createdAt DateTime @default(now())
+  fileUrl   String?
+  imageUrl  String?
 
   conversationId String
   conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)

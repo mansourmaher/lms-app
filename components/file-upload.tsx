@@ -24,7 +24,6 @@ export const FileUpload = ({
         if (onUploadBegin) {
           onUploadBegin(file);
         }
-        toast.loading("start Uploading file");
       }}
       onClientUploadComplete={(res: any) => {
         onChange(res?.[0].url);

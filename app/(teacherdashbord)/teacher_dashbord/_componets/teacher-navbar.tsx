@@ -21,6 +21,7 @@ import SheetNotification from "@/components/Auth/notification-sheet";
 import { getTheFirstConversation } from "@/actions/conversation/getthefirstconversation";
 import { getteacherfirstconversation } from "@/actions/conversation/getteacherfirstconversation";
 import LogoutBtn from "@/app/(dashboard)/_components/logoutbtn";
+import StudetnBtn from "./studentbtn";
 
 const TeacherNavbar = async () => {
   const notifs = await getAllNotifications();
@@ -142,10 +143,13 @@ const TeacherNavbar = async () => {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-
-            <UserButton />
+            {/* <UserButton /> */}
+            <DropdownMenuItem >
+              <Link href="/teacher/setup-account">Profile</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            <StudetnBtn />
+            <DropdownMenuSeparator />
             <DropdownMenuSeparator />
             <LogoutBtn />
           </DropdownMenuContent>

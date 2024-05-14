@@ -93,7 +93,15 @@ export const AttachementFormChapter = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 ">
       <div className="font-medium flex items-center justify-between">
-        Add resources to your chapter
+        <div className="">
+          Add resources to your chapter
+          {isEditing && (
+          <p className="text-sm text-slate-400">
+            *Note: The file should be in pdf format any other format will not be
+            accepted.
+          </p>
+        )}
+        </div>
         <Button variant="ghost" onClick={toggleEditing}>
           {isEditing && <>Cancel</>}
           {!isEditing && (

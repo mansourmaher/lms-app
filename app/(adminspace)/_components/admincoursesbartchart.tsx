@@ -107,7 +107,7 @@ function AdminCoursesBarChart({ courses, student }: CourseBarchatProps) {
           <CardTitle>
             {userData
               ? "We are Providing distribution of students by age"
-              : " We are Providing the Top 7 courses  by sales"}
+              : `Top ${courses.length} Courses  by Revenue `}
           </CardTitle>
         </div>
         <div className="flex items-center justify-between ml-auto gap-1">

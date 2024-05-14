@@ -108,7 +108,7 @@ function CourseBarchat({ courses, student }: CourseBarchatProps) {
       <CardHeader className="flex flex-row items-center">
         <div className="grid gap-2">
           <CardTitle>
-            {userData ? "Your Students" : "Top 7 courses for you by sales"}
+            {userData ? "Your Students" : `Top ${courses.length} Courses for you  by Revenue `}
           </CardTitle>
         </div>
         <div className="flex items-center justify-between ml-auto gap-1">

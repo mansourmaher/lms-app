@@ -28,10 +28,10 @@ export function ConversationsList({ conversations }: ConversationsListProps) {
           <div className="py-4 text-2xl font-bold text-foreground text-center flex justify-center">
             <span className="flex  items-center ">
               <Edit className="inline-block mr-2 text-sky-500" />
-              Conversations
+              Conversations 
             </span>
           </div>
-          <div className="flex items-center px-4 py-2 bg-gray-100 rounded-md mx-2">
+          <div className="flex items-center px-4 py-2 bg-gray-100 rounded-md mx-2 mb-4">
             <SearchIcon className="text-gray-400" />
             <Input
               className="bg-transparent flex-1 border-none focus:ring-0"
@@ -42,7 +42,7 @@ export function ConversationsList({ conversations }: ConversationsListProps) {
             />
           </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 overflow-y-auto">
           {filtredconv.map((conversation) => (
             <ConversationsListItem key={conversation.id} data={conversation} />
           ))}

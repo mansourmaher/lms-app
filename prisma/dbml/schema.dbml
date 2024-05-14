@@ -129,6 +129,7 @@ Table Course {
   totalPurchases Int [default: 0]
   report Report [not null]
   Community Community
+  Conversation Conversation [not null]
 }
 
 Table CourseUser {
@@ -337,6 +338,7 @@ Table Conversation {
   createdAt DateTime [default: `now()`, not null]
   title String
   courseId String
+  course Course
   paticipantsId String[] [not null]
   messages Message [not null]
 }
@@ -345,6 +347,8 @@ Table Message {
   id String [pk]
   body String [not null]
   createdAt DateTime [default: `now()`, not null]
+  fileUrl String
+  imageUrl String
   conversationId String [not null]
   conversation Conversation [not null]
   senderId String [not null]
@@ -424,6 +428,8 @@ Ref: Post.communityId > Community.id
 Ref: PostResponse.userId > User.id
 
 Ref: PostResponse.postId > Post.id
+
+Ref: Conversation.courseId > Course.id
 
 Ref: Message.conversationId > Conversation.id [delete: Cascade]
 

@@ -53,7 +53,7 @@ export const columns = [
   //@ts-ignore
   columnHelper.accessor((row) => row, {
     id: "Created At",
-    header: "Created At",
+    header: "Joined At",
     cell: (info) => {
       return (
         <div className="flex items-center gap-x-2.5">
@@ -61,7 +61,7 @@ export const columns = [
             <div className="text-sm font-medium ">{/*@ts-ignore*/}</div>
             <div className="text-xs text-gray-500">
               <div className="flex  space-x-2">
-                Publised At {/*@ts-ignore*/}
+                {/*@ts-ignore*/}
                 {format(info.row.original.createdAt, "dd/MM/yyyy")}
               </div>
             </div>
@@ -153,11 +153,10 @@ export const columns = [
               {info.row.original.status === "Validated" && (
                 <Badge variant="green">Validated</Badge>
               )}
-                {/*@ts-ignore*/}
-                {info.row.original.status === "rejected" && (
+              {/*@ts-ignore*/}
+              {info.row.original.status === "rejected" && (
                 <Badge variant="destructive">Rejected</Badge>
               )}
-
             </div>
           </div>
         </div>

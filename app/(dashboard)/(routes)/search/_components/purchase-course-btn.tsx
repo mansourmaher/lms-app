@@ -2,7 +2,7 @@
 
 interface PurchaseBtnProps {
   courseId: string;
-  userId: string;
+  existingpurchase:boolean
 }
 
 import { purchaseCourse } from "@/actions/Etudiant/purchase-course";
@@ -11,7 +11,7 @@ import axios from "axios";
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function PurchaseButton({ courseId, userId }: PurchaseBtnProps) {
+export default function PurchaseButton({ courseId,existingpurchase }: PurchaseBtnProps) {
   const [isloading, setIsloading] = React.useState(false);
   const onclick= async (courseId:string) => {
    
@@ -46,7 +46,7 @@ export default function PurchaseButton({ courseId, userId }: PurchaseBtnProps) {
       onClick={() => onclick(courseId)}
       variant="secondary"
       className="w-full"
-      disabled={isloading}
+      disabled={isloading || existingpurchase}
     >
       Purchase
     </Button>

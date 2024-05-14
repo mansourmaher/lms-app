@@ -6,6 +6,8 @@ import Image from "next/image";
 import React from "react";
 import CourseProgress from "./each-course-progress";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { deletepurchase } from "@/actions/Etudiant/deletepurchase";
 
 interface CourseStudentItemProps {
   course: Awaited<ReturnType<typeof etudiantgetycourses>>[0];
@@ -13,16 +15,22 @@ interface CourseStudentItemProps {
 
 export default function CourseStudentItem({ course }: CourseStudentItemProps) {
   const router = useRouter();
+  // const handeldelete = async () => {
+  //   await deletepurchase(course.course.id);
+  // };
   return (
     <div>
       <div
         className="bg-white shadow-lg rounded-lg p-6 mx-24 mb-24 cursor-pointer"
-        onClick={() => router.push(`/course/${course.course.id}`)}
+         onClick={() => router.push(`/course/${course.course.id}`)}
       >
         <div className="flex items-start space-x-6">
           <div className="shrink-0 ">
             <div className="p-2 rounded-full">
               <CourseProgress userProgress={course.progress} />
+              {/* <Button onClick={handeldelete} className="mt-4">
+                delete
+              </Button> */}
             </div>
           </div>
           <div className="min-w-0 flex-1">

@@ -1,6 +1,12 @@
 "use client";
 
-import { createMessage } from "@/actions/conversation/createmessage";
+import {
+  createMessage,
+  uploadFileinconversation,
+  uploadimageinconversation,
+} from "@/actions/conversation/createmessage";
+import { CommunityUploadImage } from "@/app/(community)/community/_componets/comunity-upload-image";
+import { UploadFileInconversation } from "@/app/(conversation)/conversations/_components/uploadfile";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -20,6 +26,8 @@ export function ConversationForm({ conversationId }: ConversationFormProps) {
     resolver: zodResolver(createMessageSchema),
   });
   const router = useRouter();
+  const [imageUrl, setImageUrl] = React.useState<string | null>(null);
+  const [file, setFile] = React.useState<string | null>(null);
 
   async function onSubmit(data: CreateMessageSchemaType) {
     await createMessage(conversationId, data.message);
@@ -27,8 +35,33 @@ export function ConversationForm({ conversationId }: ConversationFormProps) {
     createMessageForm.setValue("message", "");
     router.refresh();
   }
+  const handelIploadImage = async (url: string) => {
+    await uploadimageinconversation(conversationId, url);
+    setImageUrl(null);
+    router.refresh();
+  };
+  const handelUpoadFile = async (url: string) => {
+    await uploadFileinconversation(conversationId, url);
+    setFile(null);
+    router.refresh();
+  };
+
   return (
-    <div className="mb-14 border-t bg-white px-4 py-4 lg:mb-0">
+    <div className="mb-14 border-t bg-white px-4 py-4 lg:mb-0 flex items-center">
+      <UploadFileInconversation
+        communityId={conversationId}
+        onchange={(url) => {
+          setFile(url);
+          handelUpoadFile(url);
+        }}
+      />
+      <CommunityUploadImage
+        communityId={conversationId}
+        onchange={(url) => {
+          setImageUrl(url);
+          handelIploadImage(url);
+        }}
+      />
       <Form {...createMessageForm}>
         <form
           onSubmit={createMessageForm.handleSubmit(onSubmit)}

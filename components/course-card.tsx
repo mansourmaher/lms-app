@@ -6,6 +6,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { auth } from "@/auth";
 import PurchaseButton from "@/app/(dashboard)/(routes)/search/_components/purchase-course-btn";
+import { existingPurchase } from "@/actions/teacher/existing-purchase";
 
 interface CourseCardProps {
   id: string;
@@ -34,6 +35,7 @@ export const CourseCard = async ({
 }: CourseCardProps) => {
   const user = await auth();
   const userId = user?.user.id as string;
+  const existingpurchase=await existingPurchase(id)
 
   return (
     <div className="p-4 bg-white flex flex-col border rounded-lg">
@@ -87,7 +89,7 @@ export const CourseCard = async ({
           </Button>
         </div>
         <div className="mt-6 ">
-          <PurchaseButton courseId={id} userId={userId} />
+          <PurchaseButton courseId={id} existingpurchase={existingpurchase} />
         </div>
       </div>
     </div>

@@ -85,6 +85,17 @@ export async function POST(req:Request,{params}:{params:{courseId:string}}):  Pr
                 courseId
             }
         })
+        await db.course.update({
+            where:{
+                id:courseId
+            },
+            data:{
+                totalPurchases:{
+                    increment:1
+                }
+            }
+        })
+        
         return NextResponse.json({
             url:session.url
         })

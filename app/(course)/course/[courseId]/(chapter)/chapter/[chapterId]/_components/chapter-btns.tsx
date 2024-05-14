@@ -4,6 +4,7 @@ import { getChapterById } from "@/actions/chapter/get-chapter-by-id";
 import QuizForm from "@/components/models/quizForm";
 import { Button } from "@/components/ui/button";
 import { Chapter } from "@prisma/client";
+import { Badge } from "lucide-react";
 import React from "react";
 
 interface ChapterButtonsProps {
@@ -35,8 +36,22 @@ export default function ChapterButtons({
           >
             Overview
           </Button>
-
-          <a href={chapter?.resources[0]?.url!} target="_blank" download>
+          {chapter?.toDo && (
+            <a href={chapter?.resources[0]?.url!} target="_blank" download>
+              <Button
+                variant={selected === 1 ? "primary" : "ghost"}
+                className="rounded-full  p-4"
+                size="sm"
+                onClick={() => {
+                  selected === 3 ? setSelected(0) : setSelected(3);
+                }}
+                disabled={!chapter?.toDo}
+              >
+                {chapter?.toDo ? "Assignment" : "Nothing to do"}
+              </Button>
+            </a>
+          )}
+          {!chapter?.toDo && (
             <Button
               variant={selected === 1 ? "primary" : "ghost"}
               className="rounded-full  p-4"
@@ -44,16 +59,16 @@ export default function ChapterButtons({
               onClick={() => {
                 selected === 3 ? setSelected(0) : setSelected(3);
               }}
+              disabled={!chapter?.toDo}
             >
-              {chapter?.toDo ? "To Do" : "Nothing to do"}
+              {chapter?.toDo ? "Assignment" : "Nothing to do"}
             </Button>
-          </a>
+          )}
 
           {/* <PdfModal
             info={chapter?.resources[0].url!}
             work={chapter?.resources[0].url!}
           /> */}
-
           <QuizForm
             chapterId={chapter?.id!}
             hasreport={hasreport || !chapter?.toDo!}

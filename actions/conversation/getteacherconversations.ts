@@ -11,7 +11,13 @@ export async function getTeacherConversations()
         const userId=user?.user.id
         const mycourses=await db.course.findMany({
             where:{
-                userId:userId
+                userId:userId,
+                isPublished:true,
+                status:"verified"
+                
+               
+                
+
             },
             select:{
                 id:true
@@ -26,6 +32,12 @@ export async function getTeacherConversations()
                 
             },
             include:{
+                course:{
+                    select:{
+                        title:true,
+                        imageUrl:true
+                    }
+                },
                 messages:{
                     select:{
                         body:true,

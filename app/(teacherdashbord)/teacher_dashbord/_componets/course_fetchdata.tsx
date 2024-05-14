@@ -9,7 +9,6 @@ const CourseChart = async () => {
   const coursedata = await getTop5PurchasedCoursesByTeacher();
   const studentincludeage =
     await getMyStudentsIncludetheirageIncludetheircount();
-    console.log(studentincludeage)
 
   return (
     <>

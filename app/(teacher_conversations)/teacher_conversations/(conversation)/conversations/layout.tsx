@@ -24,9 +24,9 @@ const LayoutPage = async ({ children }: { children: React.ReactNode }) => {
       {/* <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50 ">
         <Sidebar community={community} isverifiedteacher={isverifiedteacher} />
       </div> */}
-      <ConversationsList conversations={conversation} />
+      {/* <ConversationsList conversations={conversation} /> */}
 
-      <div className=" h-full flex flex-col  ">{children}</div>
+      <div className=" h-full  ">{children}</div>
     </div>
   );
 };

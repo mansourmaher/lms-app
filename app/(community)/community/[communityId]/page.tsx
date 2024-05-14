@@ -28,7 +28,7 @@ const Page = async (params: {
             <UsersSidebar communityId={comunityId!} />
           </div>
 
-          <div className="border-b-2 mr-7 ml-6"></div>
+          <div className="border-b-2 mr-7 ml-6 mt-12"></div>
           <div className="flex flex-col bg-gray-100 ">
             <div className="flex h-full">
               <div>

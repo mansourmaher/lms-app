@@ -9,7 +9,7 @@ const SingleUnstructorsPage = ({ teachers }: SingleUnstructorsPageProps) => {
   return (
     <div className="m-8">
       <p className="text-2xl font-bold mb-8">
-        Recommendation formateur for you
+        Recommendation Teacher for you
       </p>
       <div className="mb-6">
         <span>

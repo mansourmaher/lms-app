@@ -24,15 +24,15 @@ export default function SingleNotifications({
   };
 
   const handelOnclick = (message: string) => {
-    message.split(" ")[2] === "purchased" &&
-    router.push(`/teacher/courses`);
-    message.split(" ")[2] === "completed" &&
-    router.push(`/teacher/courses`);
-    
+    message.split(" ")[2] === "purchased" && router.push(`/teacher/courses`);
+    message.split(" ")[2] === "completed" && router.push(`/teacher/courses`);
+
     message.split(" ")[3] === "work" && alert("You student submit the work");
     router.push(`/teacher/check`);
     message.split(" ")[3] === "your" &&
-    router.push(`/course/${notifcation?.courseId}/chapter/${notifcation?.chapterId}`)
+      router.push(
+        `/course/${notifcation?.courseId}/chapter/${notifcation?.chapterId}`
+      );
 
     alert(message);
   };
@@ -61,11 +61,10 @@ export default function SingleNotifications({
           </div>
           <div className="w-full ps-3">
             <div className="text-gray-500 text-sm mb-1.5 dark:text-gray-400">
-              {notifcation?.studentNotif?.name!}{" "}
+              {/* {notifcation?.studentNotif?.name!}{" "} */}
               <span className="font-semibold text-gray-900 dark:text-white">
                 {notifcation?.message}
               </span>
-              : "Hey, what's up? All set for the presentation?"
             </div>
             <div className="flex justify-between items-center ">
               <div className="text-xs text-blue-600 dark:text-blue-500 ">

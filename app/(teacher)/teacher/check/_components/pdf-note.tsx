@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Editor } from "@/components/editor";
 import axios from "axios";
 import { getReportById } from "@/actions/teacher/get-reportById";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   note: z.string().min(2, {
@@ -43,6 +44,7 @@ export default function PdfNote({ id }: FormProps) {
   const [grade, setGrade] = useState(0);
   const [souldBerefresh, setSouldBerefresh] = useState(false);
   const [initilagrade, setInitilagrade] = useState(0);
+  const router=useRouter()
 
   
 
@@ -75,6 +77,7 @@ export default function PdfNote({ id }: FormProps) {
         setSuccessMessage(res.data.message);
         setSouldBerefresh(!souldBerefresh);
       });
+      router.refresh()
   };
   return (
     <Dialog

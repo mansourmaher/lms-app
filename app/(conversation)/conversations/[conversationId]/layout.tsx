@@ -1,5 +1,5 @@
 import { getMyconversation } from "@/actions/conversation/getmyconversation";
-import { ConversationsList } from "@/app/(teacher_conversations)/teacher_conversations/(conversation)/conversations/_components/conversation_list";
+import { ConversationsList } from "../_components/conversation_list";
 
 const LayoutPage = async ({ children }: { children: React.ReactNode }) => {
   // const community = await getAllCommunity();
@@ -12,7 +12,7 @@ const LayoutPage = async ({ children }: { children: React.ReactNode }) => {
       {/* <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50 ">
         <Sidebar community={community} isverifiedteacher={isverifiedteacher} />
       </div> */}
-      <ConversationsList conversations={conversation} />
+      {/* <ConversationsList conversations={conversation} /> */}
 
       <div className="md:pl-80 h-full  mx-auto ">{children}</div>
     </div>

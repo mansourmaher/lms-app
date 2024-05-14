@@ -9,10 +9,12 @@ export async function getTop5PurchasedCoursesByTeacher() {
     const userId=user?.user.id
 
    const courses=await db.course.findMany({
-         where:{
-              userId:userId
-         },
-         take:7,
+        where:{
+            isPublished:true,
+            status:"verified",
+        },
+        
+         take:10,
             orderBy:{
                 totalPurchases:"desc"
             },
@@ -46,11 +48,9 @@ export async function getMyStudentsIncludetheirageIncludetheircount() {
     const userId=user?.user.id
     const students=await db.courseUser.findMany({
         distinct:["userId"],
-        where:{
-            course:{
-                userId:userId
-            }
-        },
+
+       
+       
         select:{
             user:true
         }

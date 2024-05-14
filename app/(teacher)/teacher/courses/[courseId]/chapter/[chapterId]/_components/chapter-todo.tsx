@@ -50,16 +50,26 @@ interface AttachementFormProps {
   initialeData: Chapter;
   courseId: any;
   chapterId: any;
+  onchange?: () => void;
 }
 const UploadDropzone = ({
   initialeData,
   courseId,
   chapterId,
+  onchange,
 }: AttachementFormProps) => {
   const [isUploading, setIsUploading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadError, setUploadError] = useState(false);
   const router = useRouter();
   const { startUpload } = useUploadThing("chapterTodo", {
+    onUploadError: (error) => {
+      toast.error("Failed to upload file");
+      setUploadError(true);
+      router.refresh();
+      onchange && onchange();
+      return;
+    },
     onUploadProgress: (progress) => {
       setUploadProgress(progress);
     },
@@ -73,8 +83,6 @@ const UploadDropzone = ({
 
         const res = await startUpload(acceptedFiles);
         if (res) {
-          console.log("jdsssssssssssssssssssssssssssss");
-
           console.log("name", res[0].name);
           await axios
             .post(`/api/courses/${courseId}/chapters/${chapterId}/todo`, {
@@ -83,6 +91,8 @@ const UploadDropzone = ({
             })
             .then(() => {
               setProcessing(false);
+              onchange && onchange();
+
               router.refresh();
 
               toast.success(
@@ -112,7 +122,7 @@ const UploadDropzone = ({
                     <span className="text-primary">browse</span>
                   </p>
                 </div>
-                {acceptedFiles && acceptedFiles[0] ? (
+                {acceptedFiles && acceptedFiles[0] && !uploadError ? (
                   <div className="max-w-xs bg-white flex items-center rounded-md overflow-hidden outiline outline-[1px] outline-primary">
                     <div className="px-3 py-2 h-4 flex flex-row place-items-center">
                       <File className="h-4 w-4 text-primary" />
@@ -122,7 +132,18 @@ const UploadDropzone = ({
                     </div>
                   </div>
                 ) : null}
-                {isUploading ? (
+                {uploadError && (
+                  <div className="max-w-xs bg-white flex items-center rounded-md overflow-hidden outiline outline-[1px] outline-red">
+                    <div className="px-3 py-2 h-4 flex flex-row place-items-center">
+                      <File className="h-4 w-4 text-red" />
+                    </div>
+                    <div className="px-3 py-2 h-full text-sm truncate">
+                      Error uploading file
+                    </div>
+                  </div>
+                )}
+
+                {isUploading && !uploadError ? (
                   <div className="w-full mt-4 max-w-xs mx-auto ">
                     <Progress
                       value={uploadProgress}
@@ -206,7 +227,17 @@ export const ChapterToDo = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 ">
       <div className="font-medium flex items-center justify-between">
-        Add assignment for this chapter
+        <div className="">
+          Add assignment for this chapter
+          {isEditing && (
+            <p className="text-sm text-slate-400">
+              *Note: You can only add one assignment per chapter. If you want to
+              change the assignment, you need to delete the existing one and
+              upload again. *Note: The file should be in pdf format any other
+              format will not be accepted.
+            </p>
+          )}
+        </div>
         <Button variant="ghost" onClick={toggleEditing}>
           {isEditing && <>Cancel</>}
           {!isEditing && (
@@ -254,6 +285,7 @@ export const ChapterToDo = ({
             initialeData={initialeData}
             courseId={courseId}
             chapterId={chapterId}
+            onchange={toggleEditing}
           />
         </div>
       )}

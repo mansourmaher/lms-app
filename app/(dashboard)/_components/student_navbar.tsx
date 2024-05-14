@@ -80,7 +80,7 @@ const StudentNavbar = async () => {
           className="text-muted-foreground transition-colors hover:text-foreground"
           asChild
         >
-          <Link href="/unstructor">Top Instructor</Link>
+          <Link href="/unstructor">Top Teachers</Link>
         </Button>
 
         <Button

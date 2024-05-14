@@ -12,6 +12,7 @@ import { CheckCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RejectCourse from "../../courserequest/_components/reject-course";
 import BlockeCourse from "../_componnets/unpublishcourse";
+import Unblockcourse from "../_componnets/unbloccourse";
 
 const columnHelper =
   createColumnHelper<Awaited<ReturnType<typeof getAllCourseRequest>>>();
@@ -213,18 +214,9 @@ export const columns = [
           )}
           {/*@ts-ignore*/}
           {info.row.original.status === "blocked" && (
-            <Button
-              variant="primary"
-              size={"sm"}
-              onClick={() => {
-                console.log("Blocked");
-              }}
-              className="flex gap-x-2"
-            >
-              {/*@ts-ignore*/}
-              <CheckCircle size={16} />
-              Unblock
-            </Button>
+            //@ts-ignore
+
+            <Unblockcourse id={info.row.original.id} />
           )}
 
           {/* You can add more actions as needed */}

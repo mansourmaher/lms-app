@@ -38,7 +38,7 @@ export const login=async(values:z.infer<typeof LoginSchema>)=>
         }
         if(existingUser.role ==="TEACHER" && existingUser.teacherRequest[0].status === "rejected")
             {
-                return {error:"Sorry your request has been rejected "}
+                return {error:"You access has been rejected"}
             }
 
     // existingUser.emailVerified=new Date()
@@ -55,6 +55,7 @@ export const login=async(values:z.infer<typeof LoginSchema>)=>
         else if(existingUser.role==="ADMIN")
             {
                 await signIn('credentials',{email,password,redirectTo:"/admin/admin_dashboard"})
+                return {success:"Logged in"}
 
 
             }

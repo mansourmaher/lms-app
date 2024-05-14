@@ -25,7 +25,7 @@ export function ConversationsList({ conversations }: ConversationsListProps) {
               Conversations
             </span>
           </div>
-          <div className="flex items-center px-4 py-2 bg-gray-100 rounded-md mx-2">
+          <div className="flex items-center px-4 py-2 bg-gray-100 rounded-md mx-2 mb-4">
             <SearchIcon className="text-gray-400" />
             <Input
               className="bg-transparent flex-1 border-none focus:ring-0"
